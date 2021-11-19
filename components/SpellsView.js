@@ -68,7 +68,7 @@ const DataRow = ({}) => {
       <SectionTitle title={'SPELLS'}/>
       <UnderlinedText size={6} fontSize={16} legend={'Domains/Specialty'} content={'travel/knowledge'}/>
       {Array.from(Array(10).keys() ).map((el, id)=>{
-            return <LevelList level ={el} />
+            return <LevelList key={el} level ={el} />
           })}
       <Pair title={'SPELL SAVE'} value={'13'}/>
       <Pair title={'SPELL FAILURE'} value={'50%'}/>

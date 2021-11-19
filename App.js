@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView } from 'react-native';
 import dndPic from './assets/dndPic.png'
 import { DescriptionView } from './components/DescriptionsView';
@@ -7,20 +7,32 @@ import {StatsTable} from './components/StatsTable'
 import { SavesTable } from './components/SavesTable';
 import { ResourcesTable } from './components/ResourcesTable';
 import { SkillsTable } from './components/SkillsTable';
+import { GearView } from './components/GearView';
+import { ItemsTable } from './components/ItemsTable';
+import { FeatsView } from './components/FeatsView';
+import { SpellsView } from './components/SpellsView';
+import createCharacter from './app/createCharacter';
 
 
 export default function App() {
+
+  const [character, setCharacter] = useState(createCharacter())
+
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
         <StatusBar style="auto" />
           <Image source={dndPic} style={styles.dndPic} />
-          <DescriptionView />
-          <ResourcesTable />        
+          <DescriptionView data={character.description} setData={(el) => setCharacter({...character, description: el})}/>
+          <ResourcesTable  />        
           <StatsTable />
           <SavesTable />        
           <SkillsTable />
-      </ScrollView>
+          <GearView />
+          <ItemsTable />
+          <FeatsView />
+          <SpellsView />
+      </ScrollView> 
     </SafeAreaView>
   );
 }
@@ -29,7 +41,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    height:3000,
+    height:6000,
     backgroundColor: '#fff',
     paddingLeft:10,
     paddingRight:10,

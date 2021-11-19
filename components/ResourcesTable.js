@@ -20,7 +20,7 @@ MiscContainer = () => {
       <MiscItem text={'DR'} legend={'damage reduction'}/>
       <MiscItem text={'SR'} legend={'spell resistance'}/>
       <MiscItem text={'PR'} legend={'poison resistance'}/>
-      <MiscItem text={'FF'} legend={'ARMOR CLASS'}/>
+      <MiscItem text={'FLAT'} legend={'ARMOR CLASS'}/>
       <MiscItem text={'Touch'} legend={'ARMOR CLASS'}/>
       <MiscItem text={'ATK'} legend={'Base attack Bonus'}/>
       <Initiative />
