@@ -29,7 +29,7 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
 
   return(
     <View style={thisStyle}>
-      <Text style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}}> {content} </Text>
+      <Text style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}}>{content}</Text>
       {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
       
     </View>
@@ -38,10 +38,10 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
 export const UnderlinedTextInput = ({content='', setContent, legend='', size=0.8, fontSize=12 }) => {
   let thisStyle = {flexDirection: 'column', marginRight: 10, width:50,}
   thisStyle.width = thisStyle.width*size
-
+  
   return(
     <View style={thisStyle}>
-      <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent}> {content} </TextInput>
+      <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent}>{content}</TextInput>
       {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
     </View>
   )

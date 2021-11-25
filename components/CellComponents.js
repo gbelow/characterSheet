@@ -18,10 +18,10 @@ export const DoubleCell = ({text='', legend=''}) => {
   )
 }
 
-export const CellInput = ({text=''}) => {
+export const CellInput = ({text='', setContent}) => {
   return(
     <View style={styles.statsCell}>
-      <TextInput style={styles.cellText}> {text} </TextInput>
+      <TextInput style={styles.cellText} onChangeText={setContent}>{text}</TextInput>
     </View>
   )
 }
