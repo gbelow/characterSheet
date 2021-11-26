@@ -6,8 +6,8 @@ import DescriptionView from './components/Description/DescriptionsView';
 import StatsTable from './components/Stats/StatsTable'
 import { SavesTable } from './components/Saves/SavesTable';
 import { ResourcesTable } from './components/Resources/ResourcesTable';
-import { SkillsTable } from './components/SkillsTable';
-import { GearView } from './components/GearView';
+import { SkillsTable } from './components/Skills/SkillsTable';
+import { GearView } from './components/Gear/GearView';
 import { ItemsTable } from './components/ItemsTable';
 import { FeatsView } from './components/Feats/FeatsView';
 import { SpellsView } from './components/SpellsView';
@@ -30,8 +30,8 @@ export default function App() {
             <ResourcesTable  />
             <StatsTable />
             <SavesTable />        
-            {/* <SkillsTable /> */}
-            {/* <GearView /> */}
+            <GearView />
+            <SkillsTable />
             {/* <ItemsTable /> */}
             {/* <FeatsView /> */}
             {/* <SpellsView /> */}

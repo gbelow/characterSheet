@@ -1,10 +1,20 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Cell } from './CellComponents';
-import { UnderlinedText, UnderlinedTextInput, TitleText } from './TextComponents';
+import { Cell } from '../CellComponents';
+import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
+import { useDispatch, useSelector } from 'react-redux';
+import { changeSkillItemValue, selectSkillsItem, selectAllSkills } from './SkillsSlice';
 
 export function SkillsTable ({}){
+
+  const dispatch = useDispatch()  
+  const setter = (itemName, valueName)=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e}))
+  const itemSelector = itemName => useSelector(selectSkillsItem(itemName))
+  const allSkillsSelector = () => useSelector(selectAllSkills)
+  const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
+
+  const allSkills = allSkillsSelector()
 
   const SkillItem = ({item}) => {
     return(
@@ -80,8 +90,8 @@ export function SkillsTable ({}){
     <View style={styles.skillsTable}>
       <SkillsHeader />
       {
-        skillList.map(item => (
-          <SkillItem key={item.name} item={item} />
+        Object.entries(allSkills).map(item => (
+          <SkillItem key={item[0]} item={item[1]} />
         ))
       }
       <AddSkill />
