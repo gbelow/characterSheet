@@ -22,7 +22,7 @@ export function SpellsView({}){
     return(
       <View style={{flexDirection:'row', width:'70%' }}>
         <SectionTitle title={title} width={'50%'}/>
-        <Cell text={value} />
+        <Cell content={value} />
       </View>
     )
   }

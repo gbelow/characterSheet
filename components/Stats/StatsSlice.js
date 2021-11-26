@@ -21,5 +21,9 @@ export const { changeStatsItemValue } = slice.actions;
 
 export const selectStatsItemValue = (itemName, valueName) => state => state.stats[itemName][valueName];
 export const selectStatsItem = (itemName) => state => state.stats[itemName];
+export const selectStatsModifier = itemName => state => {
+  const s = state.stats[itemName]
+  return Math.floor((s.score + s.buffs - s.debuffs - 10)/2)
+}
 
 export default slice.reducer;

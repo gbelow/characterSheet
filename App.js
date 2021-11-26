@@ -4,12 +4,12 @@ import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView } fr
 import dndPic from './assets/dndPic.png'
 import DescriptionView from './components/Description/DescriptionsView';
 import StatsTable from './components/Stats/StatsTable'
-import { SavesTable } from './components/SavesTable';
-import { ResourcesTable } from './components/ResourcesTable';
+import { SavesTable } from './components/Saves/SavesTable';
+import { ResourcesTable } from './components/Resources/ResourcesTable';
 import { SkillsTable } from './components/SkillsTable';
 import { GearView } from './components/GearView';
 import { ItemsTable } from './components/ItemsTable';
-import { FeatsView } from './components/FeatsView';
+import { FeatsView } from './components/Feats/FeatsView';
 import { SpellsView } from './components/SpellsView';
 import createCharacter from './app/createCharacter';
 import { Provider } from 'react-redux';
@@ -27,14 +27,14 @@ export default function App() {
           <StatusBar style="auto" />
             <Image source={dndPic} style={styles.dndPic} />
             <DescriptionView data={character.description} setData={(el) => setCharacter({...character, description: el})}/>
-            {/* <ResourcesTable  />         */}
+            <ResourcesTable  />
             <StatsTable />
-            {/* <SavesTable />        
-            <SkillsTable />
-            <GearView />
-            <ItemsTable />
-            <FeatsView />
-            <SpellsView /> */}
+            <SavesTable />        
+            {/* <SkillsTable /> */}
+            {/* <GearView /> */}
+            {/* <ItemsTable /> */}
+            {/* <FeatsView /> */}
+            {/* <SpellsView /> */}
         </ScrollView> 
       </SafeAreaView>
     </Provider>

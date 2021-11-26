@@ -1,27 +1,44 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-export const Cell = ({text=''}) => {
+export const Cell = ({content}) => {
   return(
     <View style={styles.statsCell}>
-      <Text style={styles.cellText}> {text} </Text>
+      <Text style={styles.cellText}>{content}</Text>
     </View>
   )
 }
 
-export const DoubleCell = ({text='', legend=''}) => {
+export const DoubleCell = ({content='', legend=''}) => {
   return(
     <View style={styles.blackStatsCell}>
-      <Text style={styles.cellTextWhite}> {text} </Text>
+      <Text style={styles.cellTextWhite}>{content}</Text>
       <Text style={styles.cellTextWhiteLegend}>{legend}</Text>
     </View>
   )
 }
 
-export const CellInput = ({text='', setContent}) => {
+export const CellInput = ({content='', setContent}) => {
   return(
     <View style={styles.statsCell}>
-      <TextInput style={styles.cellText} onChangeText={setContent}>{text}</TextInput>
+      <TextInput style={styles.cellText} onChangeText={setContent}>{content}</TextInput>
+    </View>
+  )
+}
+
+export const CellInputWithLegend = ({legend, content, setContent}) => {
+  return(
+    <View style={{flex:1, flexDirection:'column'}}>
+     <Text style={styles.smallLegend}>{legend}</Text>
+    <CellInput content={content} setContent={setContent}/>
+    </View>
+  )
+}
+export const CellWithLegend = ({legend, content}) => {
+  return(
+    <View style={{flex:1, flexDirection:'column'}}>
+      <Text style={styles.smallLegend}>{legend}</Text>
+      <Cell content={content} />
     </View>
   )
 }

@@ -2,26 +2,26 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {Cell, DoubleCell, CellInput, } from '../CellComponents'
-import {changeStatsItemValue, selectStatsItemValue, selectStatsItem} from './StatsSlice';
+import {changeStatsItemValue, selectStatsModifier, selectStatsItem} from './StatsSlice';
 
-const StatsTable = () => {
+const StatsTable = () => {  
 
-  const dispatch = useDispatch()
-  const itemValueselector = (itemName, valueName) => useSelector(selectStatsItemValue(itemName, valueName))
-  const itemselector = itemName => useSelector(selectStatsItem(itemName))
+  const dispatch = useDispatch()  
   const setter = (itemName, valueName)=> (e)=>dispatch(changeStatsItemValue({itemName:itemName, valueName:valueName ,value:e}))
+  const itemSelector = itemName => useSelector(selectStatsItem(itemName))
+  const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
+
+  const DataRow = ({stat='STR'}) => {
+    const {score, legend, buffs, debuffs} = itemSelector(stat)
+    const modifier = modifierSelector(stat)
   
-  const DataRow = ({stat='STR', score=10, legend='STRENGTH', buffs=0, debuffs=0}) => {
-  
-    const modifier = Math.floor((score+buffs-10)/2)
-    
     return(
       <View style={styles.statsTableRow}>
-        <View style={styles.statsTableCol}><DoubleCell text={stat}  legend={legend} /></View>
-        <View style={styles.statsTableCol}><CellInput text={score}  setContent={setter(stat, 'score' )} /></View>
-        <View style={styles.statsTableCol}><CellInput text={buffs}  setContent={setter(stat, 'buffs' )} /></View>
-        <View style={styles.statsTableCol}><CellInput text={debuffs} setContent={setter(stat, 'debuffs' )}  /></View>
-        <View style={styles.statsTableCol}><Cell text={'+'+modifier} /></View>
+        <View style={styles.statsTableCol}><DoubleCell content={stat}  legend={legend} /></View>
+        <View style={styles.statsTableCol}><CellInput content={score}  setContent={setter(stat, 'score' )} /></View>
+        <View style={styles.statsTableCol}><CellInput content={buffs}  setContent={setter(stat, 'buffs' )} /></View>
+        <View style={styles.statsTableCol}><CellInput content={debuffs} setContent={setter(stat, 'debuffs' )}  /></View>
+        <View style={styles.statsTableCol}><Cell content={'+'+modifier} /></View>
       </View>
     )
   }
@@ -36,16 +36,14 @@ const StatsTable = () => {
         <View><Text style={styles.statsTableTitle}> {'Ability \n Modifier'} </Text></View>
       </View>
 
-      <DataRow stat={'STR'} {...itemselector('STR')} />
-      <DataRow stat={'DEX'} {...itemselector('DEX')} />
-      <DataRow stat={'CON'} {...itemselector('CON')} />
-      <DataRow stat={'INT'} {...itemselector('INT')} />
-      <DataRow stat={'WIS'} {...itemselector('WIS')} />
-      <DataRow stat={'CHA'} {...itemselector('CHA')} />
-
+      <DataRow stat={'STR'} />
+      <DataRow stat={'DEX'} />
+      <DataRow stat={'CON'} />
+      <DataRow stat={'INT'} />
+      <DataRow stat={'WIS'} />
+      <DataRow stat={'CHA'} />
     </View>
-  )
-  
+  )  
 }
 
 export default StatsTable

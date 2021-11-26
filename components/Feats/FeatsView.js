@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Input,  } from "react-native";
-import { UnderlinedText, SectionTitle, UnderlinedTextInput } from "./TextComponents";
+import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
 
 export function FeatsView({}){
 

@@ -44,7 +44,7 @@ export function ItemsTable() {
     return(
       <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', width:'50%', alignItems:'center', paddingHorizontal:5}}>
         <Text style={{fontWeight:'bold'}}>TOTAL WEIGHT  </Text>
-        <Cell text='500.3'/>
+        <Cell content='0'/>
       </View>
     )
   }
