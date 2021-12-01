@@ -8,7 +8,7 @@ import { SavesTable } from './components/Saves/SavesTable';
 import { ResourcesTable } from './components/Resources/ResourcesTable';
 import { SkillsTable } from './components/Skills/SkillsTable';
 import { GearView } from './components/Gear/GearView';
-import { ItemsTable } from './components/ItemsTable';
+import { ItemsTable } from './components/Items/ItemsTable';
 import { FeatsView } from './components/Feats/FeatsView';
 import { SpellsView } from './components/SpellsView';
 import createCharacter from './app/createCharacter';
@@ -32,8 +32,8 @@ export default function App() {
             <SavesTable />        
             <GearView />
             <SkillsTable />
-            {/* <ItemsTable /> */}
-            {/* <FeatsView /> */}
+            <ItemsTable />
+            <FeatsView />
             {/* <SpellsView /> */}
         </ScrollView> 
       </SafeAreaView>

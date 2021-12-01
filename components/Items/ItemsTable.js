@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { Cell } from './CellComponents';
-import { SectionTitle } from './TextComponents';
+import { Cell } from '../CellComponents';
+import { SectionTitle } from '../TextComponents';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeItemValue, selectItem, selectWeightSum, selectCoins, changeCoin } from './ItemsSlice';
 
 export function ItemsTable() {
-
+  const dispatch = useDispatch()  
+  const setter = (id, value)=> (e) => dispatch(changeItemValue({itemNumber:id, item:{[value]:e}}))
+  const itemSelector = itemName => useSelector(selectItem(itemName))
+  
   const [numberItems, setNumberItems] = useState(32)
-
-  const TableRow = ({id, name, weight, value}) => {
+  
+  const TableRow = ({id}) => {
+    const item = itemSelector(id)
+    
     return(
       <View style={{flexDirection:'row', borderBottomWidth:1, height:20, width:'50%'}}>
-        <View style={{flex:3, borderRightWidth:1}}><TextInput></TextInput></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput></TextInput></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput></TextInput></View>
+        <View style={{flex:3, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'name')}>{item.name}</TextInput></View>
+        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'value')}>{item.value}</TextInput></View>
+        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'weight')}>{item.weight}</TextInput></View>
       </View>
     )
   }
@@ -44,16 +51,19 @@ export function ItemsTable() {
     return(
       <View style={{flex:1, flexDirection:'row', justifyContent:'space-between', width:'50%', alignItems:'center', paddingHorizontal:5}}>
         <Text style={{fontWeight:'bold'}}>TOTAL WEIGHT  </Text>
-        <Cell content='0'/>
+        <Cell content={useSelector(selectWeightSum)}/>
       </View>
     )
   }
 
-  const Money = ({text}) => {
+  const Money = ({text, id}) => {
+    const coins = useSelector(selectCoins(id))
+    const coinChange = id => (e) => dispatch(changeCoin({id:id, value:e}))
+    
     return(
-      <View style={{flexDirection:'row'}}>
+      <View style={{flexDirection:'row', alignItems:'center'}}>
         <Text>{text} - </Text>
-        <TextInput></TextInput>
+        <TextInput onChangeText={coinChange(id)}>{coins.amount}</TextInput>
       </View>
     )
   }
@@ -71,10 +81,10 @@ export function ItemsTable() {
       </View>
       <SectionTitle title={'MONEY'} />
       <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
-        <Money text={'CP'}/>
-        <Money text={'SP'}/>
-        <Money text={'GP'}/>
-        <Money text={'PP'}/>
+        <Money text={'CP'} id={'cp'}/>
+        <Money text={'SP'} id={'sp'}/>
+        <Money text={'GP'} id={'gp'}/>
+        <Money text={'PP'} id={'pp'}/>
       </View>
     </View>
   )
