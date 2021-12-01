@@ -1,17 +1,24 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { Cell, DoubleCell, CellInput } from "./CellComponents";
-import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "./TextComponents";
+import { Cell, DoubleCell, CellInput } from "../CellComponents";
+import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
+import { changeSpellValue, selectSpellLevel, selectSpellSummary } from "./SpellsSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 export function SpellsView({}){
+  const dispatch = useDispatch()  
+  const setChanger = level=> name => (e) => dispatch(changeSpellValue({level:level, name:name, value:e}))
+  const levelSelector = itemName => useSelector(selectSpellLevel(itemName))
   
   const LevelList = ({level, list}) => {
+    const spells = levelSelector(level)
+    const changer = setChanger(level)
     return(
       <View>
         <TitleText fontSize={16}>{level + ' level spells:'}</TitleText>
         <View style={{flexWrap:"wrap", height:100}}>
-          {Array.from(Array(6).keys() ).map((el, id)=>{
-            return <UnderlinedTextInput key={id} content={'lv'+level+' spell'} size={3}/>
+          {Object.values(spells).map((el, id)=>{
+            return <UnderlinedTextInput key={id} content={spells[id]} setContent={changer(id)} size={3}/>
           })}
         </View>
       </View>
@@ -28,6 +35,9 @@ export function SpellsView({}){
   }
 
   const SpellSummary = () => {
+
+    const summary = useSelector(selectSpellSummary('WIS'))
+    
     return (
       <View style={{width:'100%', marginVertical:20}}>
         <View style={{flexDirection:'row', justifyContent:'space-around'}}>
@@ -38,11 +48,7 @@ export function SpellsView({}){
           <View><Text > {'BONUS \n SPELLS'} </Text></View>
         </View>
   
-        <DataRow stat={'STR'}  score={12} />
-        <DataRow stat={'DEX'}  score={10} />
-        <DataRow stat={'CON'}  score={12} />
-        <DataRow stat={'INT'}  score={16} />
-        <DataRow stat={'WIS'}  score={16} />
+        {Object.values(summary).map((el, i)=> <DataRow key={i} level={i} item={el} /> )     }
   
       </View>
     )
@@ -50,15 +56,15 @@ export function SpellsView({}){
 
   
 
-const DataRow = ({}) => {
+const DataRow = ({level, item}) => {
 
   return(
     <View style={{flexDirection:'row', height:40, justifyContent:'space-around'}}>
-      <View ><CellInput text={5}   /></View>
-      <View ><CellInput text={13}  /></View>
-      <View ><Text style={{fontWeight:'bold'}}>{1+'th'}</Text></View>
-      <View ><CellInput text={2}   /></View>
-      <View ><CellInput text={0} /></View>
+      <View ><CellInput  content={item.SPELLS_KNOWN}  /></View>
+      <View ><CellInput  content={item.SPELL_SAVE_DC} /></View>
+      <View ><Text style={{fontWeight:'bold'}}>{level+'th'}</Text></View>
+      <View ><CellInput content={item.SPELLS_PER_DAY}  /></View>
+      <View ><CellInput content={item.BONUS_SPELLS} /></View>
     </View>
   )
 }

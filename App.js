@@ -10,7 +10,7 @@ import { SkillsTable } from './components/Skills/SkillsTable';
 import { GearView } from './components/Gear/GearView';
 import { ItemsTable } from './components/Items/ItemsTable';
 import { FeatsView } from './components/Feats/FeatsView';
-import { SpellsView } from './components/SpellsView';
+import { SpellsView } from './components/Spells/SpellsView';
 import createCharacter from './app/createCharacter';
 import { Provider } from 'react-redux';
 import store from './app/store';
@@ -34,7 +34,7 @@ export default function App() {
             <SkillsTable />
             <ItemsTable />
             <FeatsView />
-            {/* <SpellsView /> */}
+            <SpellsView />
         </ScrollView> 
       </SafeAreaView>
     </Provider>

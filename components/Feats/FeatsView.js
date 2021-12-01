@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import { View, Input,  } from "react-native";
 import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
+import { changeFeatValue, selectFeatCategory } from "./FeatsSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 export function FeatsView({}){
 
-  const [numFeats, setNumFeats] = useState(16)
-  const [numAbilities, setNumAbilities] = useState(16)
-  const [numLangs, setNumLangs] = useState(8)
+  const dispatch = useDispatch()  
+  const setChanger = category=> name => (e) => dispatch(changeFeatValue({category:category, name:name, value:e}))
+  const categorySelector = itemName => useSelector(selectFeatCategory(itemName))
 
-  const Line = ({id, text}) =>{
+  const Line = ({name, setter, content}) =>{
     return(
-      <UnderlinedTextInput size={3.5} content={'text'}/>
+      <UnderlinedTextInput size={3.5} content={content} setContent={setter(name)}/>
     )
   }
 
-  const FeatsMap = () => {
-    let n = numFeats
+  const FeatsMap = ({category}) => {
+
+    const feats = categorySelector(category)
+    
     return(
       <>
         {
-          Array.from(Array(n).keys()).map(el => (
-            <Line key={el} id={el}/>
+          Object.entries(feats).map(el => (
+            <Line key={el[0]} name={el[0]} content={el[1]} setter={setChanger(category)}/>
           ))
         }
       </>
@@ -31,15 +35,15 @@ export function FeatsView({}){
     <View style={{width:'100%', marginTop: 20}}>
       <SectionTitle title={'FEATS'} />
       <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center",}}>
-        <FeatsMap />
+        <FeatsMap category={'FEATS'}/>
       </View>
       <SectionTitle title={'SPECIAL ABILITIES'} />
       <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center",}}>
-        <FeatsMap />
+        <FeatsMap category={'SPECIAL_ABILITIES'}/>
       </View>
       <SectionTitle title={'LANGUAGES'} />
       <View style={{width:'100%', flexWrap:'wrap', height:100, alignItems:"center",}}>
-        <FeatsMap />
+        <FeatsMap category={'LANGUAGES'}/>
       </View>
     </View>
   )

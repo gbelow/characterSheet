@@ -6,6 +6,8 @@ import savesReducer from '../components/Saves/SavesSlice';
 import gearReducer from '../components/Gear/GearSlice';
 import skillsReducer from '../components/Skills/SkillsSlice';
 import itemsReducer from '../components/Items/ItemsSlice';
+import featsReducer from '../components/Feats/FeatsSlice';
+import spellsReducer from '../components/Spells/SpellsSlice';
 
 export default configureStore({
   reducer: {
@@ -16,5 +18,7 @@ export default configureStore({
     gear:gearReducer,
     skills:skillsReducer,
     items:itemsReducer,
+    feats: featsReducer,
+    spells: spellsReducer,
   },
 });
