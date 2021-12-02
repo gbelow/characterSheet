@@ -5,7 +5,7 @@ export const slice = createSlice({
   initialState: {
     charName:'Theoric',
     playerName:'',
-    class:'',
+    class:'Cleric',
     level:'1',
     race:'',
     alignment:'',

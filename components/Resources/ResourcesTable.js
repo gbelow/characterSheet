@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeResourceItem, selectResourceItem } from './ResourcesSlice';
+import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch } from './ResourcesSlice';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 
 export const ResourcesTable = () => {
@@ -19,8 +19,8 @@ export const ResourcesTable = () => {
         <MiscInputItem content={'DR'} legend={'damage reduction'} name={'DAMAGE_REDUCTION'} />
         <MiscInputItem content={'SR'} legend={'spell resistance'} name={'SPELL_RESISTANCE'}/>
         <MiscInputItem content={'PR'} legend={'poison resistance'} name={'POISON_RESISTANCE'}/>
-        <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} name={'FLAT'}/>
-        <MiscItem content={'Touch'} legend={'ARMOR CLASS'} name={'TOUCH'}/>
+        <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} name={'FLAT'} selector={selectFlat}/>
+        <MiscItem content={'Touch'} legend={'ARMOR CLASS'} name={'TOUCH'} selector={selectTouch} />
         <MiscInputItem content={'ATK'} legend={'Base attack Bonus'} name={'BASE_ATTACK_BONUS'}/>
         <Initiative />
         <Grapple />
@@ -28,11 +28,11 @@ export const ResourcesTable = () => {
     )
   }
 
-  const MiscItem = ({content='', legend='', name=''}) => {    
+  const MiscItem = ({content='', legend='', name='', selector}) => {    
     return(
       <View style={{flexDirection:'row', height:'25%', width:'33%', borderWidth:1}}>
         <DoubleCell content={content} legend={legend}/>
-        <Cell content={itemSelector(name)} />
+        <Cell content={useSelector(selector)} />
       </View>
     )
   }
@@ -49,12 +49,12 @@ export const ResourcesTable = () => {
   const Initiative = () => {
     return(
       <View style={{flexDirection:'row', height:'25%', width:'66%', borderWidth:1, alignItems:'center'}}>
-        <DoubleCell text={'INITIATIVE'} legend={'MODIFIER'} />
-        <CellWithLegend legend={'TOTAL'} content={itemSelector('INITIATIVE')} />
+        <DoubleCell content={'INITIATIVE'} legend={'MODIFIER'} />
+        <CellWithLegend legend={'TOTAL'} content={useSelector(selectInitiative)} />
         <Text>=</Text>
         <CellWithLegend legend={'dex mod'} content={modifierSelector('DEX')}/>
         <Text>+</Text>
-        <CellInputWithLegend legend={'misc mod'} content={itemSelector('INI_MISC_MOD')}/>
+        <CellInputWithLegend legend={'misc mod'} content={itemSelector('INI_MISC_MOD')} setContent={setter('INI_MISC_MOD')}/>
       </View>
     )
   }
@@ -95,11 +95,11 @@ export const ResourcesTable = () => {
         <DoubleCell text={'AC'} legend={'ARMOR CLASS'}/>
         <View style={{flex:10}}>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
-            <CellWithLegend legend={'TOTAL'} content={0}/>
+            <CellWithLegend legend={'TOTAL'} content={useSelector(selectTotalArmor)}/>
             <Text>= 10 + </Text>
-            <CellWithLegend legend={'armor bonus'} />
+            <CellWithLegend legend={'armor bonus'} content={useSelector(selectArmorBonus)} />
             <Text>+</Text>
-            <CellWithLegend legend={'shield bonus'}/>
+            <CellWithLegend legend={'shield bonus'} content={useSelector(selectShieldBonus)}/>
             <Text>+</Text>
             <CellWithLegend legend={'dex mod'} content={modifierSelector('DEX')} />
             <Text>+</Text>
@@ -150,10 +150,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     flexWrap:'wrap',
   },
-  smallLegend:{
-    fontSize: 10,
-    color:'#888'
-  }
+  
   
 
 })

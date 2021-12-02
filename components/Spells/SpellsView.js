@@ -2,13 +2,16 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Cell, DoubleCell, CellInput } from "../CellComponents";
 import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
-import { changeSpellValue, selectSpellLevel, selectSpellSummary } from "./SpellsSlice";
+import { changeSpellValue, selectSpellLevel, selectSpellSummary, selectSpellItem, changeSpellSummary, changeSpellItem, selectSpellSave, selectArcaneFailure } from "./SpellsSlice";
 import { useDispatch, useSelector } from 'react-redux';
 
 export function SpellsView({}){
   const dispatch = useDispatch()  
   const setChanger = level=> name => (e) => dispatch(changeSpellValue({level:level, name:name, value:e}))
+  const setSummaryChanger = (level,name) => (e) => dispatch(changeSpellSummary({level:level, name:name, value:e}))
+  const setItemChanger = (name) => (e) => dispatch(changeSpellItem({item:name, value:e}))
   const levelSelector = itemName => useSelector(selectSpellLevel(itemName))
+  const spellItemSelector = itemName => useSelector(selectSpellItem(itemName))
   
   const LevelList = ({level, list}) => {
     const spells = levelSelector(level)
@@ -36,7 +39,7 @@ export function SpellsView({}){
 
   const SpellSummary = () => {
 
-    const summary = useSelector(selectSpellSummary('WIS'))
+    const summary = useSelector(selectSpellSummary)
     
     return (
       <View style={{width:'100%', marginVertical:20}}>
@@ -60,11 +63,11 @@ const DataRow = ({level, item}) => {
 
   return(
     <View style={{flexDirection:'row', height:40, justifyContent:'space-around'}}>
-      <View ><CellInput  content={item.SPELLS_KNOWN}  /></View>
-      <View ><CellInput  content={item.SPELL_SAVE_DC} /></View>
+      <View ><CellInput  content={parseInt(item.SPELLS_KNOWN)}  setContent={setSummaryChanger(level, 'SPELLS_KNOWN')} /></View>
+      <View ><Cell  content={item.SPELL_SAVE_DC} /></View>
       <View ><Text style={{fontWeight:'bold'}}>{level+'th'}</Text></View>
-      <View ><CellInput content={item.SPELLS_PER_DAY}  /></View>
-      <View ><CellInput content={item.BONUS_SPELLS} /></View>
+      <View ><CellInput content={item.SPELLS_PER_DAY} setContent={setSummaryChanger(level, 'SPELLS_PER_DAY')} /></View>
+      <View ><Cell content={item.BONUS_SPELLS} /></View>
     </View>
   )
 }
@@ -72,12 +75,12 @@ const DataRow = ({level, item}) => {
   return(
     <View style={{width:'100%', alignItems:"center",}}>
       <SectionTitle title={'SPELLS'}/>
-      <UnderlinedText size={6} fontSize={16} legend={'Domains/Specialty'} content={'travel/knowledge'}/>
+      <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} content={spellItemSelector('domain')} setContent={setItemChanger('domain')}/>
       {Array.from(Array(10).keys() ).map((el, id)=>{
             return <LevelList key={el} level ={el} />
           })}
-      <Pair title={'SPELL SAVE'} value={'13'}/>
-      <Pair title={'SPELL FAILURE'} value={'50%'}/>
+      <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
+      <Pair title={'SPELL FAILURE'} value={useSelector(selectArcaneFailure)} />
       <SpellSummary />
     </View>
   )

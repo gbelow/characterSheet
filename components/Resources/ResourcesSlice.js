@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
+import { selectStatsModifier } from '../Stats/StatsSlice';
 
 export const slice = createSlice({
   name: 'resources',
@@ -9,8 +11,6 @@ export const slice = createSlice({
     NON_LETHAL_DMG:0,
     WOUNDS:'',
     AC:10,
-    FLAT:10,
-    TOUCH:10,
     SPEED:6,
     DAMAGE_REDUCTION:0,
     SPELL_RESISTANCE:0,
@@ -33,5 +33,26 @@ export const slice = createSlice({
 export const { changeResourceItem } = slice.actions;
 
 export const selectResourceItem = (itemName) => state => state.resources[itemName];
+export const selectArmorBonus = state => state.gear.ARMOR.AC_BONUS
+export const selectShieldBonus = state => state.gear.SHIELD.AC_BONUS
+// export const selectArmorSizeMod = state => state.description.size 
+export const selectInitiative = state => {
+  const dexMod = useSelector(selectStatsModifier('DEX'))
+  return state.resources.INI_MISC_MOD + parseInt(dexMod)
+}
+
+export const selectTotalArmor = state => {
+  const dexMod = useSelector(selectStatsModifier('DEX'))
+  return 10 + state.gear.ARMOR.AC_BONUS + 
+    state.gear.SHIELD.AC_BONUS + 
+    (state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX ) +
+    state.resources.ARMOR_MISC_MOD +
+    state.resources.NATURAL_ARMOR
+}
+export const selectFlat = state => 10+ state.gear.ARMOR.AC_BONUS + state.gear.SHIELD.AC_BONUS + state.resources.ARMOR_MISC_MOD +state.resources.NATURAL_ARMOR
+export const selectTouch = state => {
+  const dexMod = useSelector(selectStatsModifier('DEX'))
+  return 10+(state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX  ) + state.resources.ARMOR_MISC_MOD
+}
 
 export default slice.reducer;

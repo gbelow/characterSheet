@@ -39,7 +39,8 @@ export const slice = createSlice({
   },
   reducers: {
     changeSkillItemValue: (state, action) => {
-      state[action.payload.itemName][action.payload.valueName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
+      const {itemName, valueName, value} = action.payload
+      state[itemName][valueName] = parseInt(value) ? parseInt(value) : 0 ;
     },    
     createSkillItem: (state, action) => {
       state[action.payload.itemName] = {...action.payload.value, ranks:0, miscMod:0, isClassSkill:false}
@@ -50,8 +51,11 @@ export const slice = createSlice({
 export const { changeSkillItemValue, createSkillItem } = slice.actions;
 
 export const selectSkillItem = (itemName) => state => state.skills[itemName];
-export const selectAllSkills = state => state.skills;
+export const selectAllSkills = state => Object.keys(state.skills);
 export const selectSkillTotal = skillName => state => state.skills[skillName].ranks +  state.skills[skillName].miscMod + useSelector(selectStatsModifier(state.skills[skillName].ability))
-
+export const selectMaxSkill = state => {
+  const max = parseInt(state.description.level) + 3
+  return max+' / '+Math.floor(max/2)
+}
 
 export default slice.reducer;

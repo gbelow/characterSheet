@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, CheckBox } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSkillItemValue, selectSkillsItem, selectAllSkills, selectSkillTotal, createSkillItem } from './SkillsSlice';
+import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
 
 export function SkillsTable ({}){
@@ -12,38 +12,41 @@ export function SkillsTable ({}){
   const dispatch = useDispatch()  
   const setter = (itemName, valueName)=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e}))
   const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
-  const itemSelector = itemName => useSelector(selectSkillsItem(itemName))
+  const itemSelector = itemName => useSelector(selectSkillItem(itemName))
   const allSkillsSelector = () => useSelector(selectAllSkills)
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
-  const skillTotalSelecter = itemName => useSelector(selectSkillTotal(itemName))
-
-  const allSkills = allSkillsSelector()
+  const skillTotalSelecter = itemName => useSelector(selectSkillTotal(itemName))  
   
-  const SkillItem = ({item, name}) => {
+  const allSkills = allSkillsSelector()
+
+
+  const SkillItem = ({name}) => {
+    const {ability, ranks, miscMod} = itemSelector(name) 
+    console.log(name)
     return(
-      <View key={item.name} style={styles.skillItem}>
+      <View style={styles.skillItem}>
         <View style={{flex:0.5}}>
         </View>
         <View style={{flex:2}}>
           <Text>{name}</Text>
         </View>
         <View style={{flex:1}}>
-          <Text style={{textAlign:'center',}}>{item.ability}</Text>
+          <Text style={{textAlign:'center',}}>{ability}</Text>
         </View>
         <View style={{flex:1}}>
           <Cell content={skillTotalSelecter(name)}/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>=</Text>
-          <UnderlinedText content={modifierSelector(item.ability)} />
+          <UnderlinedText content={modifierSelector(ability)} />
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>+</Text>
-          <UnderlinedTextInput content={item.ranks} setContent={setter(name, 'ranks')}/>
+          <UnderlinedTextInput content={ranks} setContent={setter(name, 'ranks')}/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>+</Text>
-          <UnderlinedTextInput content={item.miscMod} setContent={setter(name, 'miscMod')}/>
+          <UnderlinedTextInput content={miscMod} setContent={setter(name, 'miscMod')}/>
         </View>
         
       </View>
@@ -59,7 +62,7 @@ export function SkillsTable ({}){
           </View>
           <View style={{flex:1, flexDirection:'row', justifyContent:'flex-end', marginHorizontal:5}}>
             <Text style={{color:'#fff', fontSize:10, textAlign:'right'}}>Max Ranks {'\n'} class/non-class </Text>
-            <View style={{backgroundColor:'#fff', padding: 5}}><Text style={{fontSize:16}}> 4 / 2 </Text></View>
+            <View style={{backgroundColor:'#fff', padding: 5}}><Text style={{fontSize:16}}>{useSelector(selectMaxSkill)}</Text></View>
           </View>
         </View>
         <View  style={{flex:1, flexDirection:'row', backgroundColor:'#fff' }}>
@@ -122,12 +125,13 @@ export function SkillsTable ({}){
     )
   }
 
+
   return(
     <View style={styles.skillsTable}>
       <SkillsHeader />
       {
-        Object.entries(allSkills).map(item => (
-          <SkillItem key={item[0]} item={item[1]} name={item[0]} />
+        allSkills.map(item => (
+          <SkillItem key={item} name={item} />
         ))
       }
       <AddSkill />

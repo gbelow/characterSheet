@@ -21,7 +21,7 @@ export const DoubleCell = ({content='', legend=''}) => {
 export const CellInput = ({content='', setContent}) => {
   return(
     <View style={styles.statsCell}>
-      <TextInput style={styles.cellText} onChangeText={setContent}>{content}</TextInput>
+      <TextInput style={styles.cellText} onChangeText={setContent} keyboardType={'numeric'}>{content}</TextInput>
     </View>
   )
 }
@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
     color:'#000',
     fontSize:18,
     fontWeight: "bold", 
+    paddingHorizontal:4,
+    paddingVertical:2,
     marginBottom:7,
     marginHorizontal:3,
     marginVertical:3,
@@ -87,4 +89,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold", 
     textAlign:'center', 
   },
+  smallLegend:{
+    fontSize: 10,
+    color:'#888'
+  }
 })
