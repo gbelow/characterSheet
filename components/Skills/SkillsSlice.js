@@ -9,6 +9,12 @@ export const slice = createSlice({
     ...newCharacterTemplate.skills
   },
   reducers: {
+    loadSkills:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeSkillItemValue: (state, action) => {
       const {itemName, valueName, value} = action.payload
       state[itemName][valueName] = parseInt(value) ? parseInt(value) : 0 ;
@@ -19,7 +25,7 @@ export const slice = createSlice({
   },
 });
 
-export const { changeSkillItemValue, createSkillItem } = slice.actions;
+export const { changeSkillItemValue, createSkillItem, loadSkills } = slice.actions;
 
 export const selectSkillItem = (itemName) => state => state.skills[itemName];
 export const selectAllSkills = state => Object.keys(state.skills);

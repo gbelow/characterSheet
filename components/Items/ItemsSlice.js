@@ -7,6 +7,12 @@ export const slice = createSlice({
     ...newCharacterTemplate.items
   },
   reducers: {
+    loadItems:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeItemValue: (state, action) => {
       const {itemNumber, item} = action.payload
       const [name, value] = Object.entries(item)[0]
@@ -19,7 +25,7 @@ export const slice = createSlice({
   },
 });
 
-export const { changeItemValue, changeCoin } = slice.actions;
+export const { changeItemValue, changeCoin, loadItems } = slice.actions;
 
 export const selectItem = (itemNumber) => state => state.items[itemNumber];
 export const selectCoins = (coin) => state => state.items[coin];

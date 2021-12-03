@@ -7,6 +7,12 @@ export const slice = createSlice({
     ...newCharacterTemplate.feats
   },
   reducers: {
+    loadFeats:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeFeatValue: (state, action) => {
       const {category, name, value} = action.payload
       state[category][name] = value ;
@@ -14,7 +20,7 @@ export const slice = createSlice({
   },
 });
 
-export const { changeFeatValue } = slice.actions;
+export const { changeFeatValue, loadFeats } = slice.actions;
 
 export const selectFeatCategory = (category) => state => state.feats[category];
 

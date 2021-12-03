@@ -9,6 +9,12 @@ export const slice = createSlice({
     ...newCharacterTemplate.spells
   },
   reducers: {
+    loadSpells:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeSpellItem:(state, action) => {
       const {item, value} = action.payload
       state[item] = value
@@ -24,7 +30,7 @@ export const slice = createSlice({
   },
 });
 
-export const { changeSpellValue, changeSpellSummary, changeSpellItem } = slice.actions;
+export const { changeSpellValue, changeSpellSummary, changeSpellItem, loadSpells } = slice.actions;
 
 export const selectSpellLevel = level => state => state.spells.SPELLS[level];
 export const selectSpellItem = itemName => state => state.spells[itemName]

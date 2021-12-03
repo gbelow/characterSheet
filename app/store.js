@@ -8,7 +8,6 @@ import skillsReducer from '../components/Skills/SkillsSlice';
 import itemsReducer from '../components/Items/ItemsSlice';
 import featsReducer from '../components/Feats/FeatsSlice';
 import spellsReducer from '../components/Spells/SpellsSlice';
-import charManagementReducer from '../components/CharManagement/CharManagerSlice';
 
 export default configureStore({
   reducer: {
@@ -21,6 +20,5 @@ export default configureStore({
     items:itemsReducer,
     feats: featsReducer,
     spells: spellsReducer,
-    charManager:charManagementReducer
   },
 });

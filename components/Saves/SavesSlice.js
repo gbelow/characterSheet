@@ -9,13 +9,19 @@ export const slice = createSlice({
     ...newCharacterTemplate.saves
   },
   reducers: {
+    loadSaves:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeSaveItem: (state, action) => {
       state[action.payload.itemName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
     },
   },
 });
 
-export const { changeSaveItem } = slice.actions;
+export const { changeSaveItem, loadSaves } = slice.actions;
 
 export const convert = (s) => {
   switch(s){

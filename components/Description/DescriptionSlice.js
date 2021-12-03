@@ -7,6 +7,12 @@ export const slice = createSlice({
     ...newCharacterTemplate.description
   },
   reducers: {
+    loadDescription:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeDescriptionItem: (state, action) => {
       state[action.payload.itemName] = action.payload.value;
     },
@@ -14,8 +20,9 @@ export const slice = createSlice({
   },
 });
 
-export const { changeDescriptionItem } = slice.actions;
+export const { changeDescriptionItem, loadDescription } = slice.actions;
 
 export const selectDescriptionItem = itemName => state => state.description[itemName];
+export const selectChar = state => state
 
 export default slice.reducer;

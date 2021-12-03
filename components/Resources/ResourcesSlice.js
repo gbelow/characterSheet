@@ -9,13 +9,19 @@ export const slice = createSlice({
     ...newCharacterTemplate.resources
   },
   reducers: {
+    loadResources:(state, action) => {
+      const s = Object.keys(state)
+      s.forEach(el => {
+        state[el] = action.payload[el]
+      });
+    },
     changeResourceItem: (state, action) => {
       state[action.payload.itemName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
     },
   },
 });
 
-export const { changeResourceItem } = slice.actions;
+export const { changeResourceItem, loadResources } = slice.actions;
 
 export const selectResourceItem = (itemName) => state => state.resources[itemName];
 export const selectArmorBonus = state => state.gear.ARMOR.AC_BONUS
