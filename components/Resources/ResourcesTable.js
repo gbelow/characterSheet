@@ -19,8 +19,8 @@ export const ResourcesTable = () => {
         <MiscInputItem content={'DR'} legend={'damage reduction'} name={'DAMAGE_REDUCTION'} />
         <MiscInputItem content={'SR'} legend={'spell resistance'} name={'SPELL_RESISTANCE'}/>
         <MiscInputItem content={'PR'} legend={'poison resistance'} name={'POISON_RESISTANCE'}/>
-        <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} name={'FLAT'} selector={selectFlat}/>
-        <MiscItem content={'Touch'} legend={'ARMOR CLASS'} name={'TOUCH'} selector={selectTouch} />
+        <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} selector={selectFlat}/>
+        <MiscItem content={'Touch'} legend={'ARMOR CLASS'} selector={selectTouch} />
         <MiscInputItem content={'ATK'} legend={'Base attack Bonus'} name={'BASE_ATTACK_BONUS'}/>
         <Initiative />
         <Grapple />
@@ -28,7 +28,7 @@ export const ResourcesTable = () => {
     )
   }
 
-  const MiscItem = ({content='', legend='', name='', selector}) => {    
+  const MiscItem = ({content='', legend='', selector}) => {    
     return(
       <View style={{flexDirection:'row', height:'25%', width:'33%', borderWidth:1}}>
         <DoubleCell content={content} legend={legend}/>
@@ -61,7 +61,7 @@ export const ResourcesTable = () => {
   const Grapple = () => {    
     return(
       <View style={{flexDirection:'row', height:'25%', width:'99%', borderWidth:1, alignItems:'center'}}>
-        <DoubleCell text={'GRAPPLE'} legend={'MODIFIER'} />
+        <DoubleCell content={'GRAPPLE'} legend={'MODIFIER'} />
         <CellWithLegend legend={'TOTAL'} content={0}/>
         <Text>=</Text>
         <CellWithLegend legend={'base atk'} content={itemSelector('BASE_ATTACK_BONUS')}/>
@@ -92,7 +92,7 @@ export const ResourcesTable = () => {
   
     return(
       <View style={styles.armorContainer}>
-        <DoubleCell text={'AC'} legend={'ARMOR CLASS'}/>
+        <DoubleCell content={'AC'} legend={'ARMOR CLASS'}/>
         <View style={{flex:10}}>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
             <CellWithLegend legend={'TOTAL'} content={useSelector(selectTotalArmor)}/>

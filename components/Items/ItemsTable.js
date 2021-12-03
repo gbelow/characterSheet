@@ -81,10 +81,10 @@ export function ItemsTable() {
       </View>
       <SectionTitle title={'MONEY'} />
       <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
-        <Money text={'CP'} id={'cp'}/>
-        <Money text={'SP'} id={'sp'}/>
-        <Money text={'GP'} id={'gp'}/>
-        <Money text={'PP'} id={'pp'}/>
+        <Money text={'CP'} id={'CP'}/>
+        <Money text={'SP'} id={'SP'}/>
+        <Money text={'GP'} id={'GP'}/>
+        <Money text={'PP'} id={'PP'}/>
       </View>
     </View>
   )

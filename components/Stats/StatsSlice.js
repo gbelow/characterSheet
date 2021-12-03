@@ -1,14 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'stats',
   initialState: {
-    STR: { legend:'STRENGTH', score:12, buffs:0, debuffs: 0 },
-    DEX: { legend:'DEXTERITY', score:10, buffs:0, debuffs: 0 },
-    CON: { legend:'CONSTITUTION', score:12, buffs:0, debuffs: 0 },
-    INT: { legend:'INTELLIGENCE', score:16, buffs:0, debuffs: 0 },
-    WIS: { legend:'WISDOM', score:16, buffs:0, debuffs: 0 },
-    CHA: { legend:'CHARISMA', score:10, buffs:0, debuffs: 0 },
+    ...newCharacterTemplate.stats
   },
   reducers: {
     changeStatsItemValue: (state, action) => {

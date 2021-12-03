@@ -1,22 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { selectStatsModifier } from '../Stats/StatsSlice';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'saves',
   initialState: {
-    BASE_FORTITUDE:0,
-    BASE_REFLEX:0,
-    BASE_WILL:0,
-    MAGIC_FORTITUDE:0,
-    MAGIC_REFLEX:0,
-    MAGIC_WILL:0,
-    MISC_FORTITUDE:0,
-    MISC_REFLEX:0,
-    MISC_WILL:0,
-    TEMP_FORTITUDE:0,
-    TEMP_REFLEX:0,
-    TEMP_WILL:0,
+    ...newCharacterTemplate.saves
   },
   reducers: {
     changeSaveItem: (state, action) => {

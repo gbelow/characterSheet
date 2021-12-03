@@ -1,23 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'description',
   initialState: {
-    charName:'Theoric',
-    playerName:'',
-    class:'Cleric',
-    level:'1',
-    race:'',
-    alignment:'',
-    deity:'',
-    size:'',
-    age:'',
-    gender:'',
-    height:'',
-    weight:'',
-    eyes:'',
-    hair:'',
-    skin:'',
+    ...newCharacterTemplate.description
   },
   reducers: {
     changeDescriptionItem: (state, action) => {

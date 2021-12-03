@@ -11,22 +11,24 @@ import { GearView } from './components/Gear/GearView';
 import { ItemsTable } from './components/Items/ItemsTable';
 import { FeatsView } from './components/Feats/FeatsView';
 import { SpellsView } from './components/Spells/SpellsView';
-import createCharacter from './app/createCharacter';
+import {CharManagement} from './components/CharManagement/CharManagement';
 import { Provider } from 'react-redux';
 import store from './app/store';
 
 
+
 export default function App() {
 
-  const [character, setCharacter] = useState(createCharacter())
-
   return (
-    <Provider store={store}>
+    <Provider store={store}>      
       <SafeAreaView>
         <ScrollView contentContainerStyle={styles.container}>
           <StatusBar style="auto" />
-            <Image source={dndPic} style={styles.dndPic} />
-            <DescriptionView data={character.description} setData={(el) => setCharacter({...character, description: el})}/>
+          <View style={{flexDirection:'row', marginVertical:30}}>
+            <Image source={dndPic} style={styles.dndPic} />   
+            <CharManagement />         
+          </View>
+            <DescriptionView />
             <ResourcesTable  />
             <StatsTable />
             <SavesTable />        
@@ -45,7 +47,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    height:6000,
+    height:6300,
     backgroundColor: '#fff',
     paddingLeft:10,
     paddingRight:10,

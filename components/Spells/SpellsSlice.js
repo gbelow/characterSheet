@@ -1,17 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import {  selectStatsModifier } from '../Stats/StatsSlice';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'spells',
   initialState: {
-    domain:'',
-    SPELLS:{
-      ...Array(10).fill({...Array(9).fill('')})
-    },
-    SUMMARY:{
-      ...Array(10).fill({SPELLS_KNOWN:0, SPELLS_PER_DAY:0})
-    }
+    ...newCharacterTemplate.spells
   },
   reducers: {
     changeSpellItem:(state, action) => {
@@ -38,7 +33,7 @@ export const selectSpellItem = itemName => state => state.spells[itemName]
 spellAttribute = {Cleric:'WIS', Wizard:'INT', Bard:'CHA', Sorcerer:'CHA', Paladin:'WIS', Druid:'WIS', Ranger:'WIS', }
 
 export const selectSpellSave = state => {
-  const charClass = state.description.class
+  const charClass = state.description.CLASS
   const mod = useSelector(selectStatsModifier(spellAttribute[charClass] ))
   return 10+parseInt(mod)
 }
@@ -49,7 +44,7 @@ export const selectArcaneFailure = state => {
 
 export const selectSpellSummary = state => {
   const resp = Object.values(state.spells.SUMMARY).map((el, spellLevel) => {
-    const charClass = state.description.class
+    const charClass = state.description.CLASS
     const level = state.description.level
     const mod = useSelector(selectStatsModifier(spellAttribute[charClass] ))
 

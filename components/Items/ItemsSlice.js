@@ -1,13 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'items',
   initialState: {
-    ...Array(32).fill({name:'', value:0, weight:0,}),
-    cp:{amount:0, weight:0},
-    sp:{amount:0, weight:0},
-    gp:{amount:0, weight:0},
-    pp:{amount:0, weight:0},
+    ...newCharacterTemplate.items
   },
   reducers: {
     changeItemValue: (state, action) => {

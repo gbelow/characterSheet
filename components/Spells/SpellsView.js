@@ -75,7 +75,7 @@ const DataRow = ({level, item}) => {
   return(
     <View style={{width:'100%', alignItems:"center",}}>
       <SectionTitle title={'SPELLS'}/>
-      <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} content={spellItemSelector('domain')} setContent={setItemChanger('domain')}/>
+      <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} content={spellItemSelector('DOMAIN')} setContent={setItemChanger('DOMAIN')}/>
       {Array.from(Array(10).keys() ).map((el, id)=>{
             return <LevelList key={el} level ={el} />
           })}

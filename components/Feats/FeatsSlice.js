@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
   name: 'feats',
   initialState: {
-    FEATS:{...Array(16).fill('')},
-    SPECIAL_ABILITIES:{...Array(16).fill('')},
-    LANGUAGES:{...Array(8).fill('')},
+    ...newCharacterTemplate.feats
   },
   reducers: {
     changeFeatValue: (state, action) => {

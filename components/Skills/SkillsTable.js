@@ -1,11 +1,12 @@
 import React, {useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, CheckBox } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
+import CheckBox from '@react-native-community/checkbox';
 
 export function SkillsTable ({}){
 
@@ -21,14 +22,26 @@ export function SkillsTable ({}){
 
 
   const SkillItem = ({name}) => {
-    const {ability, ranks, miscMod} = itemSelector(name) 
-    console.log(name)
+    const {ability, ranks, miscMod, requiredTraining, isClassSkill} = itemSelector(name) 
+    
     return(
       <View style={styles.skillItem}>
         <View style={{flex:0.5}}>
+          <CheckBox
+              value={requiredTraining}
+              onValueChange={setter(name, 'requiredTraining')}         
+              disabled={true}   
+            />
+        </View>
+        <View style={{flex:0.5}}>
+          <CheckBox
+              value={isClassSkill}
+              onValueChange={setter(name, 'isClassSkill')}         
+              disabled={false}   
+            />
         </View>
         <View style={{flex:2}}>
-          <Text>{name}</Text>
+          <Text style={{textAlign:'center'}}>{name.replace('_', ' ').replace('_', ' ').toLowerCase()}</Text>
         </View>
         <View style={{flex:1}}>
           <Text style={{textAlign:'center',}}>{ability}</Text>
@@ -66,7 +79,10 @@ export function SkillsTable ({}){
           </View>
         </View>
         <View  style={{flex:1, flexDirection:'row', backgroundColor:'#fff' }}>
-          <View style={{...styles.titleItem, flex:0.6}}>
+          <View style={{...styles.titleItem, flex:0.55}}>
+            <TitleText>require {'\n'} train</TitleText>        
+          </View>
+          <View style={{...styles.titleItem, flex:0.4}}>
             <TitleText>class</TitleText>        
           </View>
           <View style={{...styles.titleItem, flex:2}}>
@@ -94,7 +110,7 @@ export function SkillsTable ({}){
 
   const AddSkill = () => {
 
-    const [skill, setSkill] = useState({ability: 'WIS', armorPen:false, requiredTraining:false})
+    const [skill, setSkill] = useState({ability: 'WIS', armorPen:false, requiredTraining:false, isClassSkill:false})
     const [name, setName] = useState('')
   
     return(
@@ -120,11 +136,17 @@ export function SkillsTable ({}){
               onValueChange={(v)=>{setSkill({...skill, armorPen:v})}}            
             />
         </View>
+        <View className={{paddingVertical:5}}>
+          <Text style={{fontSize:8}}>class {'\n'} skill</Text>
+          <CheckBox
+              value={skill.isClassSkill}
+              onValueChange={(v)=>{setSkill({...skill, isClassSkill:v})}}            
+            />
+        </View>
         <Button title={'add skill'}  onPress={createItem(name, skill)}/>
       </View>
     )
   }
-
 
   return(
     <View style={styles.skillsTable}>
@@ -143,7 +165,7 @@ export function SkillsTable ({}){
 
 const styles = StyleSheet.create({
   skillsTable:{
-    height:1000,
+    height:1200,
     width:'100%',
     marginTop:20,
   },
