@@ -143,7 +143,7 @@ export function SkillsTable ({}){
               onValueChange={(v)=>{setSkill({...skill, isClassSkill:v})}}            
             />
         </View>
-        <Button title={'add skill'}  onPress={createItem(name, skill)}/>
+        <Button title={'add skill'} color={'#222'} onPress={createItem(name, skill)}/>
       </View>
     )
   }
