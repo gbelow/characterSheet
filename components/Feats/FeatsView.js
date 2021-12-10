@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { View, Input,  } from "react-native";
 import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
 import { changeFeatValue, selectFeatCategory } from "./FeatsSlice";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual  } from 'react-redux';
 
 export function FeatsView({}){
 
   const dispatch = useDispatch()  
   const setChanger = category=> name => (e) => dispatch(changeFeatValue({category:category, name:name, value:e}))
-  const categorySelector = itemName => useSelector(selectFeatCategory(itemName))
+  const categorySelector = itemName => useSelector(selectFeatCategory(itemName), shallowEqual )
 
   const Line = ({name, setter, content}) =>{
     return(

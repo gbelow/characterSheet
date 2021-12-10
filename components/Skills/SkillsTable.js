@@ -3,7 +3,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
 import CheckBox from '@react-native-community/checkbox';
@@ -14,7 +14,7 @@ export function SkillsTable ({}){
   const setter = (itemName, valueName)=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e}))
   const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
   const itemSelector = itemName => useSelector(selectSkillItem(itemName))
-  const allSkillsSelector = () => useSelector(selectAllSkills)
+  const allSkillsSelector = () => useSelector(selectAllSkills, shallowEqual )
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
   const skillTotalSelecter = itemName => useSelector(selectSkillTotal(itemName))  
   

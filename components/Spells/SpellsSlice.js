@@ -32,7 +32,9 @@ export const slice = createSlice({
 
 export const { changeSpellValue, changeSpellSummary, changeSpellItem, loadSpells } = slice.actions;
 
-export const selectSpellLevel = level => state => state.spells.SPELLS[level];
+export const selectAllLevelIDs = state => Object.keys(state.spells.SPELLS)
+export const selectSpellLevel = level => state => Object.keys(state.spells.SPELLS[level]);
+export const selectSpellLevelItem = (level, id) => state => state.spells.SPELLS[level][id];
 export const selectSpellItem = itemName => state => state.spells[itemName]
 
 

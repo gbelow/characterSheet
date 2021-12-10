@@ -2,26 +2,32 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Cell, DoubleCell, CellInput } from "../CellComponents";
 import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
-import { changeSpellValue, selectSpellLevel, selectSpellSummary, selectSpellItem, changeSpellSummary, changeSpellItem, selectSpellSave, selectArcaneFailure } from "./SpellsSlice";
-import { useDispatch, useSelector } from 'react-redux';
+import { 
+  changeSpellValue, selectSpellLevel, selectSpellSummary, 
+  selectSpellItem, changeSpellSummary, changeSpellItem, 
+  selectSpellSave, selectArcaneFailure, selectSpellLevelItem,
+  selectAllLevelIDs
+}  from "./SpellsSlice";
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 export function SpellsView({}){
   const dispatch = useDispatch()  
   const setChanger = level=> name => (e) => dispatch(changeSpellValue({level:level, name:name, value:e}))
   const setSummaryChanger = (level,name) => (e) => dispatch(changeSpellSummary({level:level, name:name, value:e}))
   const setItemChanger = (name) => (e) => dispatch(changeSpellItem({item:name, value:e}))
-  const levelSelector = itemName => useSelector(selectSpellLevel(itemName))
+  const levelSelector = itemName => useSelector(selectSpellLevel(itemName), shallowEqual )
   const spellItemSelector = itemName => useSelector(selectSpellItem(itemName))
+  const spellLevelItemSelector = (itemName, id) => useSelector(selectSpellLevelItem(itemName, id))
   
-  const LevelList = ({level, list}) => {
-    const spells = levelSelector(level)
+  const LevelList = ({level}) => {
+    const spellIDs = levelSelector(level)
     const changer = setChanger(level)
     return(
       <View>
         <TitleText fontSize={16}>{level + ' level spells:'}</TitleText>
         <View style={{flexWrap:"wrap", height:100}}>
-          {Object.values(spells).map((el, id)=>{
-            return <UnderlinedTextInput key={id} content={spells[id]} setContent={changer(id)} size={3}/>
+          {Object.values(spellIDs).map((el)=>{
+            return <UnderlinedTextInput key={el} content={spellLevelItemSelector(level, el)} setContent={changer(el)} size={3}/>
           })}
         </View>
       </View>
@@ -71,12 +77,12 @@ const DataRow = ({level, item}) => {
     </View>
   )
 }
-  
+
   return(
     <View style={{width:'100%', alignItems:"center",}}>
       <SectionTitle title={'SPELLS'}/>
       <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} content={spellItemSelector('DOMAIN')} setContent={setItemChanger('DOMAIN')}/>
-      {Array.from(Array(10).keys() ).map((el, id)=>{
+      {useSelector(selectAllLevelIDs, shallowEqual).map((el, id)=>{
             return <LevelList key={el} level ={el} />
           })}
       <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
