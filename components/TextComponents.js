@@ -35,13 +35,16 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
     </View>
   )
 }
-export const UnderlinedTextInput = ({content='', setContent, legend='', size=0.8, fontSize=12 }) => {
+
+export const UnderlinedTextInput = ({selector, id='', setChanger, legend='', size=0.8, fontSize=12 }) => {
+  const text = selector(id)
+  const setContent=setChanger(id)
   let thisStyle = {flexDirection: 'column', marginRight: 10, width:50,}
   thisStyle.width = thisStyle.width*size
-  
+  // console.log(id, text)
   return(
     <View style={thisStyle}>
-      <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent}>{content}</TextInput>
+      <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent} value={''+text}/>
       {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
     </View>
   )

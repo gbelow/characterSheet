@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import {  selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
+import { createSelector } from 'reselect';
 
 export const slice = createSlice({
   name: 'spells',
@@ -38,33 +39,32 @@ export const selectSpellLevelItem = (level, id) => state => state.spells.SPELLS[
 export const selectSpellItem = itemName => state => state.spells[itemName]
 
 
-spellAttribute = {Cleric:'WIS', Wizard:'INT', Bard:'CHA', Sorcerer:'CHA', Paladin:'WIS', Druid:'WIS', Ranger:'WIS', }
+const spellAttribute = {Cleric:'WIS', Wizard:'INT', Bard:'CHA', Sorcerer:'CHA', Paladin:'WIS', Druid:'WIS', Ranger:'WIS', }
+
 
 export const selectSpellSave = state => {
-  const charClass = state.description.CLASS
-  const mod = useSelector(selectStatsModifier(spellAttribute[charClass] ))
+  const attr = spellAttribute[state.description.CLASS]
+  const stat = state.stats[attr]
+  const mod = (stat.buffs - stat.debuffs + stat.score -10)/2
   return 10+parseInt(mod)
 }
+
+
 
 export const selectArcaneFailure = state => {
   return parseInt(state.gear.ARMOR.SPELL_FAILURE) ? parseInt(state.gear.ARMOR.SPELL_FAILURE) : 0
 }
 
-export const selectSpellSummary = state => {
-  const resp = Object.values(state.spells.SUMMARY).map((el, spellLevel) => {
-    const charClass = state.description.CLASS
-    const level = state.description.level
-    const mod = useSelector(selectStatsModifier(spellAttribute[charClass] ))
+export const selectSpellSummaryKeys = state => Object.keys(state.spells.SUMMARY)
+export const selectBonusSpells = state => state.description.CLASS == 'Cleric' ? 1 : 0
 
-    return({
-      ...el,
-      BONUS_SPELLS: charClass == 'Cleric' ? 1 : 0,
-      SPELL_SAVE_DC:spellLevel+mod,
-    })
-  })
-  return resp
-};
+export const selectSpellSaveDC = level => state => {
+  const attr = spellAttribute[state.description.CLASS]
+  const stat = state.stats[attr]
+  const mod = (stat.buffs - stat.debuffs + stat.score -10)/2
+  return parseInt(mod)+parseInt(level)
+}
 
-
+export const selectSpellSummaryLevelItem = (level, item) => state => state.spells.SUMMARY[level][item]
 
 export default slice.reducer;

@@ -1,26 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {Cell, DoubleCell, CellInput, } from '../CellComponents'
-import {changeStatsItemValue, selectStatsModifier, selectStatsItem} from './StatsSlice';
+import {Cell, DoubleCell, CellInput} from '../CellComponents'
+import {changeStatsItemValue, selectStatsModifier, selectStatsItemValue} from './StatsSlice';
 
 const StatsTable = () => {  
 
   const dispatch = useDispatch()  
-  const setter = (itemName, valueName)=> (e)=>dispatch(changeStatsItemValue({itemName:itemName, valueName:valueName ,value:e}))
-  const itemSelector = itemName => useSelector(selectStatsItem(itemName))
+  const setter = (itemName)=> valueName => (e)=>dispatch(changeStatsItemValue({itemName:itemName, valueName:valueName ,value:e}))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
+  const statItemValueSelector = itemName => valueName => useSelector(selectStatsItemValue(itemName, valueName))
 
   const DataRow = ({stat='STR'}) => {
-    const {score, legend, buffs, debuffs} = itemSelector(stat)
+    const legend = useSelector(selectStatsItemValue(stat, legend))
     const modifier = modifierSelector(stat)
   
     return(
       <View style={styles.statsTableRow}>
         <View style={styles.statsTableCol}><DoubleCell content={stat}  legend={legend} /></View>
-        <View style={styles.statsTableCol}><CellInput content={score}  setContent={setter(stat, 'score' )} /></View>
-        <View style={styles.statsTableCol}><CellInput content={buffs}  setContent={setter(stat, 'buffs' )} /></View>
-        <View style={styles.statsTableCol}><CellInput content={debuffs} setContent={setter(stat, 'debuffs' )}  /></View>
+        <View style={styles.statsTableCol}><CellInput id={'score'}  selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
+        <View style={styles.statsTableCol}><CellInput id={'buffs'}  selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
+        <View style={styles.statsTableCol}><CellInput id={'debuffs'} selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
         <View style={styles.statsTableCol}><Cell content={'+'+modifier} /></View>
       </View>
     )

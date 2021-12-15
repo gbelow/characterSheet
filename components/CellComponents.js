@@ -18,19 +18,23 @@ export const DoubleCell = ({content='', legend=''}) => {
   )
 }
 
-export const CellInput = ({content='', setContent}) => {
+export const CellInput = ({id, selector, setChanger}) => {
+  
+  const content = selector(id)
+  const setContent = setChanger(id)
   return(
     <View style={styles.statsCell}>
-      <TextInput style={styles.cellText} onChangeText={setContent} keyboardType={'numeric'}>{content}</TextInput>
+      <TextInput style={styles.cellText} onChangeText={setContent} keyboardType={'numeric'} value={''+content}/>
     </View>
   )
 }
 
-export const CellInputWithLegend = ({legend, content, setContent}) => {
+export const CellInputWithLegend = ({legend, id='', selector, setChanger}) => {
+
   return(
     <View style={{flex:1, flexDirection:'column'}}>
-     <Text style={styles.smallLegend}>{legend}</Text>
-    <CellInput content={content} setContent={setContent}/>
+      <Text style={styles.smallLegend}>{legend}</Text>
+      <CellInput id={id} selector={selector} setChanger={setChanger}/>
     </View>
   )
 }

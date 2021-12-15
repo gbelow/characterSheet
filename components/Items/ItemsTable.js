@@ -17,9 +17,9 @@ export function ItemsTable() {
     
     return(
       <View style={{flexDirection:'row', borderBottomWidth:1, height:20, width:'50%'}}>
-        <View style={{flex:3, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'name')}>{item.name}</TextInput></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'value')}>{item.value}</TextInput></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'weight')}>{item.weight}</TextInput></View>
+        <View style={{flex:3, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'name')} value={''+item.name}/></View>
+        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'value')} value={''+item.value}/></View>
+        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'weight')} value={''+item.weight}/></View>
       </View>
     )
   }
@@ -63,7 +63,7 @@ export function ItemsTable() {
     return(
       <View style={{flexDirection:'row', alignItems:'center'}}>
         <Text>{text} - </Text>
-        <TextInput onChangeText={coinChange(id)}>{coins.amount}</TextInput>
+        <TextInput onChangeText={coinChange(id)} value={''+coins.amount} />
       </View>
     )
   }

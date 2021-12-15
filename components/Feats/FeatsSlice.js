@@ -22,6 +22,7 @@ export const slice = createSlice({
 
 export const { changeFeatValue, loadFeats } = slice.actions;
 
-export const selectFeatCategory = (category) => state => state.feats[category];
+export const selectFeatCategory = (category) => state => Object.keys(state.feats[category]);
+export const selectFeatCategoryItem = (category, itemName) => state => state.feats[category][itemName];
 
 export default slice.reducer;

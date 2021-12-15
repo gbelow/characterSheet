@@ -4,31 +4,30 @@ import {Cell, DoubleCell, CellInput} from '../CellComponents'
 import { TitleText, BigTitleText } from '../TextComponents';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSaveItem, selectSaveItem, selectSaveTotal, convert } from './SavesSlice';
+import { changeSaveItem, selectSaveItemValue, selectSaveTotal, convert } from './SavesSlice';
 
 export const SavesTable = () => {
 
   const dispatch = useDispatch()  
-  const setter = (itemName)=> (e)=>dispatch(changeSaveItem({itemName:itemName, value:e}))
-  const itemSelector = itemName => useSelector(selectSaveItem(itemName))
+  const setter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:e}))
+  const itemSelector = itemName=> itemValue => useSelector(selectSaveItemValue(itemName, itemValue))
   const totalSelector = itemName => useSelector(selectSaveTotal(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
 
   const DataRow = ({stat='STR', legend=''}) => { 
-    let sum = 0
-  
+      
     return(
       <View style={styles.savesTableRow}>
         <View style={{flex:3}}><DoubleCell content={stat}  legend={legend} /></View>
-        <View style={styles.savesTableCol}><CellInput content={itemSelector('BASE_'+stat)} setContent={setter('BASE_'+stat)}/></View>
+        <View style={styles.savesTableCol}><CellInput id={'base'} selector={itemSelector(stat)} setChanger={setter(stat)}/></View>
         <Text style={styles.savesTableSign}>+</Text>
         <View style={styles.savesTableCol}><Cell content={modifierSelector(convert(stat))}/></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput content={itemSelector('MAGIC_'+stat)} setContent={setter('MAGIC_'+stat)} /></View>
+        <View style={styles.savesTableCol}><CellInput id={'magic'} selector={itemSelector(stat)} setChanger={setter(stat)} /></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput content={itemSelector('MISC_'+stat)} setContent={setter('MISC_'+stat)} /></View>
+        <View style={styles.savesTableCol}><CellInput id={'misc'} selector={itemSelector(stat)} setChanger={setter(stat)} /></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput content={itemSelector('TEMP_'+stat)} setContent={setter('BASE_'+stat)}/></View>
+        <View style={styles.savesTableCol}><CellInput id={'temp'} selector={itemSelector(stat)} setChanger={setter(stat)}/></View>
         <Text style={styles.savesTableSign}>=</Text>
         <View style={styles.savesTableCol}><Cell content={totalSelector(stat)} /></View>
       </View>

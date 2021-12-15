@@ -18,7 +18,7 @@ import store from './app/store';
 
 
 export default function App() {
-
+  console.log('app')
   return (
     <Provider store={store}>      
       <SafeAreaView>

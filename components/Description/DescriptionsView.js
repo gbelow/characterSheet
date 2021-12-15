@@ -1,50 +1,51 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { UnderlinedTextInput } from '../TextComponents';
 import { selectDescriptionItem, changeDescriptionItem } from './DescriptionSlice';
 import SelectDropdown from 'react-native-select-dropdown';
+import { createSelector } from 'reselect';
 
 const DescriptionView = ({}) => {
 
   const dispatch = useDispatch()
-  const selector = itemName => useSelector(selectDescriptionItem(itemName))
-  const setter = itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e}))
+  const selector = useCallback(itemName => useSelector(selectDescriptionItem(itemName)), [useSelector, selectDescriptionItem])
+  const setter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e})), [dispatch, changeDescriptionItem])
 
   return(
     <View style={styles.headingsContainer}>
       <View style={styles.headingsLine}>
-        <UnderlinedTextInput content={selector('CHAR_NAME')} setContent={setter('CHAR_NAME')} legend={'Character Name'} size={3}/>
-        <UnderlinedTextInput content={selector('PLAYER_NAME')} setContent={setter('PLAYER_NAME')} legend={'Player'} size={3} />
+        <UnderlinedTextInput id={'CHAR_NAME'} selector={selector} setChanger={setter} legend={'Character Name'} size={3} />
+        <UnderlinedTextInput id='PLAYER_NAME' selector={selector} setChanger={setter}  legend={'Player'} size={3} />
       </View>  
       <View style={styles.headingsLine}>
         <SelectDropdown 
           buttonStyle={{width:'15%', borderWidth:1, height:'100%', marginHorizontal:5, marginVertical:8}} 
           buttonTextStyle={{fontSize:10}} data={['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Wizard']} 
-          defaultButtonText={selector('CLASS')} 
+          defaultButtonText='CLASS' 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('CLASS')}
         />
-        <UnderlinedTextInput content={selector('LEVEL')} setContent={setter('LEVEL')} legend={'Level'} size={0.5}/>
-        <UnderlinedTextInput content={selector('RACE')} setContent={setter('RACE')} legend={'Race'} size={1}/>
-        <UnderlinedTextInput content={selector('ALIGNMENT')} setContent={setter('ALIGNMENT')} legend={'Alignment'} size={0.7}/>
-        <UnderlinedTextInput content={selector('DEITY')} setContent={setter('DEITY')} legend={'Deity'} size={1}/>
+        <UnderlinedTextInput id='LEVEL' selector={selector} setChanger={setter}  legend={'Level'} size={0.5}/>
+        <UnderlinedTextInput id='RACE' selector={selector} setChanger={setter}  legend={'Race'} size={1}/>
+        <UnderlinedTextInput id='ALIGNMENT' selector={selector} setChanger={setter}  legend={'Alignment'} size={0.7}/>
+        <UnderlinedTextInput id='DEITY' selector={selector} setChanger={setter}  legend={'Deity'} size={1}/>
       </View>
       <View style={styles.headingsLine}>
         <SelectDropdown 
           buttonStyle={{width:'15%', borderWidth:1, height:'100%', marginHorizontal:5, marginVertical:8}} 
           buttonTextStyle={{fontSize:10}} data={['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Colossal']} 
-          defaultButtonText={selector('SIZE')} 
+          defaultButtonText='SIZE' 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('SIZE')}
         />
-        <UnderlinedTextInput content={selector('AGE')} setContent={setter('AGE')} legend={'Age'} size={0.7}/>
-        <UnderlinedTextInput content={selector('GENDER')} setContent={setter('GENDER')} legend={'Gender'} size={0.7}/>
-        <UnderlinedTextInput content={selector('HEIGHT')} setContent={setter('HEIGHT')} legend={'Height'} size={0.7}/>
-        <UnderlinedTextInput content={selector('WEIGHT')} setContent={setter('WEIGHT')} legend={'Weight'} size={0.7}/>
-        <UnderlinedTextInput content={selector('EYES')} setContent={setter('EYES')} legend={'Eyes'} size={0.7}/>
-        <UnderlinedTextInput content={selector('HAIR')} setContent={setter('HAIR')} legend={'Hair'} size={0.7}/>
-        <UnderlinedTextInput content={selector('SKIN')} setContent={setter('SKIN')} legend={'Skin'} size={0.7}/>
+        <UnderlinedTextInput id='AGE' selector={selector} setChanger={setter}  legend={'Age'} size={0.7}/>
+        <UnderlinedTextInput id='GENDER' selector={selector} setChanger={setter}  legend={'Gender'} size={0.7}/>
+        <UnderlinedTextInput id='HEIGHT' selector={selector} setChanger={setter}  legend={'Height'} size={0.7}/>
+        <UnderlinedTextInput id='WEIGHT' selector={selector} setChanger={setter}  legend={'Weight'} size={0.7}/>
+        <UnderlinedTextInput id='EYES' selector={selector} setChanger={setter}  legend={'Eyes'} size={0.7}/>
+        <UnderlinedTextInput id='HAIR' selector={selector} setChanger={setter}  legend={'Hair'} size={0.7}/>
+        <UnderlinedTextInput id='SKIN' selector={selector} setChanger={setter}  legend={'Skin'} size={0.7}/>
       </View>  
     </View>
   )

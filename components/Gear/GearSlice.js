@@ -22,5 +22,6 @@ export const slice = createSlice({
 export const { changeGearItem, loadGear } = slice.actions;
 
 export const selectGearItem = (itemName) => state => state.gear[itemName];
+export const selectGearItemValue = (itemName, itemValue) => state => state.gear[itemName][itemValue]
 
 export default slice.reducer;

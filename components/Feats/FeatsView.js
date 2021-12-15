@@ -1,30 +1,26 @@
 import React, { useState } from "react";
 import { View, Input,  } from "react-native";
 import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
-import { changeFeatValue, selectFeatCategory } from "./FeatsSlice";
+import { changeFeatValue, selectFeatCategory, selectFeatCategoryItem } from "./FeatsSlice";
 import { useDispatch, useSelector, shallowEqual  } from 'react-redux';
 
 export function FeatsView({}){
 
   const dispatch = useDispatch()  
-  const setChanger = category=> name => (e) => dispatch(changeFeatValue({category:category, name:name, value:e}))
+  const setChanger = category => name => (e) => dispatch(changeFeatValue({category:category, name:name, value:e}))
   const categorySelector = itemName => useSelector(selectFeatCategory(itemName), shallowEqual )
+  const categoryItemSelector = category => itemName => useSelector(selectFeatCategoryItem(category, itemName))
 
-  const Line = ({name, setter, content}) =>{
-    return(
-      <UnderlinedTextInput size={3.5} content={content} setContent={setter(name)}/>
-    )
-  }
 
   const FeatsMap = ({category}) => {
 
     const feats = categorySelector(category)
-    
+
     return(
       <>
         {
-          Object.entries(feats).map(el => (
-            <Line key={el[0]} name={el[0]} content={el[1]} setter={setChanger(category)}/>
+          feats.map(el => (
+            <UnderlinedTextInput key={el+category} size={3.5} id={el} selector={categoryItemSelector(category)} setChanger={setChanger(category)}/>
           ))
         }
       </>

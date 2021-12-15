@@ -28,15 +28,19 @@ export const slice = createSlice({
 export const { changeSkillItemValue, createSkillItem, loadSkills } = slice.actions;
 
 export const selectSkillItem = (itemName) => state => state.skills[itemName];
+export const selectSkillItemValue = (itemName, itemValue) => state=> state.skills[itemName][itemValue]
 export const selectAllSkills = state => Object.keys(state.skills);
+
+
 export const selectSkillTotal = skillName => state => {
   return(
     state.skills[skillName].ranks +  
     state.skills[skillName].miscMod + 
-    useSelector(selectStatsModifier(state.skills[skillName].ability)) 
+    // useSelector(selectStatsModifier(state.skills[skillName].ability)) 
     - (state.skills[skillName].armorPen ? ( state.gear.ARMOR.CHECK_PENALTY + state.gear.SHIELD.CHECK_PENALTY) : 0)
   )
 }
+
 export const selectMaxSkill = state => {
   const max = parseInt(state.description.LEVEL) + 3
   return max+' / '+Math.floor(max/2)

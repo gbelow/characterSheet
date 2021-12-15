@@ -16,7 +16,8 @@ export const slice = createSlice({
       });
     },
     changeSaveItem: (state, action) => {
-      state[action.payload.itemName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
+      const {itemName, valueName, value} = action.payload
+      state[itemName][valueName] = parseInt(value) ? parseInt(value) : 0 ;
     },
   },
 });
@@ -31,10 +32,10 @@ export const convert = (s) => {
   }
 }
 
-export const selectSaveItem = (itemName) => state => state.saves[itemName];
+export const selectSaveItemValue = (itemName, valueName) => state => state.saves[itemName][valueName];
 export const selectSaveTotal = (itemName) => state => {
   const mod = useSelector(selectStatsModifier(convert(itemName)))
-  return state.saves['BASE_'+itemName] + mod + state.saves['MAGIC_'+itemName] + state.saves['MISC_'+itemName] + state.saves['TEMP_'+itemName]
+  return state.saves[itemName]['base'] + mod + state.saves[itemName]['magic'] + state.saves[itemName]['misc'] + state.saves[itemName]['temp']
 }
 
 export default slice.reducer;

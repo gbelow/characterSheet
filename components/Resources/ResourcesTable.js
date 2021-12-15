@@ -11,8 +11,8 @@ export const ResourcesTable = () => {
   const setter = (itemName)=> (e)=>dispatch(changeResourceItem({itemName:itemName, value:e}))
   const itemSelector = itemName => useSelector(selectResourceItem(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
-
-  MiscContainer = () => {
+  
+  const MiscContainer = () => {
     return(
       <View style={styles.miscContainer}>
         <MiscInputItem content={'SPEED'} name={'SPEED'}/>
@@ -38,10 +38,11 @@ export const ResourcesTable = () => {
   }
 
   const MiscInputItem = ({content='', legend='', name=''}) => {
+    
     return(
       <View style={{flexDirection:'row', height:'25%', width:'33%', borderWidth:1}}>
         <DoubleCell content={content} legend={legend}/>
-        <CellInput content={itemSelector(name)} setContent={setter(name)}/>
+        <CellInput id={name} selector={itemSelector} setChanger={setter}/>
       </View>
     )
   }
@@ -54,7 +55,7 @@ export const ResourcesTable = () => {
         <Text>=</Text>
         <CellWithLegend legend={'dex mod'} content={modifierSelector('DEX')}/>
         <Text>+</Text>
-        <CellInputWithLegend legend={'misc mod'} content={itemSelector('INI_MISC_MOD')} setContent={setter('INI_MISC_MOD')}/>
+        <CellInputWithLegend legend={'misc mod'} id={'INI_MISC_MOD'} selector={itemSelector} setChanger={setter}/>
       </View>
     )
   }
@@ -70,20 +71,19 @@ export const ResourcesTable = () => {
         <Text>+</Text>
         <CellWithLegend legend={'size mod'} content={0} />
         <Text>+</Text>
-        <CellInputWithLegend legend={'misc mod'} content={itemSelector('GRAPPLE_MISC_MOD')} setContent={setter('GRAPPLE_MISC_MOD')}/>
+        <CellInputWithLegend legend={'misc mod'} id={'GRAPPLE_MISC_MOD'} selector={itemSelector} setChanger={setter}/>
       </View>
     )
   }
   
   const HealthBar = () => {
-    let sum = 0 
     return(
       <View style={styles.healthBarContainer}>
         <DoubleCell content={'HP'} legend={'HIT POINTS'}/>
-        <CellInputWithLegend legend={'Full HP'} content={itemSelector('HP')} setContent={setter('HP')} />      
-        <CellInputWithLegend legend={'Current HP'} content={itemSelector('CURRENT_HP')} setContent={setter('CURRENT_HP')}/>      
-        <CellInputWithLegend legend={'Wounds'} content={itemSelector('WOUNDS')} setContent={setter('WOUNDS')}/>      
-        <CellInputWithLegend legend={'Nonlethal Damage'} content={itemSelector('NON_LETHAL_DMG')} setContent={setter('NON_LETHAL_DMG')}/>      
+        <CellInputWithLegend legend={'Full HP'} id={'HP'} selector={itemSelector} setChanger={setter} />      
+        <CellInputWithLegend legend={'Current HP'} id={'CURRENT_HP'} selector={itemSelector} setChanger={setter}/>      
+        <CellInputWithLegend legend={'Wounds'} id={'WOUNDS'} selector={itemSelector} setChanger={setter}/>      
+        <CellInputWithLegend legend={'Nonlethal Damage'} id={'NON_LETHAL_DMG'} selector={itemSelector} setChanger={setter}/>      
       </View>
     )
   }
@@ -105,13 +105,13 @@ export const ResourcesTable = () => {
             <Text>+</Text>
           </View>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
-            <CellInputWithLegend legend={'size mod'}/>
+            <CellInputWithLegend legend={'size mod'} id={'NATURAL_ARMOR'} selector={itemSelector} setChanger={setter}/>
             <Text>+</Text>
-            <CellInputWithLegend legend={'natural armor'} content={itemSelector('NATURAL_ARMOR')} setContent={setter('NATURAL_ARMOR')}/>
+            <CellInputWithLegend legend={'natural armor'} id={'NATURAL_ARMOR'} selector={itemSelector} setChanger={setter}/>
             <Text>+</Text>
-            <CellInputWithLegend legend={'deflection mod'} content={itemSelector('DEFLECT_MOD')} setContent={setter('DEFLECT_MOD')}/>
+            <CellInputWithLegend legend={'deflection mod'} id={'DEFLECT_MOD'} selector={itemSelector} setChanger={setter}/>
             <Text>+</Text>
-            <CellInputWithLegend legend={'misc mod'} content={itemSelector('ARMOR_MISC_MOD')} setContent={setter('ARMOR_MISC_MOD')}/>
+            <CellInputWithLegend legend={'misc mod'} id={'ARMOR_MISC_MOD'} selector={itemSelector} setChanger={setter}/>
           </View>
         </View>
       </View>
@@ -126,9 +126,6 @@ export const ResourcesTable = () => {
     </View>
   )
 }
-
-
-
 
 const styles = StyleSheet.create({
   resourcesContainer:{
@@ -149,8 +146,6 @@ const styles = StyleSheet.create({
     flex:4,
     flexDirection:'row',
     flexWrap:'wrap',
-  },
-  
-  
+  }, 
 
 })

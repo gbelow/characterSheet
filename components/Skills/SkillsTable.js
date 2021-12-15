@@ -1,42 +1,49 @@
-import React, {useState } from 'react';
+import React, {useCallback, useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill } from './SkillsSlice';
+import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill, selectSkillItemValue } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
 import CheckBox from '@react-native-community/checkbox';
+import { createSelector } from 'reselect';
 
 export function SkillsTable ({}){
 
   const dispatch = useDispatch()  
-  const setter = (itemName, valueName)=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e}))
-  const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
-  const itemSelector = itemName => useSelector(selectSkillItem(itemName))
-  const allSkillsSelector = () => useSelector(selectAllSkills, shallowEqual )
-  const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
-  const skillTotalSelecter = itemName => useSelector(selectSkillTotal(itemName))  
   
-  const allSkills = allSkillsSelector()
+  const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
+  const itemSelector = itemName => useSelector(selectSkillItem(itemName))  
 
-
+  const modifierSelector = useCallback(itemName => useSelector(selectStatsModifier(itemName)), [])
+  const setter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e})))
+  const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue)))
+  const skillTotalSelector = itemName => useSelector(selectSkillTotal(itemName)) 
+  
+  
+  const allSkills = useSelector(selectAllSkills, shallowEqual )
+  
   const SkillItem = ({name}) => {
-    const {ability, ranks, miscMod, requiredTraining, isClassSkill} = itemSelector(name) 
+
+    const selector = useCallback(itemValueSelector(name), [name])
+    const setChanger = useCallback(setter(name), [name])
+    
+    const skillTotal = createSelector([selectSkillTotal(name), selectStatsModifier(selector('ability'))], (a,b)=> a+b)
     
     return(
       <View style={styles.skillItem}>
         <View style={{flex:0.5}}>
           <CheckBox
-              value={requiredTraining}
-              onValueChange={setter(name, 'requiredTraining')}         
+              value={selector('requiredTraining')}
+              onValueChange={setChanger('requiredTraining')}         
               disabled={true}   
             />
         </View>
         <View style={{flex:0.5}}>
           <CheckBox
-              value={isClassSkill}
-              onValueChange={setter(name, 'isClassSkill')}         
+              value={selector('isClassSkill')}
+              onValueChange={setChanger('isClassSkill')}         
               disabled={false}   
             />
         </View>
@@ -44,22 +51,22 @@ export function SkillsTable ({}){
           <Text style={{textAlign:'center'}}>{name.replace('_', ' ').replace('_', ' ').toLowerCase()}</Text>
         </View>
         <View style={{flex:1}}>
-          <Text style={{textAlign:'center',}}>{ability}</Text>
+          <Text style={{textAlign:'center',}}>{selector('ability')}</Text>
         </View>
         <View style={{flex:1}}>
-          <Cell content={skillTotalSelecter(name)}/>
+          <Cell content={useSelector(skillTotal) }/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>=</Text>
-          <UnderlinedText content={modifierSelector(ability)} />
+          <UnderlinedText content={modifierSelector(selector('ability'))} />
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>+</Text>
-          <UnderlinedTextInput content={ranks} setContent={setter(name, 'ranks')}/>
+          <UnderlinedTextInput id={'ranks'} selector={selector} setChanger={setChanger}/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>+</Text>
-          <UnderlinedTextInput content={miscMod} setContent={setter(name, 'miscMod')}/>
+          <UnderlinedTextInput id={'miscMod'} selector={selector} setChanger={setChanger}/>
         </View>
         
       </View>
@@ -115,7 +122,7 @@ export function SkillsTable ({}){
   
     return(
       <View style={{flexDirection:'row', justifyContent:'space-around', alignItems:'center', height:50, marginVertical:10, borderWidth:1, paddingVertical:5}}>
-        <TextInput style={{borderWidth:1, width:'30%'}} placeholder={'skill name'} onChangeText={(e)=>setName(e)}>{name}</TextInput>
+        <TextInput style={{borderWidth:1, width:'30%'}} placeholder={'skill name'} onChangeText={(e)=>setName(e)} value={''+name}/>
         <SelectDropdown 
           buttonStyle={{width:'15%', borderWidth:1, height:'100%'}} 
           buttonTextStyle={{fontSize:12}} data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']} 
@@ -152,8 +159,8 @@ export function SkillsTable ({}){
     <View style={styles.skillsTable}>
       <SkillsHeader />
       {
-        allSkills.map(item => (
-          <SkillItem key={item} name={item} />
+        allSkills.map((item, id) => (
+          <SkillItem key={id} name={item} />
         ))
       }
       <AddSkill />

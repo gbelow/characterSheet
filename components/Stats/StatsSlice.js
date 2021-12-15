@@ -27,5 +27,6 @@ export const selectStatsModifier = itemName => state => {
   const s = state.stats[itemName]
   return Math.floor((s.score + s.buffs - s.debuffs - 10)/2)
 }
+export const selectStatsItemKeys = (itemName) => state => Object.keys(state[itemName])
 
 export default slice.reducer;
