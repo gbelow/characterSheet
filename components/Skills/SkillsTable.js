@@ -1,49 +1,46 @@
-import React, {useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { changeSkillItemValue, selectSkillItem, selectAllSkills, selectSkillTotal, createSkillItem, selectMaxSkill, selectSkillItemValue } from './SkillsSlice';
+import { changeSkillItemValue, selectAllSkillKeys, selectSkillTotal, createSkillItem, selectMaxSkill, selectSkillItemValue, changeSkillItemBool, removeSkillItem } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
 import CheckBox from '@react-native-community/checkbox';
-import { createSelector } from 'reselect';
 
 export function SkillsTable ({}){
 
   const dispatch = useDispatch()  
   
   const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
-  const itemSelector = itemName => useSelector(selectSkillItem(itemName))  
 
   const modifierSelector = useCallback(itemName => useSelector(selectStatsModifier(itemName)), [])
   const setter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e})))
-  const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue)))
-  const skillTotalSelector = itemName => useSelector(selectSkillTotal(itemName)) 
+  const remover =  useCallback( (itemName)=> (e)=>dispatch(removeSkillItem({itemName:itemName})))
+  const checkBoxSetter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemBool({itemName:itemName, valueName:valueName })))
+  const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue))) 
   
-  
-  const allSkills = useSelector(selectAllSkills, shallowEqual )
-  
+  const allSkillKeys = useSelector(selectAllSkillKeys, shallowEqual )
+  console.log('rerender')
   const SkillItem = ({name}) => {
 
     const selector = useCallback(itemValueSelector(name), [name])
     const setChanger = useCallback(setter(name), [name])
-    
-    const skillTotal = createSelector([selectSkillTotal(name), selectStatsModifier(selector('ability'))], (a,b)=> a+b)
+    const setCheckBoxChanger = useCallback(checkBoxSetter(name), [name])
     
     return(
       <View style={styles.skillItem}>
         <View style={{flex:0.5}}>
           <CheckBox
               value={selector('requiredTraining')}
-              onValueChange={setChanger('requiredTraining')}         
+              onValueChange={setCheckBoxChanger('requiredTraining')}
               disabled={true}   
             />
         </View>
         <View style={{flex:0.5}}>
           <CheckBox
               value={selector('isClassSkill')}
-              onValueChange={setChanger('isClassSkill')}         
+              onValueChange={setCheckBoxChanger('isClassSkill')}         
               disabled={false}   
             />
         </View>
@@ -54,7 +51,7 @@ export function SkillsTable ({}){
           <Text style={{textAlign:'center',}}>{selector('ability')}</Text>
         </View>
         <View style={{flex:1}}>
-          <Cell content={useSelector(skillTotal) }/>
+          <Cell content={useSelector(selectSkillTotal(name)) }/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
           <Text>=</Text>
@@ -68,7 +65,9 @@ export function SkillsTable ({}){
           <Text>+</Text>
           <UnderlinedTextInput id={'miscMod'} selector={selector} setChanger={setChanger}/>
         </View>
-        
+        <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>          
+          <Button title={'rm'} color={'#222'} onPress={remover(name)}/>
+        </View>
       </View>
     )
   }
@@ -159,7 +158,7 @@ export function SkillsTable ({}){
     <View style={styles.skillsTable}>
       <SkillsHeader />
       {
-        allSkills.map((item, id) => (
+        allSkillKeys.map((item, id) => (
           <SkillItem key={id} name={item} />
         ))
       }

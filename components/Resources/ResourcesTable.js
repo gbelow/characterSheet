@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch } from './ResourcesSlice';
+import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal } from './ResourcesSlice';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 
 export const ResourcesTable = () => {
@@ -11,6 +11,7 @@ export const ResourcesTable = () => {
   const setter = (itemName)=> (e)=>dispatch(changeResourceItem({itemName:itemName, value:e}))
   const itemSelector = itemName => useSelector(selectResourceItem(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
+
   
   const MiscContainer = () => {
     return(
@@ -63,7 +64,7 @@ export const ResourcesTable = () => {
     return(
       <View style={{flexDirection:'row', height:'25%', width:'99%', borderWidth:1, alignItems:'center'}}>
         <DoubleCell content={'GRAPPLE'} legend={'MODIFIER'} />
-        <CellWithLegend legend={'TOTAL'} content={0}/>
+        <CellWithLegend legend={'TOTAL'} content={useSelector(selectGrappleTotal)}/>
         <Text>=</Text>
         <CellWithLegend legend={'base atk'} content={itemSelector('BASE_ATTACK_BONUS')}/>
         <Text>+</Text>

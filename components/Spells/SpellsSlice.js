@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import {  selectStatsModifier } from '../Stats/StatsSlice';
+import {  calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 import { createSelector } from 'reselect';
 
@@ -45,7 +45,7 @@ const spellAttribute = {Cleric:'WIS', Wizard:'INT', Bard:'CHA', Sorcerer:'CHA', 
 export const selectSpellSave = state => {
   const attr = spellAttribute[state.description.CLASS]
   const stat = state.stats[attr]
-  const mod = (stat.buffs - stat.debuffs + stat.score -10)/2
+  const mod = calculateStatModifier(stat)
   return 10+parseInt(mod)
 }
 
@@ -61,8 +61,8 @@ export const selectBonusSpells = state => state.description.CLASS == 'Cleric' ? 
 export const selectSpellSaveDC = level => state => {
   const attr = spellAttribute[state.description.CLASS]
   const stat = state.stats[attr]
-  const mod = (stat.buffs - stat.debuffs + stat.score -10)/2
-  return parseInt(mod)+parseInt(level)
+  const mod = calculateStatModifier(stat)
+  return 10+parseInt(mod)+parseInt(level)
 }
 
 export const selectSpellSummaryLevelItem = (level, item) => state => state.spells.SUMMARY[level][item]

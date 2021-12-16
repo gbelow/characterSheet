@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { selectStatsModifier } from '../Stats/StatsSlice';
-import { useSelector } from 'react-redux';
+import { calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
@@ -19,24 +18,36 @@ export const slice = createSlice({
       const {itemName, valueName, value} = action.payload
       state[itemName][valueName] = parseInt(value) ? parseInt(value) : 0 ;
     },    
+    changeSkillItemBool: (state, action) => {
+      const {itemName, valueName} = action.payload
+      state[itemName][valueName] = !state[itemName][valueName];
+    },    
     createSkillItem: (state, action) => {
       state[action.payload.itemName] = {...action.payload.value, ranks:0, miscMod:0}
-    },    
+    },   
+    removeSkillItem: (state, action) => {
+      const newObj = {}
+      Object.keys(state).forEach((el) => {
+        el != action.payload.itemName ? newObj[el] = state[el] : null
+      })      
+      return newObj      
+    } 
   },
 });
 
-export const { changeSkillItemValue, createSkillItem, loadSkills } = slice.actions;
+export const { changeSkillItemValue, createSkillItem, loadSkills, changeSkillItemBool, removeSkillItem } = slice.actions;
 
 export const selectSkillItem = (itemName) => state => state.skills[itemName];
 export const selectSkillItemValue = (itemName, itemValue) => state=> state.skills[itemName][itemValue]
-export const selectAllSkills = state => Object.keys(state.skills);
+export const selectAllSkillKeys = state => Object.keys(state.skills);
 
 
 export const selectSkillTotal = skillName => state => {
+  const stat = state.stats[state.skills[skillName].ability]
   return(
     state.skills[skillName].ranks +  
     state.skills[skillName].miscMod + 
-    // useSelector(selectStatsModifier(state.skills[skillName].ability)) 
+    calculateStatModifier(stat) 
     - (state.skills[skillName].armorPen ? ( state.gear.ARMOR.CHECK_PENALTY + state.gear.SHIELD.CHECK_PENALTY) : 0)
   )
 }

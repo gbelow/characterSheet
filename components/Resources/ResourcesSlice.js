@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import { selectStatsModifier } from '../Stats/StatsSlice';
+import { calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
 
 export const slice = createSlice({
@@ -45,5 +45,7 @@ export const selectTouch = state => {
   const dexMod = useSelector(selectStatsModifier('DEX'))
   return 10+(state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX  ) + state.resources.ARMOR_MISC_MOD
 }
+
+export const selectGrappleTotal = state => calculateStatModifier(state.stats.STR) + state.resources.BASE_ATTACK_BONUS + state.resources.GRAPPLE_MISC_MOD
 
 export default slice.reducer;

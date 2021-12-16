@@ -1,0 +1,15 @@
+fix grapple - done
+standardize calculators eg. modifier calculators
+fix weapon gear calculations
+add size modifier
+add pagination
+add tooltips
+fix checkbox to turn off -- done
+add remove button to skills -- done
+add export button
+resize spells
+add/remove default character
+
+maybes - add tests
+- typescript
+-make it so it is possible to select rule set1

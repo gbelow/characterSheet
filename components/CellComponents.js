@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { makeComponentWithSelector } from './ReduxHOC';
 
 export const Cell = ({content}) => {
   return(
@@ -18,10 +19,7 @@ export const DoubleCell = ({content='', legend=''}) => {
   )
 }
 
-export const CellInput = ({id, selector, setChanger}) => {
-  
-  const content = selector(id)
-  const setContent = setChanger(id)
+const CellInputRaw = ({content, setContent}) => {
   return(
     <View style={styles.statsCell}>
       <TextInput style={styles.cellText} onChangeText={setContent} keyboardType={'numeric'} value={''+content}/>
@@ -29,15 +27,19 @@ export const CellInput = ({id, selector, setChanger}) => {
   )
 }
 
-export const CellInputWithLegend = ({legend, id='', selector, setChanger}) => {
+export const CellInput = makeComponentWithSelector(CellInputRaw)
 
+const CellInputWithLegendRaw = ({legend, content, setContent}) => {
   return(
     <View style={{flex:1, flexDirection:'column'}}>
       <Text style={styles.smallLegend}>{legend}</Text>
-      <CellInput id={id} selector={selector} setChanger={setChanger}/>
+      <CellInputRaw content={content} setContent={setContent}/>
     </View>
   )
 }
+export const CellInputWithLegend = makeComponentWithSelector(CellInputWithLegendRaw)
+
+
 export const CellWithLegend = ({legend, content}) => {
   return(
     <View style={{flex:1, flexDirection:'column'}}>

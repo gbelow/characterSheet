@@ -19,7 +19,7 @@ export function SpellsView({}){
   const spellItemSelector = itemName => useSelector(selectSpellItem(itemName))
   const spellLevelItemSelector = useCallback((itemName) => id => useSelector(selectSpellLevelItem(itemName, id)),[])
 
-  console.log('myspells')
+  
   const LevelList = ({level}) => {
     const spellIDs = levelSelector(level)
     const changer = setChanger(level)
