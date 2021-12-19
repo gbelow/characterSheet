@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal } from './ResourcesSlice';
+import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal, selectMaxDexMod } from './ResourcesSlice';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 
 export const ResourcesTable = () => {
@@ -103,7 +103,7 @@ export const ResourcesTable = () => {
             <Text>+</Text>
             <CellWithLegend legend={'shield bonus'} content={useSelector(selectShieldBonus)}/>
             <Text>+</Text>
-            <CellWithLegend legend={'dex mod'} content={modifierSelector('DEX')} />
+            <CellWithLegend legend={'dex mod'} content={useSelector(selectMaxDexMod)} />
             <Text>+</Text>
           </View>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>

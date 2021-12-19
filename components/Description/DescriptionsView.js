@@ -35,7 +35,7 @@ const DescriptionView = ({}) => {
       <View style={styles.headingsLine}>
         <SelectDropdown 
           buttonStyle={{width:'15%', borderWidth:1, height:'100%', marginHorizontal:5, marginVertical:8}} 
-          buttonTextStyle={{fontSize:10}} data={['Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Colossal']} 
+          buttonTextStyle={{fontSize:10}} data={['Fine', 'Diminutive', 'Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan', 'Colossal']} 
           defaultButtonText='SIZE' 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('SIZE')}

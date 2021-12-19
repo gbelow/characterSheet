@@ -10,7 +10,7 @@ export const SavesTable = () => {
 
   const dispatch = useDispatch()  
   const setter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:e}))
-  const numberSetter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:e.replace(/[^0-9]/g, '')}))
+  const numberSetter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:parseInt(e.replace(/[^0-9]/g, ''))}))
   const itemSelector = itemName=> itemValue => useSelector(selectSaveItemValue(itemName, itemValue))
   const totalSelector = itemName => useSelector(selectSaveTotal(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))

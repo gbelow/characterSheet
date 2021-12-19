@@ -46,6 +46,11 @@ export const selectTouch = state => {
   return 10+(state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX  ) + state.resources.ARMOR_MISC_MOD
 }
 
+export const selectMaxDexMod = state => {
+  const mod = parseInt(calculateStatModifier(state.stats.DEX))
+  return parseInt(state.gear.ARMOR.MAX_DEX) < mod ? parseInt(state.gear.ARMOR.MAX_DEX) : mod
+}
+
 export const selectGrappleTotal = state => calculateStatModifier(state.stats.STR) + state.resources.BASE_ATTACK_BONUS + state.resources.GRAPPLE_MISC_MOD
 
 export default slice.reducer;

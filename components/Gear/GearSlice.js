@@ -16,7 +16,7 @@ export const slice = createSlice({
     },
     changeGearItem: (state, action) => {
       const {itemName, valueName, value} = action.payload
-      state[itemName][valueName] =  parseInt(value) ? parseInt(value) : value;
+      state[itemName][valueName] = value;
     },
   },
 });

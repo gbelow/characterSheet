@@ -115,14 +115,15 @@ export function GearView(){
       />
     )
   }
-  const TextInputBoxWithTitle = (props, {isNumber=false}) => {
+  const TextInputBoxWithTitle = (props) => {
+    
     return(
       <BoxWithTitle {...props} 
         Factory={({content:content, setContent:setContent}) => 
           <TextInput style={{textAlign:'center' }}             
-            onChangeText={(e)=>setContent(
-              isNumber ? e.replace(/[^0-9]/g, '') : e
-              )}  value={''+content}/>
+            onChangeText={(e)=>setContent(props.isNumber ? (parseInt(e.replace(/[^0-9]/g), '') ? parseInt(e.replace(/[^0-9]/g), '') : 0) : e)}  
+            value={''+content}
+            />
         } 
       />
     )

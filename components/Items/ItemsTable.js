@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { Cell } from '../CellComponents';
+import { Cell, CellWithLegend } from '../CellComponents';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeItemValue, selectItem, selectWeightSum, selectCoins, changeCoin } from './ItemsSlice';
+import { changeItemValue, selectItem, selectWeightSum, selectCoins, changeCoin, selectWeightLimits } from './ItemsSlice';
 
 export function ItemsTable() {
   const dispatch = useDispatch()  
@@ -68,6 +68,25 @@ export function ItemsTable() {
     )
   }
 
+  const WeightLimits = ({}) => {
+
+    const caps = useSelector(selectWeightLimits)
+
+    return(
+      <View>
+        <SectionTitle title={'WEIGHT LIMITS'} />
+        <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>          
+          <CellWithLegend legend={'LIGHT'} content={caps.light}/>          
+          <CellWithLegend legend={'MEDIUM'} content={caps.medium}/>          
+          <CellWithLegend legend={'HEAVY'} content={caps.heavy}/>          
+          <CellWithLegend legend={'OVERHEAD'} content={caps.over}/>
+          <CellWithLegend legend={'OFF GROUND'} content={caps.off}/>
+          <CellWithLegend legend={'PUSH OR DRAG'} content={caps.drag}/>
+        </View>
+      </View>
+    )
+  }
+
   return(
     <View style={{width:'100%', borderWidth:1}}>
       <SectionTitle title={'OTHER POSSESIONS'} /> 
@@ -86,6 +105,7 @@ export function ItemsTable() {
         <Money text={'GP'} id={'GP'}/>
         <Money text={'PP'} id={'PP'}/>
       </View>
+      <WeightLimits />
     </View>
   )
 }

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
+import { WeightTable } from './WeightTable';
 
 export const slice = createSlice({
   name: 'items',
@@ -30,9 +31,17 @@ export const { changeItemValue, changeCoin, loadItems } = slice.actions;
 export const selectItem = (itemNumber) => state => state.items[itemNumber];
 export const selectCoins = (coin) => state => state.items[coin];
 export const selectWeightSum = state => {
-  const itemsSum = Object.values(state.items).reduce((acc,el) => acc + el.weight, 0).toFixed(2)
-  const gearSum = Object.values(state.gear).reduce((acc, el) => acc + el.weight, 0).toFixed(2)
-  return gearSum + itemsSum
+  const itemsSum = Object.values(state.items).reduce((acc,el) => acc + parseInt(el.weight), 0)
+  const gearSum = Object.values(state.gear).reduce((acc, el) => acc + parseInt(el.WEIGHT), 0)
+  return (gearSum + itemsSum).toFixed(2)
+}
+
+export const selectWeightLimits = state => {
+  const str = state.stats.STR
+  const totStr = parseInt(str.score) + parseInt(str.buffs) - parseInt(str.debuffs)
+  const cap = WeightTable[totStr] ? WeightTable[totStr] : WeightTable[Object.keys(WeightTable).length]  
+  return {light:cap[0], medium:cap[1], heavy: cap[2], over: cap[2], off: cap[2]*2, drag:cap[2]*5}
+
 }
 
 
