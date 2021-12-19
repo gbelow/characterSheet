@@ -1,7 +1,8 @@
 fix grapple - done
 standardize calculators eg. modifier calculators
-fix weapon gear calculations -- halfway
-add size modifier -- 
+fix weapon gear calculations -- done
+add size modifier -- doing -- 
+add weight modifiers to check penalties
 add pagination
 add tooltips
 fix checkbox to turn off -- done
@@ -10,6 +11,7 @@ add export button
 resize spells
 add/remove default character
 make info page - like the skill synergies and weight levels
+spells per day
 
 maybes - add tests
 - typescript

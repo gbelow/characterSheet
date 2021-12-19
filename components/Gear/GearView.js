@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {changeGearItem, selectGearItem, selectGearItemValue, selectWeaponStatModifier} from './GearSlice'
 import { selectStatsModifier } from '../Stats/StatsSlice';
 import SelectDropdown from 'react-native-select-dropdown';
-import { selectResourceItem } from '../Resources/ResourcesSlice';
+import { selectNormalSizeMod, selectResourceItem } from '../Resources/ResourcesSlice';
 
 export function GearView(){
 
@@ -97,7 +97,7 @@ export function GearView(){
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextBoxWithTitle 
         title={'CHAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} 
-        selector={() => useSelector(selectWeaponStatModifier(weap)) + useSelector(selectResourceItem('BASE_ATTACK_BONUS'))}/>
+        selector={() => useSelector(selectWeaponStatModifier(weap)) + useSelector(selectResourceItem('BASE_ATTACK_BONUS')) + useSelector(selectNormalSizeMod)}/>
       <TextInputBoxWithTitle title={'GEAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
       <DropdownBoxWithTitle title={'BONUS ATTRIBUTE'} size={1} id={'BONUS_ATTR'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} />      
       <TextInputBoxWithTitle title={'NOTES'} size={3} id={'NOTES'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>

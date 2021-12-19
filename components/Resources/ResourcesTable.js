@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal, selectMaxDexMod } from './ResourcesSlice';
+import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal, selectMaxDexMod, selectGrappleSizeMod, selectNormalSizeMod } from './ResourcesSlice';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 
 export const ResourcesTable = () => {
@@ -71,7 +71,7 @@ export const ResourcesTable = () => {
         <Text>+</Text>
         <CellWithLegend legend={'strength mod'} content={modifierSelector('STR')}/>
         <Text>+</Text>
-        <CellWithLegend legend={'size mod'} content={0} />
+        <CellWithLegend legend={'size mod'} content={useSelector(selectGrappleSizeMod)} />
         <Text>+</Text>
         <CellInputWithLegend legend={'misc mod'} id={'GRAPPLE_MISC_MOD'} selector={itemSelector} setChanger={setter}/>
       </View>
@@ -107,7 +107,7 @@ export const ResourcesTable = () => {
             <Text>+</Text>
           </View>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
-            <CellInputWithLegend legend={'size mod'} id={'NATURAL_ARMOR'} selector={itemSelector} setChanger={setter}/>
+            <CellWithLegend legend={'size mod'} content={useSelector(selectNormalSizeMod)}/>
             <Text>+</Text>
             <CellInputWithLegend legend={'natural armor'} id={'NATURAL_ARMOR'} selector={itemSelector} setChanger={setter}/>
             <Text>+</Text>

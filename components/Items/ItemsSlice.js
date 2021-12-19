@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
-import { WeightTable } from './WeightTable';
+import { WeightTable } from '../Tables/WeightTable';
 
 export const slice = createSlice({
   name: 'items',

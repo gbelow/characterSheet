@@ -44,15 +44,21 @@ const spellAttribute = {Cleric:'WIS', Wizard:'INT', Bard:'CHA', Sorcerer:'CHA', 
 
 export const selectSpellSave = state => {
   const attr = spellAttribute[state.description.CLASS]
-  const stat = state.stats[attr]
-  const mod = calculateStatModifier(stat)
-  return 10+parseInt(mod)
+  if(attr){
+    const stat = state.stats[attr]
+    const mod = calculateStatModifier(stat)
+    return 10+parseInt(mod)
+  }
+  return 10
 }
 
 
 
 export const selectArcaneFailure = state => {
-  return parseInt(state.gear.ARMOR.SPELL_FAILURE) ? parseInt(state.gear.ARMOR.SPELL_FAILURE) : 0
+  return (
+    (parseInt(state.gear.ARMOR.SPELL_FAILURE) ? parseInt(state.gear.ARMOR.SPELL_FAILURE) : 0) +
+    (parseInt(state.gear.SHIELD.SPELL_FAILURE) ? parseInt(state.gear.SHIELD.SPELL_FAILURE) : 0 )
+  )
 }
 
 export const selectSpellSummaryKeys = state => Object.keys(state.spells.SUMMARY)
@@ -60,9 +66,12 @@ export const selectBonusSpells = state => state.description.CLASS == 'Cleric' ? 
 
 export const selectSpellSaveDC = level => state => {
   const attr = spellAttribute[state.description.CLASS]
-  const stat = state.stats[attr]
-  const mod = calculateStatModifier(stat)
-  return 10+parseInt(mod)+parseInt(level)
+  if(attr){
+    const stat = state.stats[attr]
+    const mod = calculateStatModifier(stat)
+    return 10+parseInt(mod)+parseInt(level)
+  }
+  return 10
 }
 
 export const selectSpellSummaryLevelItem = (level, item) => state => state.spells.SUMMARY[level][item]

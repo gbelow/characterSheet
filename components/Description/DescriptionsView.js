@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { UnderlinedTextInput } from '../TextComponents';
-import { selectDescriptionItem, changeDescriptionItem } from './DescriptionSlice';
+import { selectDescriptionItem, changeDescriptionItem, SizeKeys } from './DescriptionSlice';
 import SelectDropdown from 'react-native-select-dropdown';
 import { createSelector } from 'reselect';
 
@@ -35,7 +35,7 @@ const DescriptionView = ({}) => {
       <View style={styles.headingsLine}>
         <SelectDropdown 
           buttonStyle={{width:'15%', borderWidth:1, height:'100%', marginHorizontal:5, marginVertical:8}} 
-          buttonTextStyle={{fontSize:10}} data={['Fine', 'Diminutive', 'Tiny', 'Small', 'Medium', 'Large', 'Huge', 'Gargantuan', 'Colossal']} 
+          buttonTextStyle={{fontSize:10}} data={SizeKeys} 
           defaultButtonText='SIZE' 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('SIZE')}

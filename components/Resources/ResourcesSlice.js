@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import { calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
+import SizeTable from '../Tables/SizeTable';
 
 export const slice = createSlice({
   name: 'resources',
@@ -32,13 +33,16 @@ export const selectInitiative = state => {
   return state.resources.INI_MISC_MOD + parseInt(dexMod)
 }
 
+export const getSizeMod = (size, mod) => parseInt(SizeTable[size][mod]) ? parseInt(SizeTable[size][mod]) : 0
+
 export const selectTotalArmor = state => {
   const dexMod = useSelector(selectStatsModifier('DEX'))
   return 10 + state.gear.ARMOR.AC_BONUS + 
     state.gear.SHIELD.AC_BONUS + 
     (state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX ) +
     state.resources.ARMOR_MISC_MOD +
-    state.resources.NATURAL_ARMOR
+    state.resources.NATURAL_ARMOR +
+    getSizeMod(state.description.SIZE, 'normal')
 }
 export const selectFlat = state => 10+ state.gear.ARMOR.AC_BONUS + state.gear.SHIELD.AC_BONUS + state.resources.ARMOR_MISC_MOD +state.resources.NATURAL_ARMOR
 export const selectTouch = state => {
@@ -51,6 +55,22 @@ export const selectMaxDexMod = state => {
   return parseInt(state.gear.ARMOR.MAX_DEX) < mod ? parseInt(state.gear.ARMOR.MAX_DEX) : mod
 }
 
-export const selectGrappleTotal = state => calculateStatModifier(state.stats.STR) + state.resources.BASE_ATTACK_BONUS + state.resources.GRAPPLE_MISC_MOD
+
+export const selectGrappleTotal = state => {
+  return(
+    calculateStatModifier(state.stats.STR) + 
+    state.resources.BASE_ATTACK_BONUS + 
+    state.resources.GRAPPLE_MISC_MOD + 
+    getSizeMod(state.description.SIZE, 'special')
+  )
+}
+
+export const selectGrappleSizeMod = state => {
+  return getSizeMod(state.description.SIZE, 'special')
+}
+
+export const selectNormalSizeMod = state => {
+  return getSizeMod(state.description.SIZE, 'normal')
+}
 
 export default slice.reducer;

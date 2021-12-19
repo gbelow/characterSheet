@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
+import { getSizeMod } from '../Resources/ResourcesSlice';
 
 export const slice = createSlice({
   name: 'skills',
@@ -41,14 +42,19 @@ export const selectSkillItem = (itemName) => state => state.skills[itemName];
 export const selectSkillItemValue = (itemName, itemValue) => state=> state.skills[itemName][itemValue]
 export const selectAllSkillKeys = state => Object.keys(state.skills);
 
-
 export const selectSkillTotal = skillName => state => {
   const stat = state.stats[state.skills[skillName].ability]
+  const additionals = {
+    'swim': skillName == 'SWIM' ?  -parseInt(state.gear.ARMOR.CHECK_PENALTY) - parseInt(state.gear.SHIELD.CHECK_PENALTY) : 0,
+    'hide': skillName == 'HIDE' ?  getSizeMod( state.description.SIZE ,'hide') : 0
+  }
+
   return(
     state.skills[skillName].ranks +  
     state.skills[skillName].miscMod + 
     calculateStatModifier(stat) 
-    - (state.skills[skillName].armorPen ? ( state.gear.ARMOR.CHECK_PENALTY + state.gear.SHIELD.CHECK_PENALTY) : 0)
+    - (state.skills[skillName].armorPen ? ( state.gear.ARMOR.CHECK_PENALTY + state.gear.SHIELD.CHECK_PENALTY) : 0) + 
+    Object.values(additionals).reduce((acc,el) => el+acc, 0)
   )
 }
 
