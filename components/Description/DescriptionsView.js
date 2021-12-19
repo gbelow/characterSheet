@@ -11,6 +11,7 @@ const DescriptionView = ({}) => {
   const dispatch = useDispatch()
   const selector = useCallback(itemName => useSelector(selectDescriptionItem(itemName)), [useSelector, selectDescriptionItem])
   const setter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e})), [dispatch, changeDescriptionItem])
+  const numberSetter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e.replace(/[^0-9]/g, '')})), [dispatch, changeDescriptionItem])
 
   return(
     <View style={styles.headingsContainer}>
@@ -26,7 +27,7 @@ const DescriptionView = ({}) => {
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('CLASS')}
         />
-        <UnderlinedTextInput id='LEVEL' selector={selector} setChanger={setter}  legend={'Level'} size={0.5}/>
+        <UnderlinedTextInput id='LEVEL' selector={selector} setChanger={numberSetter}  legend={'Level'} size={0.5}/>
         <UnderlinedTextInput id='RACE' selector={selector} setChanger={setter}  legend={'Race'} size={1}/>
         <UnderlinedTextInput id='ALIGNMENT' selector={selector} setChanger={setter}  legend={'Alignment'} size={0.7}/>
         <UnderlinedTextInput id='DEITY' selector={selector} setChanger={setter}  legend={'Deity'} size={1}/>
@@ -39,10 +40,10 @@ const DescriptionView = ({}) => {
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('SIZE')}
         />
-        <UnderlinedTextInput id='AGE' selector={selector} setChanger={setter}  legend={'Age'} size={0.7}/>
+        <UnderlinedTextInput id='AGE' selector={selector} setChanger={numberSetter}  legend={'Age'} size={0.7}/>
         <UnderlinedTextInput id='GENDER' selector={selector} setChanger={setter}  legend={'Gender'} size={0.7}/>
-        <UnderlinedTextInput id='HEIGHT' selector={selector} setChanger={setter}  legend={'Height'} size={0.7}/>
-        <UnderlinedTextInput id='WEIGHT' selector={selector} setChanger={setter}  legend={'Weight'} size={0.7}/>
+        <UnderlinedTextInput id='HEIGHT' selector={selector} setChanger={numberSetter}  legend={'Height'} size={0.7}/>
+        <UnderlinedTextInput id='WEIGHT' selector={selector} setChanger={numberSetter}  legend={'Weight'} size={0.7}/>
         <UnderlinedTextInput id='EYES' selector={selector} setChanger={setter}  legend={'Eyes'} size={0.7}/>
         <UnderlinedTextInput id='HAIR' selector={selector} setChanger={setter}  legend={'Hair'} size={0.7}/>
         <UnderlinedTextInput id='SKIN' selector={selector} setChanger={setter}  legend={'Skin'} size={0.7}/>

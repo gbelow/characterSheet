@@ -31,7 +31,7 @@ export function SpellsView({}){
         <TitleText fontSize={16}>{level + ' level spells:'}</TitleText>
         <View style={{flexWrap:"wrap", height:100}}>
           {Object.values(spellIDs).map((el)=>{
-            return <UnderlinedTextInput key={level+'_'+el} id={el} selector={selector} setChanger={changer} size={2.5}/>
+            return <UnderlinedTextInput key={level+'_'+el} id={el} selector={selector} setChanger={changer} size={2}/>
           })}
         </View>
       </View>

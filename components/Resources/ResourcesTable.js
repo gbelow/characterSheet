@@ -9,6 +9,7 @@ export const ResourcesTable = () => {
 
   const dispatch = useDispatch()  
   const setter = (itemName)=> (e)=>dispatch(changeResourceItem({itemName:itemName, value:e}))
+  const numberSetter = (itemName)=> (e)=>dispatch(changeResourceItem({itemName:itemName, value:e.replace(/[^0-9]/g, '')}))
   const itemSelector = itemName => useSelector(selectResourceItem(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
 
@@ -43,7 +44,7 @@ export const ResourcesTable = () => {
     return(
       <View style={{flexDirection:'row', height:'25%', width:'33%', borderWidth:1}}>
         <DoubleCell content={content} legend={legend}/>
-        <CellInput id={name} selector={itemSelector} setChanger={setter}/>
+        <CellInput id={name} selector={itemSelector} setChanger={numberSetter}/>
       </View>
     )
   }

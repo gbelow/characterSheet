@@ -16,7 +16,7 @@ export const slice = createSlice({
     changeItemValue: (state, action) => {
       const {itemNumber, item} = action.payload
       const [name, value] = Object.entries(item)[0]
-      state[itemNumber][name] = name == 'name' ? value : parseInt(value) ;
+      state[itemNumber][name] = name == 'name' ? value : (parseInt(value) ? parseInt(value) : 0) ;
     },
     changeCoin:(state, action) => {
       const {id, value} = action.payload
@@ -29,6 +29,11 @@ export const { changeItemValue, changeCoin, loadItems } = slice.actions;
 
 export const selectItem = (itemNumber) => state => state.items[itemNumber];
 export const selectCoins = (coin) => state => state.items[coin];
-export const selectWeightSum = state => Object.values(state.items).reduce((acc,el) => acc + el.weight, 0).toFixed(2)
+export const selectWeightSum = state => {
+  const itemsSum = Object.values(state.items).reduce((acc,el) => acc + el.weight, 0).toFixed(2)
+  const gearSum = Object.values(state.gear).reduce((acc, el) => acc + el.weight, 0).toFixed(2)
+  return gearSum + itemsSum
+}
+
 
 export default slice.reducer;

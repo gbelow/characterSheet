@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
+import { calculateStatModifier } from '../Stats/StatsSlice';
 
 export const slice = createSlice({
   name: 'gear',
@@ -14,7 +15,8 @@ export const slice = createSlice({
       });
     },
     changeGearItem: (state, action) => {
-      state[action.payload.itemName][action.payload.valueName] = action.payload.value;
+      const {itemName, valueName, value} = action.payload
+      state[itemName][valueName] =  parseInt(value) ? parseInt(value) : value;
     },
   },
 });
@@ -23,5 +25,9 @@ export const { changeGearItem, loadGear } = slice.actions;
 
 export const selectGearItem = (itemName) => state => state.gear[itemName];
 export const selectGearItemValue = (itemName, itemValue) => state => state.gear[itemName][itemValue]
+export const selectWeaponStatModifier = (itemName) => state => {
+  const statName = state.gear[itemName].BONUS_ATTR
+  return statName ? calculateStatModifier(state.stats[statName]) : calculateStatModifier(state.stats['STR'])
+}
 
 export default slice.reducer;

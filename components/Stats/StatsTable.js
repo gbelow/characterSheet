@@ -8,6 +8,7 @@ const StatsTable = () => {
 
   const dispatch = useDispatch()  
   const setter = (itemName)=> valueName => (e)=>dispatch(changeStatsItemValue({itemName:itemName, valueName:valueName ,value:e}))
+  const numberSetter = (itemName)=> valueName => (e)=>dispatch(changeStatsItemValue({itemName:itemName, valueName:valueName ,value:e.replace(/[^0-9]/g, '')}))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
   const statItemValueSelector = itemName => valueName => useSelector(selectStatsItemValue(itemName, valueName))
 
@@ -18,9 +19,9 @@ const StatsTable = () => {
     return(
       <View style={styles.statsTableRow}>
         <View style={styles.statsTableCol}><DoubleCell content={stat}  legend={legend} /></View>
-        <View style={styles.statsTableCol}><CellInput id={'score'}  selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
-        <View style={styles.statsTableCol}><CellInput id={'buffs'}  selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
-        <View style={styles.statsTableCol}><CellInput id={'debuffs'} selector={statItemValueSelector(stat)} setChanger={setter(stat)} /></View>
+        <View style={styles.statsTableCol}><CellInput id={'score'}  selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
+        <View style={styles.statsTableCol}><CellInput id={'buffs'}  selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
+        <View style={styles.statsTableCol}><CellInput id={'debuffs'} selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <View style={styles.statsTableCol}><Cell content={'+'+modifier} /></View>
       </View>
     )

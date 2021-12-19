@@ -10,6 +10,7 @@ export const SavesTable = () => {
 
   const dispatch = useDispatch()  
   const setter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:e}))
+  const numberSetter = (itemName)=> valueName=> (e)=>dispatch(changeSaveItem({itemName:itemName, valueName:valueName, value:e.replace(/[^0-9]/g, '')}))
   const itemSelector = itemName=> itemValue => useSelector(selectSaveItemValue(itemName, itemValue))
   const totalSelector = itemName => useSelector(selectSaveTotal(itemName))
   const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
@@ -19,15 +20,15 @@ export const SavesTable = () => {
     return(
       <View style={styles.savesTableRow}>
         <View style={{flex:3}}><DoubleCell content={stat}  legend={legend} /></View>
-        <View style={styles.savesTableCol}><CellInput id={'base'} selector={itemSelector(stat)} setChanger={setter(stat)}/></View>
+        <View style={styles.savesTableCol}><CellInput id={'base'} selector={itemSelector(stat)} setChanger={numberSetter(stat)}/></View>
         <Text style={styles.savesTableSign}>+</Text>
         <View style={styles.savesTableCol}><Cell content={modifierSelector(convert(stat))}/></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput id={'magic'} selector={itemSelector(stat)} setChanger={setter(stat)} /></View>
+        <View style={styles.savesTableCol}><CellInput id={'magic'} selector={itemSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput id={'misc'} selector={itemSelector(stat)} setChanger={setter(stat)} /></View>
+        <View style={styles.savesTableCol}><CellInput id={'misc'} selector={itemSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <Text style={styles.savesTableSign}>+</Text>
-        <View style={styles.savesTableCol}><CellInput id={'temp'} selector={itemSelector(stat)} setChanger={setter(stat)}/></View>
+        <View style={styles.savesTableCol}><CellInput id={'temp'} selector={itemSelector(stat)} setChanger={numberSetter(stat)}/></View>
         <Text style={styles.savesTableSign}>=</Text>
         <View style={styles.savesTableCol}><Cell content={totalSelector(stat)} /></View>
       </View>

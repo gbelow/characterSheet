@@ -15,13 +15,12 @@ export function SkillsTable ({}){
   const createItem = (name, skill)=>(e)=>dispatch(createSkillItem({itemName:name, value:skill}))
 
   const modifierSelector = useCallback(itemName => useSelector(selectStatsModifier(itemName)), [])
-  const setter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e})))
+  const setter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemValue({itemName:itemName, valueName:valueName ,value:e.replace(/[^0-9]/g, '')})))
   const remover =  useCallback( (itemName)=> (e)=>dispatch(removeSkillItem({itemName:itemName})))
   const checkBoxSetter =  useCallback( (itemName)=> valueName=> (e)=>dispatch(changeSkillItemBool({itemName:itemName, valueName:valueName })))
   const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue))) 
   
   const allSkillKeys = useSelector(selectAllSkillKeys, shallowEqual )
-  console.log('rerender')
   const SkillItem = ({name}) => {
 
     const selector = useCallback(itemValueSelector(name), [name])
