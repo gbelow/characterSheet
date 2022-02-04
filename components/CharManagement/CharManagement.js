@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Alert, Modal } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector } from 'react-redux';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
@@ -13,12 +13,66 @@ import { loadSpells } from '../Spells/SpellsSlice';
 import { loadStats } from '../Stats/StatsSlice';
 import { loadResources } from '../Resources/ResourcesSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { changeCurrentChar, selectCurrentChar } from './CharManagementSlice';
 
 
-export function CharManagement (){
+export const saveCharacter = async ({char, fileName}) => {
+  try {
+    const jsonValue = JSON.stringify(char) 
+    if(fileName != null){
+       await AsyncStorage.setItem(fileName , jsonValue)
+    }
+  } catch (e) {
+    console.log('error')
+  }
   
+  
+}
+
+const AlertWithPrompt = ({title, color='#111', onPress}) => {
+
   const dispatch = useDispatch()
+  const [modalVisible, setModalVisible] = useState(false);
+  const [tinput, setTinput] = useState({})
+
+  return(
+    <View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalView} >
+          <Text>Make new Character</Text>
+          <Text>All unsaved progress will be lost</Text>
+          <TextInput 
+            style={{...tinput, fontSize:16, borderBottomWidth:1, width:250 }} 
+            value={useSelector(selectCurrentChar)} onChangeText={(e) => dispatch(changeCurrentChar({value:e}))}
+            onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
+            onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
+          />
+
+          <View style={{flexDirection:'row' }}>
+            <Button color={color} onPress={() => setModalVisible(false)} title={'Cancel'}></Button>
+            <Button color={color} onPress={() => {onPress(); setModalVisible(false)} } title={'OK'}></Button>
+          </View>
+          
+        </View>
+      </Modal>
+      <Button title={title} color={color} onPress={() => setModalVisible(!modalVisible)}>New Character</Button>
+    </View>
+  )
+}
+
+export function CharManagement ({navigation}){
+  
+  
   const char = useSelector(selectChar)
+  const currentChar = useSelector(selectCurrentChar)
+  const dispatch=useDispatch()
 
   const getCharList = async () => {
     let keys = []
@@ -26,7 +80,7 @@ export function CharManagement (){
       keys = await AsyncStorage.getAllKeys()
       setData(keys)
     } catch(e) {
-      console.log('error2')
+      console.log(e)
     }
     return keys
   }
@@ -36,52 +90,58 @@ export function CharManagement (){
 
     useEffect(()=>{
       getCharList()
-    })
+    },[])
 
-  const loadCharacter = async (char) => {   
-    let character = {}
-    try {
-      character = JSON.parse(await AsyncStorage.getItem(char))      
-    } catch(e) {
-      console.log(e)
-      return 'err'
-    }    
-    dispatch(loadDescription(character.description))
-    dispatch(loadFeats(character.feats))
-    dispatch(loadGear(character.gear))
-    dispatch(loadItems(character.items))
-    dispatch(loadSaves(character.saves))
-    dispatch(loadSkills(character.skills))
-    dispatch(loadSpells(character.spells))
-    dispatch(loadStats(character.stats))
-    dispatch(loadResources(character.resources))
     
-  }
-  
-  
 
-  const removeValue = async (char) => {
-    try {
-      await AsyncStorage.removeItem(char)
-    } catch(e) {
-      // remove error
+    const loadCharacter = async ({char}) => {   
+      
+      let character = {}
+      try {
+        character = JSON.parse(await AsyncStorage.getItem(char))
+      } catch(e) {
+        console.log(e)
+        return 'err'
+      }    
+      dispatch(loadDescription(character.description))
+      dispatch(loadFeats(character.feats))
+      dispatch(loadGear(character.gear))
+      dispatch(loadItems(character.items))
+      dispatch(loadSaves(character.saves))
+      dispatch(loadSkills(character.skills))
+      dispatch(loadSpells(character.spells))
+      dispatch(loadStats(character.stats))
+      dispatch(loadResources(character.resources))
+      
     }
-    getCharList()
-    console.log('Done.')
-  }  
 
-  const saveCharacter = async () => {
+    const newCharacter = async (char) => {   
+
+      let character = {}    
+      character = newCharacterTemplate
     
-    try {
-      const jsonValue = JSON.stringify(char) 
-      if(char.description.CHAR_NAME != null){
-        await AsyncStorage.setItem(char.description.CHAR_NAME , jsonValue)
+      dispatch(loadDescription(character.description))
+      dispatch(loadFeats(character.feats))
+      dispatch(loadGear(character.gear))
+      dispatch(loadItems(character.items))
+      dispatch(loadSaves(character.saves))
+      dispatch(loadSkills(character.skills))
+      dispatch(loadSpells(character.spells))
+      dispatch(loadStats(character.stats))
+      dispatch(loadResources(character.resources))
+      
+    }
+
+    const removeValue = async (char) => {
+      try {
+        await AsyncStorage.removeItem(char)
+      } catch(e) {
+        // remove error
       }
-    } catch (e) {
-      console.log('error')
+      getCharList()
+      console.log('Done.')
     }
-    getCharList()
-  }
+
 
   const onRemoveCharacterClick = () => {
     Alert.alert(
@@ -108,7 +168,11 @@ export function CharManagement (){
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: ()=>loadCharacter(selectedChar) }
+        { text: "OK", onPress: ()=>{
+          console.log(selectedChar)
+          loadCharacter({char:selectedChar})
+          navigation.navigate('Sheet')
+        } }
       ]
     );
   }
@@ -123,12 +187,18 @@ export function CharManagement (){
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: saveCharacter}
+        { text: "OK", onPress: () => { 
+          saveCharacter({char:char, fileName:currentChar})       
+          getCharList()
+          
+        }}
       ]
     );
   }
 
   const onMakeNewCharacterClick = () => {
+    
+    
     Alert.alert(
       "New Character",
       "All unsaved progress will be lost",
@@ -138,11 +208,18 @@ export function CharManagement (){
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => loadCharacter(newCharacterTemplate)}
+        { text: "OK", onPress: async () => {
+          saveCharacter({char:newCharacterTemplate, fileName:currentChar})
+          newCharacter()
+          // console.log(s, 'saved')          
+          getCharList()
+          
+          navigation.navigate('Sheet')
+        }}
       ]
     );
   }
-
+  
   return(
     <View>
       <SelectDropdown 
@@ -151,10 +228,30 @@ export function CharManagement (){
           defaultButtonText={selectedChar}
           onSelect={(e)=>{setSelectedChar(e)}}
         />
-        <Button title={'new'} color={'#222'} onPress={onMakeNewCharacterClick}/>
-        <Button title={'save'} color={'#222'} onPress={onSaveCharacterClick}/>
-        <Button title={'load'} color={'#222'} onPress={onLoadCharacterClick}/>
-        <Button title={'remove'} color={'#222'} onPress={onRemoveCharacterClick}/>
+        <AlertWithPrompt title={'new'} color={'#111'} onPress={ onMakeNewCharacterClick}/>
+        <Button title={'save'} color={'#111'} onPress={onSaveCharacterClick}/>
+        <Button title={'load'} color={'#111'} onPress={onLoadCharacterClick}/>
+        <Button title={'remove'} color={'#111'} onPress={onRemoveCharacterClick}/>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  modalView: {
+    marginVertical: 20,
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+
+})
+

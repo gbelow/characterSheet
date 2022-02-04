@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView, Button } from 'react-native';
 import dndPic from './assets/dndPic.png'
 import DescriptionView from './components/Description/DescriptionsView';
 import StatsTable from './components/Stats/StatsTable'
@@ -12,33 +12,82 @@ import { ItemsTable } from './components/Items/ItemsTable';
 import { FeatsView } from './components/Feats/FeatsView';
 import { SpellsView } from './components/Spells/SpellsView';
 import {CharManagement} from './components/CharManagement/CharManagement';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import store from './app/store';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { selectCurrentChar } from './components/CharManagement/CharManagementSlice';
 
+const tabs = {description: DescriptionView, Combat: ResourcesTable, stats: StatsTable, 
+  saves: SavesTable, gear: GearView, skills: SkillsTable, items: ItemsTable, feats: FeatsView, spells: SpellsView}
 
+const Navigation = ({selectedTab, setSelected=()=>null}) => {
+  return(
+    <View style={{flexDirection:'row', flexWrap:'wrap', marginVertical:5, justifyContent:'space-evenly', borderWidth:1 }}>
+      {
+        Object.keys(tabs).map(el => (
+          <View key={el} style={{width:'20%', margin:5}}>
+            <Button color={selectedTab == el ? '#800' : '#111'} title={el} onPress={() => setSelected(el)} />
+          </View>
+          ))
+      }
+      
+    </View>
+  )
+} 
 
-export default function App() {
+const HomeScreen = ({navigation}) => {
+  return(
+    <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
+      <Image source={dndPic} style={styles.dndPic} />   
+      <CharManagement  navigation={navigation} />     
+      
+    </View>
+  )
+}
+
+const SheetScreen = ({navigation}) => {
+  const [selectedTab, setSelectedTab] = useState('description')
+  const SelectedTab = tabs[selectedTab]
+
+  return(
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
+        {/* <StatusBar style="auto" /> */}
+        <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
+          <Text>{useSelector(selectCurrentChar)}</Text>
+          <Navigation selectedTab={selectedTab} setSelected={setSelectedTab} />    
+        </View>
+        <SelectedTab />
+      </ScrollView> 
+    </SafeAreaView>
+  )
   
+}
+
+export default function App() { 
+  
+  const Stack = createNativeStackNavigator()
+
   return (
     <Provider store={store}>      
-      <SafeAreaView>
-        <ScrollView contentContainerStyle={styles.container}>
-          <StatusBar style="auto" />
-          <View style={{flexDirection:'row', marginVertical:30}}>
-            <Image source={dndPic} style={styles.dndPic} />   
-            <CharManagement />         
-          </View>
-            <DescriptionView />
-            <ResourcesTable  />
-            <StatsTable />
-            <SavesTable />        
-            <GearView />
-            <SkillsTable />
-            <ItemsTable />
-            <FeatsView />
-            <SpellsView />
-        </ScrollView> 
-      </SafeAreaView>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+          name={'Home'}
+          component={HomeScreen}
+          />
+          <Stack.Screen 
+            name={'Sheet'}
+            component={SheetScreen}
+            options={({navigation, route})=> ({
+              headerTitle: props => <Text>{'text'}</Text>,
+            })}
+          />
+
+          
+        </Stack.Navigator>
+      </NavigationContainer>
     </Provider>
   );
 }
@@ -47,12 +96,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    height:6700,
+    
     backgroundColor: '#fff',
     paddingLeft:10,
     paddingRight:10,
     alignItems: 'center',
     marginTop: 40, 
+    paddingBottom:40,
+    
   },
   dndPic:{
     width:250,

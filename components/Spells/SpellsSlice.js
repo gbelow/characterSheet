@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
 import {  calculateStatModifier, selectStatsModifier } from '../Stats/StatsSlice';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
-import { createSelector } from 'reselect';
 
 export const slice = createSlice({
   name: 'spells',

@@ -31,7 +31,7 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
   return(
     <View style={thisStyle}>
       <Text style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}}>{content}</Text>
-      {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
+      {legend ? <Text style={{fontSize:parseInt(fontSize*3/4),}}>{legend}</Text> : null  }
       
     </View>
   )
@@ -43,7 +43,7 @@ const UnderlinedTextInputRaw = ({content, setContent, legend='', size=0.8, fontS
   return(
     <View style={thisStyle}>
       <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent} value={''+content}/>
-      {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
+      {legend ? <Text style={{fontSize:parseInt(fontSize*3/4)}}>{legend}</Text> : null  }
     </View>
   )
 }

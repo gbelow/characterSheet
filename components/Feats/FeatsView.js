@@ -20,7 +20,7 @@ export function FeatsView({}){
       <>
         {
           feats.map(el => (
-            <UnderlinedTextInput key={el+category} size={3.5} id={el} selector={categoryItemSelector(category)} setChanger={setChanger(category)}/>
+            <UnderlinedTextInput key={el+category} size={2.2} id={el} selector={categoryItemSelector(category)} setChanger={setChanger(category)}/>
           ))
         }
       </>
@@ -30,7 +30,7 @@ export function FeatsView({}){
   return(
     <View style={{width:'100%', marginTop: 20}}>
       <SectionTitle title={'FEATS'} />
-      <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center",}}>
+      <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center"}}>
         <FeatsMap category={'FEATS'}/>
       </View>
       <SectionTitle title={'SPECIAL ABILITIES'} />
