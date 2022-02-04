@@ -17,6 +17,7 @@ import { changeCurrentChar, selectCurrentChar } from './CharManagementSlice';
 
 
 export const saveCharacter = async ({char, fileName}) => {
+  
   try {
     const jsonValue = JSON.stringify(char) 
     if(fileName != null){
@@ -24,8 +25,7 @@ export const saveCharacter = async ({char, fileName}) => {
     }
   } catch (e) {
     console.log('error')
-  }
-  
+  } 
   
 }
 
@@ -34,6 +34,7 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
   const [tinput, setTinput] = useState({})
+  const [newCharName, setNewCharName] = useState('')
 
   return(
     <View>
@@ -50,14 +51,14 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
           <Text>All unsaved progress will be lost</Text>
           <TextInput 
             style={{...tinput, fontSize:16, borderBottomWidth:1, width:250 }} 
-            value={useSelector(selectCurrentChar)} onChangeText={(e) => dispatch(changeCurrentChar({value:e}))}
+            value={newCharName} onChangeText={(e) => setNewCharName(e)}
             onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
             onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
           />
 
           <View style={{flexDirection:'row' }}>
             <Button color={color} onPress={() => setModalVisible(false)} title={'Cancel'}></Button>
-            <Button color={color} onPress={() => {onPress(); setModalVisible(false)} } title={'OK'}></Button>
+            <Button color={color} onPress={() => {onPress(); setModalVisible(false); dispatch(changeCurrentChar({value:newCharName})) }} title={'OK'}></Button>
           </View>
           
         </View>
@@ -169,7 +170,7 @@ export function CharManagement ({navigation}){
           style: "cancel"
         },
         { text: "OK", onPress: ()=>{
-          console.log(selectedChar)
+          dispatch(changeCurrentChar({value:selectedChar}))
           loadCharacter({char:selectedChar})
           navigation.navigate('Sheet')
         } }
@@ -188,7 +189,7 @@ export function CharManagement ({navigation}){
           style: "cancel"
         },
         { text: "OK", onPress: () => { 
-          saveCharacter({char:char, fileName:currentChar})       
+          saveCharacter({char:char, fileName:currentChar})
           getCharList()
           
         }}
@@ -228,6 +229,10 @@ export function CharManagement ({navigation}){
           defaultButtonText={selectedChar}
           onSelect={(e)=>{setSelectedChar(e)}}
         />
+      <View style={{flexDirection:'row', margin:10, padding:5, elevation:5, shadowColor:'#000'}}>
+        <Text style={{fontSize:18}}>Currently playing with:</Text>
+        <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>
+      </View>
         <AlertWithPrompt title={'new'} color={'#111'} onPress={ onMakeNewCharacterClick}/>
         <Button title={'save'} color={'#111'} onPress={onSaveCharacterClick}/>
         <Button title={'load'} color={'#111'} onPress={onLoadCharacterClick}/>

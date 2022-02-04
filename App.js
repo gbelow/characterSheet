@@ -81,7 +81,12 @@ export default function App() {
             name={'Sheet'}
             component={SheetScreen}
             options={({navigation, route})=> ({
-              headerTitle: props => <Text>{'text'}</Text>,
+              headerTitle: props => {
+                const cchar = useSelector(selectCurrentChar)
+                return(
+                  <Text>{cchar}</Text>
+                )
+              },
             })}
           />
 
