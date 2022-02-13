@@ -9,10 +9,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadItems:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeItemValue: (state, action) => {
       const {itemNumber, item} = action.payload

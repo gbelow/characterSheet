@@ -9,10 +9,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadGear:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeGearItem: (state, action) => {
       const {itemName, valueName, value} = action.payload

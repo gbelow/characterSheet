@@ -9,10 +9,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadSpells:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeSpellItem:(state, action) => {
       const {item, value} = action.payload

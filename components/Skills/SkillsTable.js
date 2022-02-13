@@ -1,5 +1,5 @@
-import React, {useCallback, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import React, {useCallback, useEffect, useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
 import { Cell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -21,11 +21,28 @@ export function SkillsTable ({}){
   const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue))) 
   
   const allSkillKeys = useSelector(selectAllSkillKeys, shallowEqual )
+  console.log(allSkillKeys)
+
   const SkillItem = ({name}) => {
 
     const selector = useCallback(itemValueSelector(name), [name])
     const setChanger = useCallback(setter(name), [name])
     const setCheckBoxChanger = useCallback(checkBoxSetter(name), [name])
+
+    const onRemoveClick = (name) => {
+      Alert.alert(
+        "Remove Skill",
+        "This will delete this skill",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: remover(name) }
+        ]
+      );
+    }
     
     return(
       <View style={styles.skillItem}>
@@ -65,7 +82,7 @@ export function SkillsTable ({}){
           <UnderlinedTextInput id={'miscMod'} selector={selector} setChanger={setChanger}/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>          
-          <Button title={'rm'} color={'#222'} onPress={remover(name)}/>
+          <Button title={'rm'} color={'#222'} onPress={() => onRemoveClick(name)}/>
         </View>
       </View>
     )

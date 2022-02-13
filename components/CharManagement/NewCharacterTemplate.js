@@ -7,7 +7,7 @@ const newCharacterTemplate = {
   description:{
     CHAR_NAME:'',
     PLAYER_NAME:'',
-    CLASS:'',
+    CLASS:'Barbarian',
     LEVEL:'1',
     RACE:'',
     ALIGNMENT:'',

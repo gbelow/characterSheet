@@ -24,7 +24,7 @@ export const saveCharacter = async ({char, fileName}) => {
        await AsyncStorage.setItem(fileName , jsonValue)
     }
   } catch (e) {
-    console.log('error')
+    console.log('error', e)
   } 
   
 }
@@ -104,6 +104,7 @@ export function CharManagement ({navigation}){
         console.log(e)
         return 'err'
       }    
+      // console.log(character.skills)
       dispatch(loadDescription(character.description))
       dispatch(loadFeats(character.feats))
       dispatch(loadGear(character.gear))

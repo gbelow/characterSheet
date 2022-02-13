@@ -88,9 +88,7 @@ export default function App() {
                 )
               },
             })}
-          />
-
-          
+          />          
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -8,10 +8,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadStats:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeStatsItemValue: (state, action) => {
       state[action.payload.itemName][action.payload.valueName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;

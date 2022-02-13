@@ -9,10 +9,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadDescription:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeDescriptionItem: (state, action) => {
       state[action.payload.itemName] = action.payload.value;

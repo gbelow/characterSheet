@@ -10,10 +10,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadSkills:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeSkillItemValue: (state, action) => {
       const {itemName, valueName, value} = action.payload
@@ -40,7 +37,7 @@ export const { changeSkillItemValue, createSkillItem, loadSkills, changeSkillIte
 
 export const selectSkillItem = (itemName) => state => state.skills[itemName];
 export const selectSkillItemValue = (itemName, itemValue) => state=> state.skills[itemName][itemValue]
-export const selectAllSkillKeys = state => Object.keys(state.skills);
+export const selectAllSkillKeys = state => Object.keys(state.skills)
 
 export const selectSkillTotal = skillName => state => {
   const stat = state.stats[state.skills[skillName].ability]

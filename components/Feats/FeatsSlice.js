@@ -8,10 +8,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadFeats:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeFeatValue: (state, action) => {
       const {category, name, value} = action.payload

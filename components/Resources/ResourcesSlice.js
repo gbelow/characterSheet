@@ -11,10 +11,7 @@ export const slice = createSlice({
   },
   reducers: {
     loadResources:(state, action) => {
-      const s = Object.keys(state)
-      s.forEach(el => {
-        state[el] = action.payload[el]
-      });
+      return action.payload
     },
     changeResourceItem: (state, action) => {
       state[action.payload.itemName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
