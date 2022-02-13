@@ -2,10 +2,18 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { makeComponentWithSelector } from './ReduxHOC';
 
-export const Cell = ({content}) => {
+export const Cell = ({content, fontSize=22, color='#555'}) => {
   return(
-    <View style={styles.statsCell}>
-      <Text style={styles.cellText}>{content}</Text>
+    <View style={{...styles.statsCell, borderColor:color}}>
+      <Text style={{...styles.cellText, fontSize:fontSize}}>{content}</Text>
+    </View>
+  )
+}
+
+export const LargeCell = ({content}) => {
+  return(
+    <View style={{...styles.statsCell, borderColor:'#a00'}}>
+      <Text style={{...styles.cellText, fontWeight:'bold', fontSize:20}}>{content}</Text>
     </View>
   )
 }
@@ -19,32 +27,32 @@ export const DoubleCell = ({content='', legend=''}) => {
   )
 }
 
-const CellInputRaw = ({content, setContent}) => {
+const CellInputRaw = ({content, setContent, fontSize=22}) => {
   return(
     <View style={styles.statsCell}>
-      <TextInput style={styles.cellText} onChangeText={setContent} keyboardType={'numeric'} value={''+content}/>
+      <TextInput style={{...styles.cellText, fontSize:fontSize}} onChangeText={setContent} keyboardType={'numeric'} value={''+content}/>
     </View>
   )
 }
 
 export const CellInput = makeComponentWithSelector(CellInputRaw)
 
-const CellInputWithLegendRaw = ({legend, content, setContent}) => {
+const CellInputWithLegendRaw = ({legend, content, setContent, fontSize=22}) => {
   return(
     <View style={{flex:1, flexDirection:'column'}}>
       <Text style={styles.smallLegend}>{legend}</Text>
-      <CellInputRaw content={content} setContent={setContent}/>
+      <CellInputRaw content={content} setContent={setContent} fontSize={fontSize}/>
     </View>
   )
 }
 export const CellInputWithLegend = makeComponentWithSelector(CellInputWithLegendRaw)
 
 
-export const CellWithLegend = ({legend, content}) => {
+export const CellWithLegend = ({legend, content, fontSize=22, color='#555'}) => {
   return(
     <View style={{flex:1, flexDirection:'column'}}>
-      <Text style={styles.smallLegend}>{legend}</Text>
-      <Cell content={content} />
+      <Text style={{...styles.smallLegend}}>{legend}</Text>
+      <Cell content={content} fontSize={fontSize} color={color}/>
     </View>
   )
 }
@@ -54,7 +62,7 @@ const styles = StyleSheet.create({
     flex:1,
     borderWidth:1,
     borderRadius:3,
-    borderColor:'#333',
+    borderColor:'#555',
     justifyContent:'center',
     color:'#000',
     fontSize:18,
@@ -68,7 +76,7 @@ const styles = StyleSheet.create({
   blackStatsCell:{
     borderWidth:1,
     borderRadius:3,
-    borderColor:'#333',
+    borderColor:'#555',
     justifyContent:'center',
     backgroundColor:'#000',
     color:'#fff',
@@ -96,7 +104,7 @@ const styles = StyleSheet.create({
     textAlign:'center', 
   },
   smallLegend:{
-    fontSize: 10,
-    color:'#888'
+    fontSize: 12,
+    color:'#777'
   }
 })

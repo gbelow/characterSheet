@@ -75,7 +75,7 @@ export function ItemsTable() {
     return(
       <View>
         <SectionTitle title={'WEIGHT LIMITS'} />
-        <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>          
+        <View style={{borderWidth:1, height:80, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>          
           <CellWithLegend legend={'LIGHT'} content={caps.light}/>          
           <CellWithLegend legend={'MEDIUM'} content={caps.medium}/>          
           <CellWithLegend legend={'HEAVY'} content={caps.heavy}/>          
@@ -88,7 +88,7 @@ export function ItemsTable() {
   }
 
   return(
-    <View style={{width:'100%', borderWidth:1}}>
+    <View style={{width:'100%', borderWidth:1, marginBottom:30}}>
       <SectionTitle title={'OTHER POSSESIONS'} /> 
         <View style={{flexDirection:'row', width:'100%'}}>
           <TableLegend />

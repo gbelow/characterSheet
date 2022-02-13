@@ -4,13 +4,13 @@ import { makeComponentWithSelector } from "./ReduxHOC";
 
 export const TitleText = ({children, fontSize=10}) => {
   return(
-    <Text style={{color:'#333', fontSize:fontSize}}>{children}</Text>
+    <Text style={{color:'#222', fontSize:fontSize}}>{children}</Text>
   )
 }
 
 export const BigTitleText = ({children}) => {
   return(
-    <Text style={{color:'#333', fontSize:14, fontWeight:'bold',}}>{children}</Text>
+    <Text style={{color:'#222', fontSize:14, fontWeight:'bold',}}>{children}</Text>
   )
 }
 

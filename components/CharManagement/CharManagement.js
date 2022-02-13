@@ -50,7 +50,7 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
           <Text>Make new Character</Text>
           <Text>All unsaved progress will be lost</Text>
           <TextInput 
-            style={{...tinput, fontSize:16, borderBottomWidth:1, width:250 }} 
+            style={{...tinput, fontSize:16, borderBottomWidth:1, width:250, margin:10 }} 
             value={newCharName} onChangeText={(e) => setNewCharName(e)}
             onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
             onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
@@ -104,7 +104,6 @@ export function CharManagement ({navigation}){
         console.log(e)
         return 'err'
       }    
-      // console.log(character.skills)
       dispatch(loadDescription(character.description))
       dispatch(loadFeats(character.feats))
       dispatch(loadGear(character.gear))

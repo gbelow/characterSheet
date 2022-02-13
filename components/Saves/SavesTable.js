@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
-import {Cell, DoubleCell, CellInput} from '../CellComponents'
+import {Cell, DoubleCell, CellInput, LargeCell} from '../CellComponents'
 import { TitleText, BigTitleText } from '../TextComponents';
 import { selectStatsModifier } from '../Stats/StatsSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +20,8 @@ export const SavesTable = () => {
     return(
       <View style={styles.savesTableRow}>
         <View style={{flex:3}}><DoubleCell content={stat}  legend={legend} /></View>
+        <View style={styles.savesTableCol}><LargeCell content={totalSelector(stat)} /></View>
+        <Text style={styles.savesTableSign}>=</Text>
         <View style={styles.savesTableCol}><CellInput id={'base'} selector={itemSelector(stat)} setChanger={numberSetter(stat)}/></View>
         <Text style={styles.savesTableSign}>+</Text>
         <View style={styles.savesTableCol}><Cell content={modifierSelector(convert(stat))}/></View>
@@ -29,8 +31,6 @@ export const SavesTable = () => {
         <View style={styles.savesTableCol}><CellInput id={'misc'} selector={itemSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <Text style={styles.savesTableSign}>+</Text>
         <View style={styles.savesTableCol}><CellInput id={'temp'} selector={itemSelector(stat)} setChanger={numberSetter(stat)}/></View>
-        <Text style={styles.savesTableSign}>=</Text>
-        <View style={styles.savesTableCol}><Cell content={totalSelector(stat)} /></View>
       </View>
     )
   }
@@ -39,12 +39,12 @@ export const SavesTable = () => {
     <View style={styles.savesTable}>
       <View style={{...styles.savesTableRow, flex:0.6}}>
         <View style={{ flex:3 }}><BigTitleText>{'SAVING THROWS'}</BigTitleText></View>
+        <View style={styles.savesTableCol}><BigTitleText style={{ }}> {'TOTAL'}</BigTitleText></View>
         <View style={styles.savesTableCol}><TitleText >{'Base \n Save'} </TitleText></View>
         <View style={styles.savesTableCol}><TitleText > {'Ability \n Modifier'} </TitleText></View>
         <View style={styles.savesTableCol}><TitleText > {'Magic \n Modifier'} </TitleText></View>
         <View style={styles.savesTableCol}><TitleText > {'Misc \n Modifier'} </TitleText></View>
         <View style={styles.savesTableCol}><TitleText > {'Temp. \n Modifier'}</TitleText></View>
-        <View style={styles.savesTableCol}><BigTitleText style={{ }}> {'TOTAL'}</BigTitleText></View>
       </View>
 
       <DataRow stat={'FORTITUDE'} legend={'(CONSTITUTION)'} baseSave={2} />
@@ -58,7 +58,7 @@ export const SavesTable = () => {
 
 const styles = StyleSheet.create({
   savesTable:{
-    height:145,
+    flex:1,
     width:'100%',
     marginTop:20,
   },
@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
   savesTableRow:{
     flex:1,
     flexDirection:'row',
+    alignItems:'center',
+    marginVertical:10
   },
   savesTableSign:{
     fontSize: 16, 

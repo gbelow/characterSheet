@@ -168,6 +168,8 @@ export function GearView(){
       <SectionTitle title={'GEAR'} />
       <Weapon index={1}/>
       <Weapon index={2}/>
+      <Weapon index={3}/>
+      <Weapon index={4}/>
       <Armor />
       <Shield />
       <ProtectiveItem index={1} />

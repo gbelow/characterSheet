@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
-import { Cell } from '../CellComponents';
+import { Cell, LargeCell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
@@ -21,7 +21,6 @@ export function SkillsTable ({}){
   const itemValueSelector = useCallback(itemName => itemValue => useSelector(selectSkillItemValue(itemName, itemValue))) 
   
   const allSkillKeys = useSelector(selectAllSkillKeys, shallowEqual )
-  console.log(allSkillKeys)
 
   const SkillItem = ({name}) => {
 
@@ -67,9 +66,9 @@ export function SkillsTable ({}){
           <Text style={{textAlign:'center',}}>{selector('ability')}</Text>
         </View>
         <View style={{flex:1}}>
-          <Cell content={useSelector(selectSkillTotal(name)) }/>
+          <LargeCell content={useSelector(selectSkillTotal(name)) }/>
         </View>
-        <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>
+        <View style={{flex:1, flexDirection:'row', alignItems:'center' }}>
           <Text>=</Text>
           <UnderlinedText content={modifierSelector(selector('ability'))} />
         </View>
@@ -81,8 +80,8 @@ export function SkillsTable ({}){
           <Text>+</Text>
           <UnderlinedTextInput id={'miscMod'} selector={selector} setChanger={setChanger}/>
         </View>
-        <View style={{flex:1, flexDirection:'row', alignItems:'center', }}>          
-          <Button title={'rm'} color={'#222'} onPress={() => onRemoveClick(name)}/>
+        <View style={{flex:1, flexDirection:'row', alignItems:'center', marginLeft:10 }}>          
+          <Button title={'rm'} color={'#555'} onPress={() => onRemoveClick(name)}/>
         </View>
       </View>
     )
@@ -101,19 +100,19 @@ export function SkillsTable ({}){
           </View>
         </View>
         <View  style={{flex:1, flexDirection:'row', backgroundColor:'#fff' }}>
-          <View style={{...styles.titleItem, flex:0.55}}>
-            <TitleText>require {'\n'} train</TitleText>        
+          <View style={{...styles.titleItem, flex:0.5}}>
+            <TitleText>requires {'\n'} training</TitleText>        
           </View>
-          <View style={{...styles.titleItem, flex:0.4}}>
+          <View style={{...styles.titleItem, flex:0.5}}>
             <TitleText>class</TitleText>        
           </View>
-          <View style={{...styles.titleItem, flex:2}}>
+          <View style={{...styles.titleItem, flex:1.2}}>
             <TitleText>name</TitleText>
           </View>
           <View style={styles.titleItem}>
-            <TitleText style={{textAlign:'center',}}>ability</TitleText>
+            <TitleText style={{textAlign:'center', flex:0.7}}>ability</TitleText>
           </View>
-          <View style={styles.titleItem}>
+          <View style={{...styles.titleItem, borderColor:'#a00'}}>
             <TitleText>Skill {'\n'} Modifier</TitleText>
           </View>
           <View style={styles.titleItem}>
@@ -187,7 +186,7 @@ export function SkillsTable ({}){
 
 const styles = StyleSheet.create({
   skillsTable:{
-    height:1200,
+    flex:1,
     width:'100%',
     marginTop:20,
   },

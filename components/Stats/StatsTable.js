@@ -22,7 +22,7 @@ const StatsTable = () => {
         <View style={styles.statsTableCol}><CellInput id={'score'}  selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <View style={styles.statsTableCol}><CellInput id={'buffs'}  selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
         <View style={styles.statsTableCol}><CellInput id={'debuffs'} selector={statItemValueSelector(stat)} setChanger={numberSetter(stat)} /></View>
-        <View style={styles.statsTableCol}><Cell content={'+'+modifier} /></View>
+        <View style={styles.statsTableCol}><Cell content={'+'+modifier} color={'#a00'} /></View>
       </View>
     )
   }
@@ -52,7 +52,7 @@ export default StatsTable
 const styles = StyleSheet.create({
 
   statsTable:{
-    height:275,
+    height:400,
     width:'100%',
     marginTop:20,
   },

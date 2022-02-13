@@ -26,7 +26,7 @@ const Navigation = ({selectedTab, setSelected=()=>null}) => {
     <View style={{flexDirection:'row', flexWrap:'wrap', marginVertical:5, justifyContent:'space-evenly', borderWidth:1 }}>
       {
         Object.keys(tabs).map(el => (
-          <View key={el} style={{width:'20%', margin:5}}>
+          <View key={el} style={{width:'25%', margin:5}}>
             <Button color={selectedTab == el ? '#800' : '#111'} title={el} onPress={() => setSelected(el)} />
           </View>
           ))
@@ -55,7 +55,7 @@ const SheetScreen = ({navigation}) => {
       <ScrollView contentContainerStyle={styles.container}>
         {/* <StatusBar style="auto" /> */}
         <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
-          <Text>{useSelector(selectCurrentChar)}</Text>
+          <Text style={{fontWeight:'bold', fontSize:22}}>{useSelector(selectCurrentChar)}</Text>
           <Navigation selectedTab={selectedTab} setSelected={setSelectedTab} />    
         </View>
         <SelectedTab />
@@ -84,7 +84,7 @@ export default function App() {
               headerTitle: props => {
                 const cchar = useSelector(selectCurrentChar)
                 return(
-                  <Text>{cchar}</Text>
+                  <Text style={{fontWeight:'bold'}}>{cchar}'s Character Sheet</Text>
                 )
               },
             })}

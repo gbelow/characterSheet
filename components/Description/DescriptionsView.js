@@ -14,6 +14,7 @@ const DescriptionView = ({}) => {
   const setter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e})), [dispatch, changeDescriptionItem])
   const numberSetter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e.replace(/[^0-9]/g, '')})), [dispatch, changeDescriptionItem])
 
+  console.log(selector('CLASS'))
   return(
     <View style={styles.headingsContainer}>
       <Text style={{fontSize:30, fontWeight:'bold',}}>Description</Text>
@@ -25,33 +26,33 @@ const DescriptionView = ({}) => {
         <SelectDropdown 
           buttonStyle={{width:'25%', borderWidth:1, marginHorizontal:5, marginVertical:8}} 
           buttonTextStyle={{fontSize:16}} data={['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Wizard']} 
-          defaultButtonText='CLASS' 
+          defaultButtonText={selector('CLASS')} 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('CLASS')}
         />
         <UnderlinedTextInput id='LEVEL' selector={selector} setChanger={numberSetter}  legend={'Level'} size={1} fontSize={16}/>
-        <UnderlinedTextInput id='RACE' selector={selector} setChanger={setter}  legend={'Race'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='ALIGNMENT' selector={selector} setChanger={setter}  legend={'Alignment'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='DEITY' selector={selector} setChanger={setter}  legend={'Deity'} size={1.5} fontSize={16}/>
+        <UnderlinedTextInput id='RACE' selector={selector} setChanger={setter}  legend={'Race'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='ALIGNMENT' selector={selector} setChanger={setter}  legend={'Alignment'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='DEITY' selector={selector} setChanger={setter}  legend={'Deity'} size={1.2} fontSize={16}/>
       </View>
       <View style={{...styles.headingsLine, flexWrap:'wrap', }}>
         <SelectDropdown 
           buttonStyle={{width:'25%', borderWidth:1, marginHorizontal:5, marginVertical:8,}} 
           buttonTextStyle={{fontSize:16}} data={SizeKeys} 
-          defaultButtonText='SIZE' 
+          defaultButtonText={selector('SIZE')} 
           buttonTextAfterSelection={selectedItem => selectedItem}
           onSelect={setter('SIZE')}
         />
-        <UnderlinedTextInput id='AGE' selector={selector} setChanger={numberSetter}  legend={'Age'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='GENDER' selector={selector} setChanger={setter}  legend={'Gender'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='HEIGHT' selector={selector} setChanger={numberSetter}  legend={'Height'} size={1.5} fontSize={16}/>
+        <UnderlinedTextInput id='AGE' selector={selector} setChanger={numberSetter}  legend={'Age'} size={0.7} fontSize={16}/>
+        <UnderlinedTextInput id='GENDER' selector={selector} setChanger={setter}  legend={'Gender'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='HEIGHT' selector={selector} setChanger={numberSetter}  legend={'Height'} size={1.2} fontSize={16}/>
         
       </View>  
       <View  style={{...styles.headingsLine, flexWrap:'wrap', }}>
-        <UnderlinedTextInput id='WEIGHT' selector={selector} setChanger={numberSetter}  legend={'Weight'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='EYES' selector={selector} setChanger={setter}  legend={'Eyes'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='HAIR' selector={selector} setChanger={setter}  legend={'Hair'} size={1.5} fontSize={16}/>
-        <UnderlinedTextInput id='SKIN' selector={selector} setChanger={setter}  legend={'Skin'} size={1.5} fontSize={16}/>
+        <UnderlinedTextInput id='WEIGHT' selector={selector} setChanger={numberSetter}  legend={'Weight'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='EYES' selector={selector} setChanger={setter}  legend={'Eyes'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='HAIR' selector={selector} setChanger={setter}  legend={'Hair'} size={1.2} fontSize={16}/>
+        <UnderlinedTextInput id='SKIN' selector={selector} setChanger={setter}  legend={'Skin'} size={1.2} fontSize={16}/>
       </View>
     </View>
   )
@@ -61,7 +62,9 @@ export default DescriptionView
 
 const styles = StyleSheet.create({
   headingsContainer:{
-    height:300,
+    flex:1,
+    marginHorizontal:10,
+    width:'100%',
     alignItems:'center',
   },
   headingsLine:{

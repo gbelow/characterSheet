@@ -53,7 +53,7 @@ export const ResourcesTable = () => {
     return(
       <View style={{flexDirection:'row', height:'25%', width:'66%', borderWidth:1, alignItems:'center'}}>
         <DoubleCell content={'INITIATIVE'} legend={'MODIFIER'} />
-        <CellWithLegend legend={'TOTAL'} content={useSelector(selectInitiative)} />
+        <CellWithLegend legend={'TOTAL'} content={useSelector(selectInitiative)} color={'#a00'} />
         <Text>=</Text>
         <CellWithLegend legend={'dex mod'} content={modifierSelector('DEX')}/>
         <Text>+</Text>
@@ -65,7 +65,7 @@ export const ResourcesTable = () => {
     return(
       <View style={{flexDirection:'row', height:'25%', width:'99%', borderWidth:1, alignItems:'center'}}>
         <DoubleCell content={'GRAPPLE'} legend={'MODIFIER'} />
-        <CellWithLegend legend={'TOTAL'} content={useSelector(selectGrappleTotal)}/>
+        <CellWithLegend legend={'TOTAL'} content={useSelector(selectGrappleTotal)} color={'#a00'}/>
         <Text>=</Text>
         <CellWithLegend legend={'base atk'} content={itemSelector('BASE_ATTACK_BONUS')}/>
         <Text>+</Text>
@@ -82,10 +82,10 @@ export const ResourcesTable = () => {
     return(
       <View style={styles.healthBarContainer}>
         <DoubleCell content={'HP'} legend={'HIT POINTS'}/>
-        <CellInputWithLegend legend={'Full HP'} id={'HP'} selector={itemSelector} setChanger={setter} />      
-        <CellInputWithLegend legend={'Current HP'} id={'CURRENT_HP'} selector={itemSelector} setChanger={setter}/>      
-        <CellInputWithLegend legend={'Wounds'} id={'WOUNDS'} selector={itemSelector} setChanger={setter}/>      
-        <CellInputWithLegend legend={'Nonlethal Damage'} id={'NON_LETHAL_DMG'} selector={itemSelector} setChanger={setter}/>      
+        <CellInputWithLegend legend={'Full HP'} id={'HP'} selector={itemSelector} setChanger={setter} fontSize={22} />      
+        <CellInputWithLegend legend={'Current HP'} id={'CURRENT_HP'} selector={itemSelector} setChanger={setter} fontSize={22}/>      
+        <CellInputWithLegend legend={'Wounds'} id={'WOUNDS'} selector={itemSelector} setChanger={setter} fontSize={22}/>      
+        <CellInputWithLegend legend={'Nonlethal Damage'} id={'NON_LETHAL_DMG'} selector={itemSelector} setChanger={setter} fontSize={22}/>      
       </View>
     )
   }
@@ -95,15 +95,15 @@ export const ResourcesTable = () => {
     return(
       <View style={styles.armorContainer}>
         <DoubleCell content={'AC'} legend={'ARMOR CLASS'}/>
-        <View style={{flex:10}}>
+        <View style={{flex:15}}>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
-            <CellWithLegend legend={'TOTAL'} content={useSelector(selectTotalArmor)}/>
-            <Text>= 10 + </Text>
-            <CellWithLegend legend={'armor bonus'} content={useSelector(selectArmorBonus)} />
+            <CellWithLegend legend={'TOTAL'} content={useSelector(selectTotalArmor)} fontSize={22} color={'#a00'}/>
+            <Text style={{fontSize:22}}>= 10 + </Text>
+            <CellWithLegend legend={'armor bonus'} content={useSelector(selectArmorBonus)} fontSize={22}/>
             <Text>+</Text>
-            <CellWithLegend legend={'shield bonus'} content={useSelector(selectShieldBonus)}/>
+            <CellWithLegend legend={'shield bonus'} content={useSelector(selectShieldBonus)} fontSize={22}/>
             <Text>+</Text>
-            <CellWithLegend legend={'dex mod'} content={useSelector(selectMaxDexMod)} />
+            <CellWithLegend legend={'dex mod'} content={useSelector(selectMaxDexMod)} fontSize={22} />
             <Text>+</Text>
           </View>
           <View style={{flex:1, flexDirection:'row', alignItems:'center', paddingRight:5}}>
@@ -131,9 +131,9 @@ export const ResourcesTable = () => {
 
 const styles = StyleSheet.create({
   resourcesContainer:{
-    height:300,
+    flex:1,
     width:'100%',
-    marginTop:20,
+    marginTop:10,
   },
   healthBarContainer:{
     flex:1,
