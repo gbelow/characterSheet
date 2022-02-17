@@ -14,7 +14,7 @@ const DescriptionView = ({}) => {
   const setter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e})), [dispatch, changeDescriptionItem])
   const numberSetter = useCallback(itemName=> (e)=>dispatch(changeDescriptionItem({itemName:itemName ,value:e.replace(/[^0-9]/g, '')})), [dispatch, changeDescriptionItem])
 
-  console.log(selector('CLASS'))
+  
   return(
     <View style={styles.headingsContainer}>
       <Text style={{fontSize:30, fontWeight:'bold',}}>Description</Text>

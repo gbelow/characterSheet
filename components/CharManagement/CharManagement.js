@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Alert, Modal } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Alert, Modal, Pressable, ScrollView, SafeAreaView } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector } from 'react-redux';
 import newCharacterTemplate from '../CharManagement/NewCharacterTemplate';
@@ -47,18 +47,27 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
         }}
       >
         <View style={styles.modalView} >
-          <Text>Make new Character</Text>
-          <Text>All unsaved progress will be lost</Text>
-          <TextInput 
-            style={{...tinput, fontSize:16, borderBottomWidth:1, width:250, margin:10 }} 
-            value={newCharName} onChangeText={(e) => setNewCharName(e)}
-            onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
-            onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
-          />
-
+          <Text>Make new Character</Text>          
+          <View>
+            <TextInput 
+              style={{...tinput, fontSize:16, borderBottomWidth:1, width:250, margin:10, borderColor:'#555', textAlign:'center' }} 
+              value={newCharName} onChangeText={(e) => setNewCharName(e)}
+              onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
+              onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
+              placeholder= "File Name"
+            />
+          </View>
+          <Text>This will load a brand new character. All unsaved progress will be lost</Text>
           <View style={{flexDirection:'row' }}>
             <Button color={color} onPress={() => setModalVisible(false)} title={'Cancel'}></Button>
-            <Button color={color} onPress={() => {onPress(); setModalVisible(false); dispatch(changeCurrentChar({value:newCharName})) }} title={'OK'}></Button>
+            <Button color={color} onPress={() => {
+              if(newCharName){
+                setModalVisible(false);                  
+                onPress(newCharName);
+              }else{
+                Alert.alert("Please, choose a file name", "", [{text:'ok'}])
+              }
+            }} title={'OK'}></Button>
           </View>
           
         </View>
@@ -68,12 +77,15 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
   )
 }
 
-export function CharManagement ({navigation}){
-  
+
+
+export function CharManagement ({navigation}){  
   
   const char = useSelector(selectChar)
   const currentChar = useSelector(selectCurrentChar)
   const dispatch=useDispatch()
+  const [data, setData] = useState([])
+  const [selectedChar, setSelectedChar] = useState('') 
 
   const getCharList = async () => {
     let keys = []
@@ -84,14 +96,36 @@ export function CharManagement ({navigation}){
       console.log(e)
     }
     return keys
-  }
-
-  const [data, setData] = useState(['empty'])
-  const [selectedChar, setSelectedChar] = useState('') 
+  }  
 
     useEffect(()=>{
       getCharList()
     },[])
+
+    const CharListTable = () => {
+
+      return(
+        <View style={{borderWidth:3, borderColor:'#333', alignItems:'center', marginVertical:20, borderRadius:3  }}>
+          <View style={{ borderBottomColor:'#333', borderBottomWidth:2, backgroundColor:'#000', width:'100%', paddingVertical:10}}>
+            <Text style={{textAlign:'center', fontWeight:'bold', fontSize:20}}>Choose your character</Text>
+          </View>
+          <SafeAreaView style={{textAlign:'center', alignItems:'center', minHeight:50, maxHeight:250, width:300, marginTop:10  }}>
+            <ScrollView style={{width:'100%'}}>
+                {
+                  data.length > 0 ?
+                    data.map(el => 
+                      <Pressable key={el} style={{paddingVertical:5, width:'100%', backgroundColor: (selectedChar == el ? '#444' : 'transparent')}} onPress={() => setSelectedChar(el)}>
+                        <Text style={{textAlign:'center'}}>{el}</Text>
+                      </Pressable>
+                    )
+                    : <Text style={{width:'100%', textAlign:'center'}}>Create your first character!</Text>
+                  }
+
+            </ScrollView>
+          </SafeAreaView>
+        </View>      
+      )
+    }
 
     
 
@@ -147,7 +181,7 @@ export function CharManagement ({navigation}){
   const onRemoveCharacterClick = () => {
     Alert.alert(
       "Delete Character",
-      "This will delete the selected character",
+      "This will delete " + selectedChar + " . Do you really want to delete it?",
       [
         {
           text: "Cancel",
@@ -162,7 +196,7 @@ export function CharManagement ({navigation}){
   const onLoadCharacterClick = () => {
     Alert.alert(
       "Load Character",
-      "All unsaved progress will be lost",
+      "Do you want to load file " + selectedChar + "? All unsaved progress will be lost",
       [
         {
           text: "Cancel",
@@ -181,7 +215,7 @@ export function CharManagement ({navigation}){
   const onSaveCharacterClick = () =>{
     Alert.alert(
       "Save Character",
-      "Save character",
+      "Save " + currentChar + " under file named "+ selectedChar +"?",
       [
         {
           text: "Cancel",
@@ -197,12 +231,12 @@ export function CharManagement ({navigation}){
     );
   }
 
-  const onMakeNewCharacterClick = () => {
+  const onMakeNewCharacterClick = (newCharName) => {
     
     
     Alert.alert(
       "New Character",
-      "All unsaved progress will be lost",
+      "Create " +newCharName +"?All unsaved progress will be lost",
       [
         {
           text: "Cancel",
@@ -210,8 +244,9 @@ export function CharManagement ({navigation}){
           style: "cancel"
         },
         { text: "OK", onPress: async () => {
-          saveCharacter({char:newCharacterTemplate, fileName:currentChar})
+          saveCharacter({char:newCharacterTemplate, fileName:newCharName})
           newCharacter()
+          dispatch(changeCurrentChar({value:newCharName}))
           // console.log(s, 'saved')          
           getCharList()
           
@@ -223,12 +258,13 @@ export function CharManagement ({navigation}){
   
   return(
     <View>
-      <SelectDropdown 
+      {/* <SelectDropdown 
           buttonStyle={{borderWidth:1, marginHorizontal:5, marginVertical:10}} 
           buttonTextStyle={{fontSize:12}} data={data}
           defaultButtonText={selectedChar}
           onSelect={(e)=>{setSelectedChar(e)}}
-        />
+      /> */}
+      <CharListTable />
       <View style={{flexDirection:'row', margin:10, padding:5, elevation:5, shadowColor:'#000'}}>
         <Text style={{fontSize:18}}>Currently playing with:</Text>
         <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>

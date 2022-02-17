@@ -25,7 +25,7 @@ export const SectionTitle = ({title, width='100%'}) => {
 }
 
 export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) => {
-  let thisStyle = {flexDirection: 'column', marginRight: 10, width:50}
+  let thisStyle = {flexDirection: 'column', marginRight: 10, width:50, opacity:0.6}
   thisStyle.width = thisStyle.width*size
 
   return(
