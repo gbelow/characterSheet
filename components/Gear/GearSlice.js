@@ -20,10 +20,11 @@ export const slice = createSlice({
 
 export const { changeGearItem, loadGear } = slice.actions;
 
-export const selectGearItem = (itemName) => state => state.gear[itemName];
+
+export const selectGearItem = (itemName) => state => state.gear[itemName] ? state.gear[itemName] : null
 export const selectGearItemValue = (itemName, itemValue) => state => state.gear[itemName][itemValue]
 export const selectWeaponStatModifier = (itemName) => state => {
-  const statName = state.gear[itemName].BONUS_ATTR
+  const statName = state.gear[itemName]?.BONUS_ATTR
   return statName ? calculateStatModifier(state.stats[statName]) : calculateStatModifier(state.stats['STR'])
 }
 

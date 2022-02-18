@@ -23,7 +23,7 @@ const tabs = {description: DescriptionView, Combat: ResourcesTable, stats: Stats
 
 const Navigation = ({selectedTab, setSelected=()=>null}) => {
   return(
-    <View style={{flexDirection:'row', flexWrap:'wrap', marginVertical:5, justifyContent:'space-evenly', borderWidth:1 }}>
+    <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', borderWidth:1 }}>
       {
         Object.keys(tabs).map(el => (
           <View key={el} style={{width:'25%', margin:5}}>
@@ -54,7 +54,7 @@ const SheetScreen = ({navigation}) => {
     <SafeAreaView>
       <ScrollView contentContainerStyle={styles.container}>
         {/* <StatusBar style="auto" /> */}
-        <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
+        <View style={{flexDirection:'column', marginVertical:10, alignItems:'center'}}>
           <Text style={{fontWeight:'bold', fontSize:22}}>{useSelector(selectCurrentChar)}</Text>
           <Navigation selectedTab={selectedTab} setSelected={setSelectedTab} />    
         </View>
@@ -104,13 +104,13 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     paddingRight:10,
     alignItems: 'center',
-    marginTop: 40, 
-    paddingBottom:40,
+    marginTop: 10, 
+    paddingBottom:10,
     
   },
   dndPic:{
-    width:250,
-    height:100,
+    width:350,
+    height:130,
   },
   
 

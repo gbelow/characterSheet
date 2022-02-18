@@ -1,6 +1,6 @@
-const weapon = {NAME:'', ATK_BONUS:0, BONUS_ATTR:'', DAMAGE:'', 
-  DAMAGE_TYPE:'', BONUS_DAMAGE:'', BONUS_DAMAGE_TYPE:'', DAMAGE_BONUS:0, 
-  CRITICAL:'', WEIGHT:0, RANGE:0, TYPE:'', NOTES:''
+export const weapon = {NAME:'', ATK_BONUS:0, BONUS_ATTR:'STR', DAMAGE:'', DAMAGE_BONUS:0,
+  DAMAGE_TYPE:'', BONUS_DAMAGE:'', BONUS_DAMAGE_TYPE:'',  
+  CRITICAL:'', WEIGHT:0, RANGE:0, TYPE:'', NOTES:'', 'AMMO':0
 }
 
 const newCharacterTemplate = {
@@ -88,6 +88,9 @@ const newCharacterTemplate = {
     NATURAL_ARMOR:0,
     DEFLECT_MOD:0,
     ARMOR_MISC_MOD:0,
+    EXTRAS:'',
+    MAIN_HAND:'',
+    OFF_HAND:'',
   },
   feats:{
     FEATS:{...Array(16).fill('')},

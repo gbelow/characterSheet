@@ -4,7 +4,7 @@ import { makeComponentWithSelector } from './ReduxHOC';
 
 export const Cell = ({content, fontSize=22, color='#555'}) => {
   return(
-    <View style={{...styles.statsCell, borderColor:color, opacity:0.6}}>
+    <View style={{...styles.statsCell, borderColor:color, opacity:0.75}}>
       <Text style={{...styles.cellText, fontSize:fontSize}}>{content}</Text>
     </View>
   )
@@ -12,7 +12,7 @@ export const Cell = ({content, fontSize=22, color='#555'}) => {
 
 export const LargeCell = ({content}) => {
   return(
-    <View style={{...styles.statsCell, borderColor:'#a00', opacity:0.6}}>
+    <View style={{...styles.statsCell, borderColor:'#a00', opacity:0.75}}>
       <Text style={{...styles.cellText, fontWeight:'bold', fontSize:20}}>{content}</Text>
     </View>
   )
@@ -48,9 +48,9 @@ const CellInputWithLegendRaw = ({legend, content, setContent, fontSize=22}) => {
 export const CellInputWithLegend = makeComponentWithSelector(CellInputWithLegendRaw)
 
 
-export const CellWithLegend = ({legend, content, fontSize=22, color='#555'}) => {
+export const CellWithLegend = ({legend, content, fontSize=22, color='#555', opacity=0.75}) => {
   return(
-    <View style={{flex:1, flexDirection:'column', opacity:0.6}}>
+    <View style={{flex:1, flexDirection:'column', opacity:opacity}}>
       <Text style={{...styles.smallLegend}}>{legend}</Text>
       <Cell content={content} fontSize={fontSize} color={color}/>
     </View>

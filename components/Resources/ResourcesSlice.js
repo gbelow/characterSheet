@@ -16,14 +16,17 @@ export const slice = createSlice({
     changeResourceItem: (state, action) => {
       state[action.payload.itemName] = parseInt(action.payload.value) ? parseInt(action.payload.value) : 0 ;
     },
+    changeResourceItemString: (state, action) => {
+      state[action.payload.itemName] = action.payload.value
+    },
   },
 });
 
-export const { changeResourceItem, loadResources } = slice.actions;
+export const { changeResourceItem, loadResources, changeResourceItemString } = slice.actions;
 
 export const selectResourceItem = (itemName) => state => state.resources[itemName];
 export const selectArmorBonus = state => state.gear.ARMOR.AC_BONUS
-export const selectShieldBonus = state => state.gear.SHIELD.AC_BONUS
+export const selectShieldBonus = state => state.resources.MAIN_HAND == 'SHIELD' || state.resources.OFF_HAND == 'SHIELD' ? state.gear.SHIELD.AC_BONUS : 0
 // export const selectArmorSizeMod = state => state.description.size 
 export const selectInitiative = state => {
   const dexMod = useSelector(selectStatsModifier('DEX'))
@@ -35,13 +38,20 @@ export const getSizeMod = (size, mod) => parseInt(SizeTable[size][mod]) ? parseI
 export const selectTotalArmor = state => {
   const dexMod = useSelector(selectStatsModifier('DEX'))
   return 10 + state.gear.ARMOR.AC_BONUS + 
-    state.gear.SHIELD.AC_BONUS + 
+    (state.resources.MAIN_HAND == 'SHIELD' || state.resources.OFF_HAND == 'SHIELD' ? state.gear.SHIELD.AC_BONUS : 0) + 
     (state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX ) +
     state.resources.ARMOR_MISC_MOD +
     state.resources.NATURAL_ARMOR +
     getSizeMod(state.description.SIZE, 'normal')
 }
-export const selectFlat = state => 10+ state.gear.ARMOR.AC_BONUS + state.gear.SHIELD.AC_BONUS + state.resources.ARMOR_MISC_MOD +state.resources.NATURAL_ARMOR
+export const selectFlat = state => {
+  return(
+    10+ state.gear.ARMOR.AC_BONUS + 
+    (state.resources.MAIN_HAND == 'SHIELD' || state.resources.OFF_HAND == 'SHIELD' ? state.gear.SHIELD.AC_BONUS : 0)
+     + state.resources.ARMOR_MISC_MOD +state.resources.NATURAL_ARMOR
+  )
+}
+
 export const selectTouch = state => {
   const dexMod = useSelector(selectStatsModifier('DEX'))
   return 10+(state.gear.ARMOR.MAX_DEX > dexMod ? dexMod : state.gear.ARMOR.MAX_DEX  ) + state.resources.ARMOR_MISC_MOD

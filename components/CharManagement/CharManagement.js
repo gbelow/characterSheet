@@ -223,7 +223,7 @@ export function CharManagement ({navigation}){
           style: "cancel"
         },
         { text: "OK", onPress: () => { 
-          saveCharacter({char:char, fileName:currentChar})
+          saveCharacter({char:char, fileName:selectedChar})
           getCharList()
           
         }}

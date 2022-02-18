@@ -1,9 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import React, {useState} from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeGearItem, selectGearItem, selectGearItemValue, selectWeaponStatModifier} from './GearSlice'
-import { selectStatsModifier } from '../Stats/StatsSlice';
 import SelectDropdown from 'react-native-select-dropdown';
 import { selectNormalSizeMod, selectResourceItem } from '../Resources/ResourcesSlice';
 
@@ -13,14 +12,13 @@ export function GearView(){
   const setter = (itemName) => valueName => (e)=>dispatch(changeGearItem({itemName:itemName, valueName:valueName,value:e}))
   const itemSelector = itemName => useSelector(selectGearItem(itemName))
   const itemValueSelector = itemName => itemValue => useSelector(selectGearItemValue(itemName, itemValue))
-  const modifierSelector = itemName => useSelector(selectStatsModifier(itemName))
   
   const Armor = () => {
 
     const armor = 'ARMOR'
     
     return(
-      <View style={{marginVertical:5}}>
+      <View style={styles.equipmentContainer}>
         <View style={{flexDirection:'row', height:80, borderWidth:1}}>
           <TextInputBoxWithTitle title={'ARMOR/Protective Item'} size={3} id={'NAME'} selector={itemValueSelector(armor)} setChanger={setter(armor)} />
           <TextInputBoxWithTitle title={'TYPE'} size={1} id={'TYPE'} selector={itemValueSelector(armor)} setChanger={setter(armor)}/>
@@ -43,7 +41,7 @@ export function GearView(){
     const shield = 'SHIELD'
 
     return(
-      <View style={{marginVertical:5}}>
+      <View style={styles.equipmentContainer}>
         <View style={{flexDirection:'row', height:80, borderWidth:1}}>
           <TextInputBoxWithTitle title={'SHIELD/Protective Item'} size={3} id={'NAME'} selector={itemValueSelector(shield)} setChanger={setter(shield)}/>
           <TextInputBoxWithTitle title={'AC BONUS'} size={1} id={'AC_BONUS'} selector={itemValueSelector(shield)} setChanger={setter(shield)} isNumber={true}/>
@@ -65,7 +63,7 @@ export function GearView(){
     
     const prot = 'PROT_ITEM'+index
     return(
-      <View style={{marginVertical:5}}>
+      <View style={styles.equipmentContainer}>
         <View style={{flexDirection:'row', height:80, borderWidth:1}}>
           <TextInputBoxWithTitle title={'PROTECTIVE ITEM'} size={3} id={'NAME'} selector={itemValueSelector(prot)} setChanger={setter(prot)}/>
           <TextInputBoxWithTitle title={'AC BONUS'} size={1} id={'AC_BONUS'} selector={itemValueSelector(prot)} setChanger={setter(prot)} isNumber={true}/>
@@ -79,16 +77,18 @@ export function GearView(){
  const  Weapon = ({index}) => {
   const weap = 'WEAPON'+index
   return(
-  <View style={{marginVertical:5}}>
+  <View style={styles.equipmentContainer}>
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextInputBoxWithTitle title={'WEAPON'} size={3} id={'NAME'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
       <TextInputBoxWithTitle title={'RANGE'} size={1} id={'RANGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
       <TextInputBoxWithTitle title={'TYPE'} size={1} id={'TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
+      <TextInputBoxWithTitle title={'AMMO'} size={1} id={'AMMO'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
       <TextInputBoxWithTitle title={'WEIGHT'} size={1} id={'WEIGHT'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
     </View>
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextInputBoxWithTitle title={'DAMAGE'} size={1}  id={'DAMAGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
-      <TextBoxWithTitle title={'BONUS FROM STAT'} size={1}  id={'DAMAGE_BONUS'} selector={() => useSelector(selectWeaponStatModifier(weap))}  />
+      <TextBoxWithTitle title={'BONUS FROM STAT'} size={1}  id={'BONUS_FROM_STAT'} selector={() => useSelector(selectWeaponStatModifier(weap))}  />
+      <TextInputBoxWithTitle title={'DAMAGE BONUS'} size={1}  id={'DAMAGE_BONUS'} selector={itemValueSelector(weap)} setChanger={setter(weap)} />
       <TextInputBoxWithTitle title={'DAMAGE TYPE'} size={1}  id={'DAMAGE_TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
       <TextInputBoxWithTitle title={'SECOND DAMAGE'} size={1}  id={'BONUS_DAMAGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
       <TextInputBoxWithTitle title={'SECOND DAMAGE TYPE'} size={1}  id={'BONUS_DAMAGE_TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
@@ -97,7 +97,9 @@ export function GearView(){
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextBoxWithTitle 
         title={'CHAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} 
-        selector={() => useSelector(selectWeaponStatModifier(weap)) + useSelector(selectResourceItem('BASE_ATTACK_BONUS')) + useSelector(selectNormalSizeMod)}/>
+        selector={() => useSelector(selectWeaponStatModifier(weap)) + useSelector(selectResourceItem('BASE_ATTACK_BONUS')) + useSelector(selectNormalSizeMod)}
+
+      />
       <TextInputBoxWithTitle title={'GEAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
       <DropdownBoxWithTitle title={'BONUS ATTRIBUTE'} size={1} id={'BONUS_ATTR'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} />      
       <TextInputBoxWithTitle title={'NOTES'} size={3} id={'NOTES'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
@@ -110,7 +112,7 @@ export function GearView(){
     return(
       <BoxWithTitle {...props} 
         Factory={({content:content, setContent:setContent}) =>  
-          <Text style={{textAlign:'center' }}>{content}</Text>
+          <Text style={{textAlign:'center', opacity:0.6 }}>{content}</Text>
         } 
       />
     )
@@ -133,7 +135,7 @@ export function GearView(){
       <BoxWithTitle {...props} 
         Factory={({content:content, setContent:setContent}) => 
           <SelectDropdown 
-            buttonStyle={{width:'100%', borderWidth:1, height:'100%'}} 
+            buttonStyle={{width:'100%', borderWidth:1, height:'100%', borderColor:'#444'}} 
             buttonTextStyle={{fontSize:10}} data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']} 
             defaultValue={content}
             defaultButtonText='STAT' 
@@ -159,7 +161,7 @@ export function GearView(){
         </View>
       </View>
     )
-  }
+  }  
 
   
 
@@ -177,3 +179,15 @@ export function GearView(){
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  equipmentContainer:{
+    marginVertical:10, 
+    borderWidth:3, 
+    borderColor:'#444', 
+    borderRadius:5
+  }
+  
+  
+
+});
