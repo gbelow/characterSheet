@@ -26,8 +26,8 @@ const Navigation = ({selectedTab, setSelected=()=>null}) => {
     <View style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', borderWidth:1 }}>
       {
         Object.keys(tabs).map(el => (
-          <View key={el} style={{width:'25%', margin:5}}>
-            <Button color={selectedTab == el ? '#800' : '#111'} title={el} onPress={() => setSelected(el)} />
+          <View key={el} style={{width:'30%', marginVertical:5}}>
+            <Button  color={selectedTab == el ? '#800' : '#111'} title={el} onPress={() => setSelected(el)} />
           </View>
           ))
       }

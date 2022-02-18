@@ -154,7 +154,7 @@ export function GearView(){
     return(
       <View style={{flex:size,}}>
         <View style={{backgroundColor:'#000', paddingVertical:3, borderRightWidth :1, borderColor:'#fff', flex:2, justifyContent:'center'}}>
-          <Text style={{color:'#fff', textAlign:'center'}}>{title} </Text>
+          <Text style={{color:'#fff', textAlign:'center', fontSize:9}}>{title} </Text>
         </View>
         <View style={{borderRightWidth:1, flex:3, justifyContent:'center'}}>
           <Factory content={content}  setContent={setContent} />

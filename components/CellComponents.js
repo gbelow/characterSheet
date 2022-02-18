@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor:'#000',
     color:'#fff',
-    fontSize:18,
     fontWeight: "bold", 
     marginVertical:3,
     marginHorizontal:3,
@@ -88,23 +87,23 @@ const styles = StyleSheet.create({
     paddingHorizontal:3,
   },
   cellText:{
-    fontSize:12,
+    fontSize:10,
     textAlign:'center', 
   },
   cellTextWhite:{
     color:'#fff',
-    fontSize:18,
+    fontSize:16,
     fontWeight: "bold", 
     textAlign:'center', 
   },
   cellTextWhiteLegend:{
     color:'#fff',
-    fontSize:10,
+    fontSize:9,
     fontWeight: "bold", 
     textAlign:'center', 
   },
   smallLegend:{
-    fontSize: 12,
+    fontSize: 9,
     color:'#777'
   }
 })
