@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeResourceItem, selectResourceItem, selectArmorBonus, selectShieldBonus, selectTotalArmor, selectInitiative, selectFlat, selectTouch, selectGrappleTotal, selectMaxDexMod, selectGrappleSizeMod, selectNormalSizeMod, changeResourceItemString } from './ResourcesSlice';
@@ -161,33 +161,37 @@ export const ResourcesTable = () => {
   }
 
   return (
-    <View style={styles.resourcesContainer}>
-      <HealthBar />
-      <View style={{flexDirection:'row'}}>
-        <MiscInputItem content={'ATK'} legend={'Base attack Bonus'} name={'BASE_ATTACK_BONUS'}/>
-        <MiscInputItem content={'SPEED'} name={'SPEED'}/>
-      </View>
-      <View style={{borderWidth:1, borderRadius:3, borderColor:'#333'}}>
-        <Text>Equipped Weapons and Shields</Text>
-        <WeaponBar hand={'Main'} />
-        <WeaponBar hand={'Off'}/>
-      </View>
-      <ArmorBar />
-      <View >
-        <View style={{flexDirection:'row'}}>
-          <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} selector={selectFlat}/>
-          <MiscItem content={'Touch'} legend={'ARMOR CLASS'} selector={selectTouch} />
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.resourcesContainer}>
+          <HealthBar />
+          <View style={{flexDirection:'row'}}>
+            <MiscInputItem content={'ATK'} legend={'Base attack Bonus'} name={'BASE_ATTACK_BONUS'}/>
+            <MiscInputItem content={'SPEED'} name={'SPEED'}/>
+          </View>
+          <View style={{borderWidth:1, borderRadius:3, borderColor:'#333'}}>
+            <Text>Equipped Weapons and Shields</Text>
+            <WeaponBar hand={'Main'} />
+            <WeaponBar hand={'Off'}/>
+          </View>
+          <ArmorBar />
+          <View >
+            <View style={{flexDirection:'row'}}>
+              <MiscItem content={'FLAT'} legend={'ARMOR CLASS'} selector={selectFlat}/>
+              <MiscItem content={'Touch'} legend={'ARMOR CLASS'} selector={selectTouch} />
+            </View>
+            <View style={{flexDirection:'row'}}>
+              <MiscInputItem content={'DR'} legend={'damage reduction'} name={'DAMAGE_REDUCTION'} />
+              <MiscInputItem content={'SR'} legend={'spell resistance'} name={'SPELL_RESISTANCE'}/>
+              <MiscInputItem content={'PR'} legend={'poison resistance'} name={'POISON_RESISTANCE'}/>
+            </View>
+          </View>
+          <Initiative />
+          <Grapple />
+          <Extras />
         </View>
-        <View style={{flexDirection:'row'}}>
-          <MiscInputItem content={'DR'} legend={'damage reduction'} name={'DAMAGE_REDUCTION'} />
-          <MiscInputItem content={'SR'} legend={'spell resistance'} name={'SPELL_RESISTANCE'}/>
-          <MiscInputItem content={'PR'} legend={'poison resistance'} name={'POISON_RESISTANCE'}/>
-        </View>
-      </View>
-      <Initiative />
-      <Grapple />
-      <Extras />
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

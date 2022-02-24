@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell, CellWithLegend } from '../CellComponents';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,24 +88,28 @@ export function ItemsTable() {
   }
 
   return(
-    <View style={{width:'100%', borderWidth:1, marginBottom:30}}>
-      <SectionTitle title={'OTHER POSSESIONS'} /> 
-        <View style={{flexDirection:'row', width:'100%'}}>
-          <TableLegend />
-          <TableLegend />
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{width:'100%', borderWidth:1, marginBottom:30}}>
+          <SectionTitle title={'OTHER POSSESIONS'} /> 
+            <View style={{flexDirection:'row', width:'100%'}}>
+              <TableLegend />
+              <TableLegend />
+            </View>
+          <View style={{height:20*(numberItems+2)/2, flexWrap:'wrap'}}>
+            <RowMap />
+            <TotalWeight />
+          </View>
+          <SectionTitle title={'MONEY'} />
+          <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
+            <Money text={'CP'} id={'CP'}/>
+            <Money text={'SP'} id={'SP'}/>
+            <Money text={'GP'} id={'GP'}/>
+            <Money text={'PP'} id={'PP'}/>
+          </View>
+          <WeightLimits />
         </View>
-      <View style={{height:20*(numberItems+2)/2, flexWrap:'wrap'}}>
-        <RowMap />
-        <TotalWeight />
-      </View>
-      <SectionTitle title={'MONEY'} />
-      <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
-        <Money text={'CP'} id={'CP'}/>
-        <Money text={'SP'} id={'SP'}/>
-        <Money text={'GP'} id={'GP'}/>
-        <Money text={'PP'} id={'PP'}/>
-      </View>
-      <WeightLimits />
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeGearItem, selectGearItem, selectGearItemValue, selectWeaponStatModifier} from './GearSlice'
@@ -166,17 +166,21 @@ export function GearView(){
   
 
   return(
-    <View style={{width:'100%'}}>
-      <SectionTitle title={'GEAR'} />
-      <Weapon index={1}/>
-      <Weapon index={2}/>
-      <Weapon index={3}/>
-      <Weapon index={4}/>
-      <Armor />
-      <Shield />
-      <ProtectiveItem index={1} />
-      <ProtectiveItem index={2} />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{width:'100%'}}>
+          <SectionTitle title={'GEAR'} />
+          <Weapon index={1}/>
+          <Weapon index={2}/>
+          <Weapon index={3}/>
+          <Weapon index={4}/>
+          <Armor />
+          <Shield />
+          <ProtectiveItem index={1} />
+          <ProtectiveItem index={2} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

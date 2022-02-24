@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, ScrollView } from 'react-native';
 import { Cell, LargeCell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -169,16 +169,18 @@ export function SkillsTable ({}){
     )
   }
 
-  return(
-    <View style={styles.skillsTable}>
-      <SkillsHeader />
-      {
-        allSkillKeys.map((item, id) => (
-          <SkillItem key={id} name={item} />
-        ))
-      }
-      <AddSkill />
-    </View>
+  return(    
+      <SafeAreaView style={{marginHorizontal:5}}>
+        <ScrollView>
+          <SkillsHeader />
+          {
+            allSkillKeys.map((item, id) => (
+              <SkillItem key={id} name={item} />
+            ))
+          }
+          <AddSkill />
+        </ScrollView>
+      </SafeAreaView>
   )
 }
 

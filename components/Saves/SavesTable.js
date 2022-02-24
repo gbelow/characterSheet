@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, LargeCell} from '../CellComponents'
 import { TitleText, BigTitleText } from '../TextComponents';
 import { selectStatsModifier } from '../Stats/StatsSlice';
@@ -36,22 +36,24 @@ export const SavesTable = () => {
   }
 
   return (
-    <View style={styles.savesTable}>
-      <View style={{...styles.savesTableRow, flex:0.6}}>
-        <View style={{ flex:3 }}><BigTitleText>{'SAVING THROWS'}</BigTitleText></View>
-        <View style={styles.savesTableCol}><BigTitleText style={{ }}> {'TOTAL'}</BigTitleText></View>
-        <View style={styles.savesTableCol}><TitleText >{'Base \n Save'} </TitleText></View>
-        <View style={styles.savesTableCol}><TitleText > {'Ability \n Modifier'} </TitleText></View>
-        <View style={styles.savesTableCol}><TitleText > {'Magic \n Modifier'} </TitleText></View>
-        <View style={styles.savesTableCol}><TitleText > {'Misc \n Modifier'} </TitleText></View>
-        <View style={styles.savesTableCol}><TitleText > {'Temp. \n Modifier'}</TitleText></View>
-      </View>
-
-      <DataRow stat={'FORTITUDE'} legend={'(CONSTITUTION)'} baseSave={2} />
-      <DataRow stat={'REFLEX'} legend={'(DEXTERITY)'} baseSave={0} />
-      <DataRow stat={'WILL'} legend={'(WISDOM)'} baseSave={2} />
-
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.savesTable}>
+          <View style={{...styles.savesTableRow, flex:0.6}}>
+            <View style={{ flex:3 }}><BigTitleText>{'SAVING THROWS'}</BigTitleText></View>
+            <View style={styles.savesTableCol}><BigTitleText style={{ }}> {'TOTAL'}</BigTitleText></View>
+            <View style={styles.savesTableCol}><TitleText >{'Base \n Save'} </TitleText></View>
+            <View style={styles.savesTableCol}><TitleText > {'Ability \n Modifier'} </TitleText></View>
+            <View style={styles.savesTableCol}><TitleText > {'Magic \n Modifier'} </TitleText></View>
+            <View style={styles.savesTableCol}><TitleText > {'Misc \n Modifier'} </TitleText></View>
+            <View style={styles.savesTableCol}><TitleText > {'Temp. \n Modifier'}</TitleText></View>
+          </View>
+          <DataRow stat={'FORTITUDE'} legend={'(CONSTITUTION)'} baseSave={2} />
+          <DataRow stat={'REFLEX'} legend={'(DEXTERITY)'} baseSave={0} />
+          <DataRow stat={'WILL'} legend={'(WISDOM)'} baseSave={2} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

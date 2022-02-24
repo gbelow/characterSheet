@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Cell, DoubleCell, CellInput } from "../CellComponents";
 import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
 import { 
@@ -81,15 +81,19 @@ const DataRow = ({level}) => {
 }
 
   return(
-    <View style={{width:'100%', alignItems:"center",}}>
-      <SectionTitle title={'SPELLS'}/>
-      <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} id={'DOMAIN'} selector={spellItemSelector} setChanger={setItemChanger}/>
-      {useSelector(selectAllLevelIDs, shallowEqual).map((el)=>{
-            return <LevelList key={'level'+el} level ={el} />
-          })}
-      <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
-      <Pair title={'SPELL FAILURE'} value={useSelector(selectArcaneFailure)} />
-      <SpellSummary />
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{width:'100%', alignItems:"center",}}>
+          <SectionTitle title={'SPELLS'}/>
+          <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} id={'DOMAIN'} selector={spellItemSelector} setChanger={setItemChanger}/>
+          {useSelector(selectAllLevelIDs, shallowEqual).map((el)=>{
+                return <LevelList key={'level'+el} level ={el} />
+              })}
+          <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
+          <Pair title={'SPELL FAILURE'} value={useSelector(selectArcaneFailure)} />
+          <SpellSummary />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }

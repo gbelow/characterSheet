@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Input,  } from "react-native";
+import { View, Input, SafeAreaView, ScrollView,  } from "react-native";
 import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
 import { changeFeatValue, selectFeatCategory, selectFeatCategoryItem } from "./FeatsSlice";
 import { useDispatch, useSelector, shallowEqual  } from 'react-redux';
@@ -28,19 +28,23 @@ export function FeatsView({}){
   }
 
   return(
-    <View style={{width:'100%', marginTop: 20}}>
-      <SectionTitle title={'FEATS'} />
-      <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center"}}>
-        <FeatsMap category={'FEATS'}/>
-      </View>
-      <SectionTitle title={'SPECIAL ABILITIES'} />
-      <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center",}}>
-        <FeatsMap category={'SPECIAL_ABILITIES'}/>
-      </View>
-      <SectionTitle title={'LANGUAGES'} />
-      <View style={{width:'100%', flexWrap:'wrap', height:100, alignItems:"center",}}>
-        <FeatsMap category={'LANGUAGES'}/>
-      </View>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{width:'100%', marginTop: 20}}>
+          <SectionTitle title={'FEATS'} />
+          <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center"}}>
+            <FeatsMap category={'FEATS'}/>
+          </View>
+          <SectionTitle title={'SPECIAL ABILITIES'} />
+          <View style={{width:'100%', flexWrap:'wrap', height:200, alignItems:"center",}}>
+            <FeatsMap category={'SPECIAL_ABILITIES'}/>
+          </View>
+          <SectionTitle title={'LANGUAGES'} />
+          <View style={{width:'100%', flexWrap:'wrap', height:100, alignItems:"center",}}>
+            <FeatsMap category={'LANGUAGES'}/>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
