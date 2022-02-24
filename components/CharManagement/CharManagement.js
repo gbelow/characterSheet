@@ -194,22 +194,30 @@ export function CharManagement ({navigation}){
   }
 
   const onLoadCharacterClick = () => {
-    Alert.alert(
-      "Load Character",
-      "Do you want to load file " + selectedChar + "? All unsaved progress will be lost",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "OK", onPress: ()=>{
-          dispatch(changeCurrentChar({value:selectedChar}))
-          loadCharacter({char:selectedChar})
-          navigation.navigate('Sheet')
-        } }
-      ]
-    );
+    // console.log(currentChar, selectedChar) b
+    if(currentChar !== selectedChar){
+      Alert.alert(
+        "Load Character",
+        "Do you want to load file " + selectedChar + "? All unsaved progress will be lost",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: ()=>{
+            dispatch(changeCurrentChar({value:selectedChar}))
+            loadCharacter({char:selectedChar})          
+            Alert.alert("Loading", 'Loading '+selectedChar+', please wait a few seconds')
+            navigation.navigate('Sheet')
+          } }
+        ]
+      );
+    }else{
+      Alert.alert("Loading", 'Loading '+currentChar+', please wait a few seconds')
+      navigation.navigate('Sheet')
+    }
+    
   }
 
   const onSaveCharacterClick = () =>{
@@ -249,7 +257,7 @@ export function CharManagement ({navigation}){
           dispatch(changeCurrentChar({value:newCharName}))
           // console.log(s, 'saved')          
           getCharList()
-          
+          Alert.alert("Loading", 'Loading '+newCharName+', please wait a few seconds')
           navigation.navigate('Sheet')
         }}
       ]
