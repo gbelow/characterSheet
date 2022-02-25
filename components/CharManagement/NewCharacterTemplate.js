@@ -37,7 +37,7 @@ const newCharacterTemplate = {
     CONCENTRATION: { ability: 'CON', armorPen:false, requiredTraining:false, ranks:0, miscMod:0, isClassSkill:false},
     DECIPHER_SCRIPT: { ability: 'INT', armorPen:false, requiredTraining:true, ranks:0, miscMod:0, isClassSkill:false},
     DIPLOMACY: { ability: 'CHA', armorPen:false, requiredTraining:false, ranks:0, miscMod:0, isClassSkill:false},
-    DISABLE_DEVICE: { ability: 'DEX', armorPen:false, requiredTraining:true, ranks:0, miscMod:0, isClassSkill:false},
+    DISABLE_DEVICE: { ability: 'INT', armorPen:false, requiredTraining:true, ranks:0, miscMod:0, isClassSkill:false},
     DISGUISE: { ability: 'CHA', armorPen:false, requiredTraining:false, ranks:0, miscMod:0, isClassSkill:false},
     ESCAPE: { ability: 'DEX', armorPen:true, requiredTraining:false, ranks:0, miscMod:0, isClassSkill:false},
     FORGERY: { ability: 'INT', armorPen:false, requiredTraining:true, ranks:0, miscMod:0, isClassSkill:false},

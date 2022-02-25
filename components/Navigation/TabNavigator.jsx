@@ -46,9 +46,9 @@ function TabNavigator({
                     });
                   }
                 }}
-                style={{ borderWidth:1, paddingVertical:5, paddingHorizontal:5, backgroundColor:isFocused ? '#800' : '#000'  }}
+                style={{ borderWidth:1, paddingVertical:5, paddingHorizontal:5, backgroundColor:isFocused ? '#800' : '#444'  }}
                 >
-                  <Text style={{ color: isFocused ? '#800' : '#222', textAlign:'center' }}>
+                  <Text style={{ color: isFocused ? '#fff' : '#222', textAlign:'center' }}>
                     {route.name}
                   </Text>
               </Pressable>
