@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, SectionList } from "react-native";
 import { Cell, DoubleCell, CellInput } from "../CellComponents";
 import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
 import { 
@@ -24,7 +24,6 @@ export function SpellsView({}){
     const spellIDs = levelSelector(level)
     const changer = setChanger(level)
     const selector = spellLevelItemSelector(level)
-    // console.log('dang' + level)
     
     return(
       <View>
@@ -80,20 +79,29 @@ const DataRow = ({level}) => {
   )
 }
 
+  const spellLevels = useSelector(selectAllLevelIDs, shallowEqual)
+
   return(
-    <SafeAreaView>
-      <ScrollView>
-        <View style={{width:'100%', alignItems:"center",}}>
-          <SectionTitle title={'SPELLS'}/>
-          <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} id={'DOMAIN'} selector={spellItemSelector} setChanger={setItemChanger}/>
-          {useSelector(selectAllLevelIDs, shallowEqual).map((el)=>{
-                return <LevelList key={'level'+el} level ={el} />
-              })}
-          <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
-          <Pair title={'SPELL FAILURE'} value={useSelector(selectArcaneFailure)} />
-          <SpellSummary />
-        </View>
-      </ScrollView>
+    <SafeAreaView style={{marginHorizontal:5}}>
+      
+      <SectionList 
+        sections={spellLevels.map(item => ({title:item, data:item}))}
+        renderItem={({item}) => <LevelList  level ={item} />}
+        keyExtractor={({item}) => 'level'+item}
+        ListHeaderComponent={
+          <>
+            <SectionTitle title={'SPELLS'}/>
+            <UnderlinedTextInput size={6} fontSize={16} legend={'Domains/Specialty'} id={'DOMAIN'} selector={spellItemSelector} setChanger={setItemChanger}/>
+          </>
+        }
+        ListFooterComponent={
+          <>
+            <Pair title={'SPELL SAVE'} value={useSelector(selectSpellSave)}/>
+            <Pair title={'SPELL FAILURE'} value={useSelector(selectArcaneFailure)} />
+            <SpellSummary />
+          </>
+        }
+      />
     </SafeAreaView>
   )
 }

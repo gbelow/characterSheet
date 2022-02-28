@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import { Cell, LargeCell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -171,15 +171,13 @@ export function SkillsTable ({}){
 
   return(    
       <SafeAreaView style={{marginHorizontal:5}}>
-        <ScrollView>
-          <SkillsHeader />
-          {
-            allSkillKeys.map((item, id) => (
-              <SkillItem key={id} name={item} />
-            ))
-          }
-          <AddSkill />
-        </ScrollView>
+        <FlatList 
+          ListHeaderComponent={<SkillsHeader />}
+          data={ allSkillKeys }
+          renderItem={({item}) => <SkillItem key={item} name={item} /> }
+          keyExtractor={item => item}
+          ListFooterComponent={<AddSkill />}
+        />      
       </SafeAreaView>
   )
 }

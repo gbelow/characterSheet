@@ -28,6 +28,7 @@ const DescriptionView = ({}) => {
               buttonStyle={{width:'25%', borderWidth:1, marginHorizontal:5, marginVertical:8}} 
               buttonTextStyle={{fontSize:16}} data={['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Wizard']} 
               defaultButtonText={selector('CLASS')} 
+              dropdownStyle={{width:100}}
               buttonTextAfterSelection={selectedItem => selectedItem}
               onSelect={setter('CLASS')}
             />
@@ -41,6 +42,7 @@ const DescriptionView = ({}) => {
               buttonStyle={{width:'25%', borderWidth:1, marginHorizontal:5, marginVertical:8,}} 
               buttonTextStyle={{fontSize:16}} data={SizeKeys} 
               defaultButtonText={selector('SIZE')} 
+              dropdownStyle={{width:120}}
               buttonTextAfterSelection={selectedItem => selectedItem}
               onSelect={setter('SIZE')}
             />

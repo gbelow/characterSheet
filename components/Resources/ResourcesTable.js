@@ -112,9 +112,11 @@ export const ResourcesTable = () => {
   const WeaponBar = ({hand}) => {
 
     const i = hand == 'Main' ?  'MAIN_HAND' : 'OFF_HAND'
-    const mh = useSelector(selectResourceItem(i))
+    const mh = useSelector(selectResourceItem(i)) || 'WEAPON1'
     let weap =  useSelector(selectGearItem(mh)) 
     const mod =  useSelector(selectWeaponStatModifier(mh))
+    
+    const x = (parseInt(useSelector(selectWeaponStatModifier(mh, 'damage')))+parseInt(weap.DAMAGE_BONUS)) 
     
     return(
       <View style={{marginVertical:5, flexDirection:'row', alignItems:'center'}}>
@@ -124,6 +126,7 @@ export const ResourcesTable = () => {
             buttonTextStyle={{fontSize:10}} data={['WEAPON1', 'WEAPON2', 'WEAPON3', 'WEAPON4', 'SHIELD', '']} 
             defaultValue={weap?.NAME}
             defaultButtonText={weap?.NAME }
+            dropdownStyle={{width:120}}
             buttonTextAfterSelection={selectedItem => weap?.NAME}
             onSelect={ selectedItem => dispatch(changeResourceItemString({itemName:i, value:selectedItem}))}
             rowTextStyle={{fontSize:8}}
@@ -132,7 +135,12 @@ export const ResourcesTable = () => {
           weap?.DAMAGE ?
             <>
               <CellWithLegend legend={'Attack'} content={parseInt(mod)+parseInt(weap.ATK_BONUS)} fontSize={16}/>
-              <CellWithLegend legend={'Damage'} content={weap.DAMAGE + '+' + (parseInt(mod)+parseInt(weap.DAMAGE_BONUS)) +'\n '+ weap.DAMAGE_TYPE} fontSize={16} />
+              <CellWithLegend 
+                legend={'Damage'} content={weap.DAMAGE + '+' 
+                + x
+                +'\n '+ weap.DAMAGE_TYPE} fontSize={16} 
+
+              />
               <CellWithLegend legend={'Extra'} content={weap.BONUS_DAMAGE + '\n'+ weap.BONUS_DAMAGE_TYPE} fontSize={16} />        
               {/* <CellWithLegend legend={'Range'} content={weap.RANGE} fontSize={16} />         */}
               <CellWithLegend legend={'Ammo'} content={weap.AMMO} fontSize={16}  />     

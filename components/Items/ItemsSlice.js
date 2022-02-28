@@ -28,7 +28,7 @@ export const { changeItemValue, changeCoin, loadItems } = slice.actions;
 export const selectItem = (itemNumber) => state => state.items[itemNumber];
 export const selectCoins = (coin) => state => state.items[coin];
 export const selectWeightSum = state => {
-  const itemsSum = Object.values(state.items).reduce((acc,el) => acc + parseInt(el.weight), 0)
+  const itemsSum = Object.values(state.items).reduce((acc,el) => acc + parseInt(el.weight)*(el.quantity ? el.quantity :  1), 0)
   const gearSum = Object.values(state.gear).reduce((acc, el) => acc + parseInt(el.WEIGHT), 0)
   return (gearSum + itemsSum).toFixed(2)
 }

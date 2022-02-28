@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Cell, CellWithLegend } from '../CellComponents';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,8 +18,9 @@ export function ItemsTable() {
     return(
       <View style={{flexDirection:'row', borderBottomWidth:1, height:20, width:'50%'}}>
         <View style={{flex:3, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'name')} value={''+item.name}/></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'value')} value={''+item.value}/></View>
-        <View style={{flex:1, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'weight')} value={''+item.weight}/></View>
+        <View style={{flex:0.6, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'value')} value={''+item.value}/></View>
+        <View style={{flex:0.6, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'weight')} value={''+item.weight}/></View>
+        <View style={{flex:0.6, borderRightWidth:1}}><TextInput onChangeText={setter(id, 'quantity')} value={item.quantity ? ''+item.quantity : '0'}/></View>
       </View>
     )
   }
@@ -28,24 +29,14 @@ export function ItemsTable() {
     return(
       <View style={{flexDirection:'row', borderBottomWidth:1, height:20, width:'50%'}}>
         <View style={{flex:3, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>Item</Text></View>
-        <View style={{flex:1, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>PG.</Text></View>
-        <View style={{flex:1, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>WT.</Text></View>
+        <View style={{flex:0.6, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>PG.</Text></View>
+        <View style={{flex:0.6, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>WT.</Text></View>
+        <View style={{flex:0.6, borderRightWidth:1, justifyContent:'center'}}><Text style={{textAlign:'center'}}>QT.</Text></View>
       </View>
     )
   }
 
-  const RowMap = () => {
-    let n = numberItems
-    return(
-      <>
-        {
-          Array.from(Array(n).keys()).map(el => (
-            <TableRow key={el} id={el}/>
-          ))
-        }
-      </>
-    )
-  }
+  
 
   const TotalWeight = () => {
     return(
@@ -89,27 +80,34 @@ export function ItemsTable() {
 
   return(
     <SafeAreaView>
-      <ScrollView>
-        <View style={{width:'100%', borderWidth:1, marginBottom:30}}>
-          <SectionTitle title={'OTHER POSSESIONS'} /> 
+      <FlatList 
+        data={Array.from(Array(numberItems).keys())}
+        renderItem={({item})=> <TableRow  id={item}/>}
+        keyExtractor={(item) =>  item+''}
+        numColumns={2}
+        ListHeaderComponent={
+          <>
+            <SectionTitle title={'OTHER POSSESIONS'} /> 
             <View style={{flexDirection:'row', width:'100%'}}>
               <TableLegend />
               <TableLegend />
             </View>
-          <View style={{height:20*(numberItems+2)/2, flexWrap:'wrap'}}>
-            <RowMap />
+          </>
+        }
+        ListFooterComponent={
+          <>
             <TotalWeight />
-          </View>
-          <SectionTitle title={'MONEY'} />
-          <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
-            <Money text={'CP'} id={'CP'}/>
-            <Money text={'SP'} id={'SP'}/>
-            <Money text={'GP'} id={'GP'}/>
-            <Money text={'PP'} id={'PP'}/>
-          </View>
-          <WeightLimits />
-        </View>
-      </ScrollView>
+            <SectionTitle title={'MONEY'} />
+            <View style={{borderWidth:1, height:50, flexDirection:'row', justifyContent:'space-between',alignItems:'center' ,paddingHorizontal:10}}>
+              <Money text={'CP'} id={'CP'}/>
+              <Money text={'SP'} id={'SP'}/>
+              <Money text={'GP'} id={'GP'}/>
+              <Money text={'PP'} id={'PP'}/>
+            </View>
+            <WeightLimits />
+          </>
+        }
+      />
     </SafeAreaView>
   )
 }

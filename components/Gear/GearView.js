@@ -74,6 +74,8 @@ export function GearView(){
     )
   }
 
+  const weaponTypes = ["melee", "ranged"]
+
  const  Weapon = ({index}) => {
   const weap = 'WEAPON'+index
   return(
@@ -81,13 +83,14 @@ export function GearView(){
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextInputBoxWithTitle title={'WEAPON'} size={3} id={'NAME'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
       <TextInputBoxWithTitle title={'RANGE'} size={1} id={'RANGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
-      <TextInputBoxWithTitle title={'TYPE'} size={1} id={'TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
+      {/* <TextInputBoxWithTitle title={'TYPE'} size={1} id={'TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/> */}
+      <DropdownBoxWithTitle title={'TYPE'} size={1} id={'TYPE'} data={weaponTypes} selector={itemValueSelector(weap)}  setChanger={setter(weap)} />  
       <TextInputBoxWithTitle title={'AMMO'} size={1} id={'AMMO'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
       <TextInputBoxWithTitle title={'WEIGHT'} size={1} id={'WEIGHT'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
     </View>
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextInputBoxWithTitle title={'DAMAGE'} size={1}  id={'DAMAGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
-      <TextBoxWithTitle title={'BONUS FROM STAT'} size={1}  id={'BONUS_FROM_STAT'} selector={() => useSelector(selectWeaponStatModifier(weap))}  />
+      <TextBoxWithTitle title={'BONUS FROM STAT'} size={1}  id={'BONUS_FROM_STAT'} selector={() => useSelector(selectWeaponStatModifier(weap, 'damage'))}  />
       <TextInputBoxWithTitle title={'DAMAGE BONUS'} size={1}  id={'DAMAGE_BONUS'} selector={itemValueSelector(weap)} setChanger={setter(weap)} />
       <TextInputBoxWithTitle title={'DAMAGE TYPE'} size={1}  id={'DAMAGE_TYPE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
       <TextInputBoxWithTitle title={'SECOND DAMAGE'} size={1}  id={'BONUS_DAMAGE'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
@@ -97,11 +100,14 @@ export function GearView(){
     <View style={{flexDirection:'row', height:80, borderWidth:1}}>
       <TextBoxWithTitle 
         title={'CHAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} 
-        selector={() => useSelector(selectWeaponStatModifier(weap)) + useSelector(selectResourceItem('BASE_ATTACK_BONUS')) + useSelector(selectNormalSizeMod)}
+        selector={() => useSelector(selectWeaponStatModifier(weap, 'attack')) + useSelector(selectResourceItem('BASE_ATTACK_BONUS')) + useSelector(selectNormalSizeMod)}
 
       />
       <TextInputBoxWithTitle title={'GEAR ATTACK BONUS'} size={1} id={'ATK_BONUS'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} isNumber={true}/>
-      <DropdownBoxWithTitle title={'BONUS ATTRIBUTE'} size={1} id={'BONUS_ATTR'} selector={itemValueSelector(weap)}  setChanger={setter(weap)} />      
+      <DropdownBoxWithTitle 
+        title={'BONUS ATTRIBUTE'} size={1} id={'BONUS_ATTR'} 
+        data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']} selector={itemValueSelector(weap)}  setChanger={setter(weap)} 
+      />      
       <TextInputBoxWithTitle title={'NOTES'} size={3} id={'NOTES'} selector={itemValueSelector(weap)}  setChanger={setter(weap)}/>
     </View>
   </View>
@@ -135,10 +141,11 @@ export function GearView(){
       <BoxWithTitle {...props} 
         Factory={({content:content, setContent:setContent}) => 
           <SelectDropdown 
-            buttonStyle={{width:'100%', borderWidth:1, height:'100%', borderColor:'#444'}} 
-            buttonTextStyle={{fontSize:10}} data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']} 
-            defaultValue={content}
-            defaultButtonText='STAT' 
+            buttonStyle={{width:'100%', borderWidth:1, height:'100%', borderColor:'#444', paddingHorizontal:0}} 
+            buttonTextStyle={{fontSize:10}} data={props.data} 
+            dropdownStyle={{width:100}}
+            defaultValue={content || 'select'}
+            defaultButtonText={''}
             buttonTextAfterSelection={selectedItem => content}
             onSelect={setContent}
         />

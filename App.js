@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView, Button, TouchableOpacity, Pressable, Alert } from 'react-native';
 import dndPic from './assets/dndPic.png'
@@ -23,19 +22,18 @@ import { selectChar } from './components/Description/DescriptionSlice';
 
 const Tab = createTabNavigator()
 
-
-const tabs = {description: DescriptionView, Combat: ResourcesTable, stats: StatsTable, 
-  saves: SavesTable, gear: GearView, skills: SkillsTable, items: ItemsTable, feats: FeatsView, spells: SpellsView}
+// const tabs = {description: DescriptionView, Combat: ResourcesTable, stats: StatsTable, 
+//   saves: SavesTable, gear: GearView, skills: SkillsTable, items: ItemsTable, feats: FeatsView, spells: SpellsView}
 
 const Navigation = () => {
   return (
-    <Tab.Navigator  >
+    <Tab.Navigator >
       <Tab.Screen name="Description" component={DescriptionView} />
       <Tab.Screen name="Combat" component={ResourcesTable} />
       <Tab.Screen name="Stats" component={StatsTable} />
       <Tab.Screen name="Saves" component={SavesTable} />
       <Tab.Screen name="Gear" component={GearView} />
-      <Tab.Screen name="Skills" component={SkillsTable} />
+      <Tab.Screen name="Skills" component={SkillsTable} /> 
       <Tab.Screen name="Items" component={ItemsTable} />
       <Tab.Screen name="Feats" component={FeatsView} />
       <Tab.Screen name="Spells" component={SpellsView} />

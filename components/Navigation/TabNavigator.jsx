@@ -21,7 +21,6 @@ function TabNavigator({
       screenOptions,
       initialRouteName,
     });
-
   return (
     <NavigationContent>
       <View style={[{ flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', borderWidth:1 }, tabBarStyle]}>
