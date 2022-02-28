@@ -30,7 +30,11 @@ export const DoubleCell = ({content='', legend=''}) => {
 const CellInputRaw = ({content, setContent, fontSize=22}) => {
   return(
     <View style={styles.statsCell}>
-      <TextInput style={{...styles.cellText, fontSize:fontSize}} onChangeText={setContent} keyboardType={'numeric'} value={''+content}/>
+      <TextInput 
+        style={{...styles.cellText, fontSize:fontSize}} 
+        onChangeText={setContent} keyboardType={'numeric'} value={''+content}
+
+      />
     </View>
   )
 }

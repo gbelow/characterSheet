@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {Cell, DoubleCell, CellInput} from '../CellComponents'
 import {changeStatsItemValue, selectStatsModifier, selectStatsItemValue} from './StatsSlice';
@@ -29,8 +29,8 @@ const StatsTable = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.statsTable}>
+      <FlatList
+        ListHeaderComponent={          
           <View style={{...styles.statsTableRow, flex:0.6}}>
             <View><Text style={styles.statsTableTitle}> {'Ability \n Name'} </Text></View>
             <View><Text style={styles.statsTableTitle}> {'Ability \n Score'} </Text></View>
@@ -38,15 +38,12 @@ const StatsTable = () => {
             <View><Text style={styles.statsTableTitle}> {'Debuffs'} </Text></View>
             <View><Text style={styles.statsTableTitle}> {'Ability \n Modifier'} </Text></View>
           </View>
-
-          <DataRow stat={'STR'} />
-          <DataRow stat={'DEX'} />
-          <DataRow stat={'CON'} />
-          <DataRow stat={'INT'} />
-          <DataRow stat={'WIS'} />
-          <DataRow stat={'CHA'} />
-        </View>
-      </ScrollView>
+        }
+        renderItem={({item}) => <DataRow stat={item} />}
+        data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']}
+        keyExtractor={(item) => item}
+      />
+      
     </SafeAreaView>
   )  
 }

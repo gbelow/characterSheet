@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { Cell, CellWithLegend } from '../CellComponents';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';

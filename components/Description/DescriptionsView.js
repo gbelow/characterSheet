@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { SectionTitle, UnderlinedTextInput } from '../TextComponents';
+import { UnderlinedTextInput } from '../TextComponents';
 import { selectDescriptionItem, changeDescriptionItem, SizeKeys } from './DescriptionSlice';
 import SelectDropdown from 'react-native-select-dropdown';
 

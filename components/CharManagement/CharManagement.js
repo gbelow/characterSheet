@@ -50,10 +50,10 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
           <Text>Make new Character</Text>          
           <View>
             <TextInput 
-              style={{...tinput, fontSize:16, borderBottomWidth:1, width:250, margin:10, borderColor:'#555', textAlign:'center' }} 
+              style={{...tinput, fontSize:16, borderWidth:1, width:250, margin:10, borderColor:'#555', textAlign:'center' }} 
               value={newCharName} onChangeText={(e) => setNewCharName(e)}
               onFocus={()=> setTinput({...tinput, borderWidth:1, borderRadius:5})}
-              onBlur={()=> setTinput({...tinput, borderBottomWidth:1})}
+              onBlur={()=> setTinput({...tinput})}
               placeholder= "File Name"
             />
           </View>
@@ -208,13 +208,12 @@ export function CharManagement ({navigation}){
           { text: "OK", onPress: ()=>{
             dispatch(changeCurrentChar({value:selectedChar}))
             loadCharacter({char:selectedChar})          
-            Alert.alert("Loading", 'Loading '+selectedChar+', please wait a few seconds')
             navigation.navigate('Sheet')
           } }
         ]
       );
     }else{
-      Alert.alert("Loading", 'Loading '+currentChar+', please wait a few seconds')
+      // Alert.alert("Loading", 'Loading '+currentChar+', please wait a few seconds')
       navigation.navigate('Sheet')
     }
     

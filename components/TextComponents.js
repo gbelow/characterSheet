@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, StyleSheet } from 'react-native';
 import { makeComponentWithSelector } from "./ReduxHOC";
 
 export const TitleText = ({children, fontSize=10}) => {
@@ -38,27 +38,25 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
 }
 
 const UnderlinedTextInputRaw = ({content, setContent, legend='', size=0.8, fontSize=12}) => {
-  let thisStyle = {flexDirection: 'column', marginRight: 10, width:50,}
+  let thisStyle = {flexDirection: 'column', marginRight: 10, width:50, }
   thisStyle.width = thisStyle.width*size
   return(
     <View style={thisStyle}>
-      <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent} value={''+content}/>
-      {legend ? <Text style={{fontSize:parseInt(fontSize*3/4)}}>{legend}</Text> : null  }
+      <TextInput 
+        style={{...styles.textInput, fontSize:fontSize}} 
+        onChangeText={setContent} value={''+content}
+      />
+      <Text style={{fontSize:parseInt(fontSize*3/4), borderTopWidth:2, borderColor:'#555'}}>{legend}</Text>
     </View>
   )
 }
 export const UnderlinedTextInput = makeComponentWithSelector(UnderlinedTextInputRaw)
 
-// export const UnderlinedTextInput = ({selector, id='', setChanger, legend='', size=0.8, fontSize=12 }) => {
-//   const text = selector(id)
-//   const setContent=setChanger(id)
-//   let thisStyle = {flexDirection: 'column', marginRight: 10, width:50,}
-//   thisStyle.width = thisStyle.width*size
-//   // console.log(id, text)
-//   return(
-//     <View style={thisStyle}>
-//       <TextInput style={{fontSize:fontSize, borderRadius:1, borderBottomWidth:2, borderColor:'gray', width:'100%',}} onChangeText={setContent} value={''+text}/>
-//       {legend ? <Text style={{fontSize:8,}}>{legend}</Text> : null  }
-//     </View>
-//   )
-// }
+const styles = StyleSheet.create({
+  textInput:{
+    fontSize:12, 
+    width:'100%',
+    textAlign:'center',
+  } 
+  
+});

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Input, SafeAreaView,  SectionList, Text } from "react-native";
+import React from "react";
+import { View, SafeAreaView,  SectionList } from "react-native";
 import { SectionTitle, UnderlinedTextInput } from "../TextComponents";
 import { changeFeatValue, selectFeatCategory, selectFeatCategoryItem } from "./FeatsSlice";
 import { useDispatch, useSelector, shallowEqual  } from 'react-redux';

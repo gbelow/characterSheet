@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import React from 'react';
+import { FlatList,  SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SectionTitle } from '../TextComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import {changeGearItem, selectGearItem, selectGearItemValue, selectWeaponStatModifier} from './GearSlice'
@@ -174,19 +174,21 @@ export function GearView(){
 
   return(
     <SafeAreaView>
-      <ScrollView>
-        <View style={{width:'100%'}}>
-          <SectionTitle title={'GEAR'} />
-          <Weapon index={1}/>
-          <Weapon index={2}/>
-          <Weapon index={3}/>
-          <Weapon index={4}/>
-          <Armor />
-          <Shield />
-          <ProtectiveItem index={1} />
-          <ProtectiveItem index={2} />
-        </View>
-      </ScrollView>
+      <FlatList
+      ListHeaderComponent={<SectionTitle title={'GEAR'} />}
+        data={[1,2,3,4]}
+        renderItem={({item}) => <Weapon index={item}/>}
+        keyExtractor={(item)=> ''+item}
+        ListFooterComponent={
+          <>
+            <Armor />
+            <Shield />
+            <ProtectiveItem index={1} />
+            <ProtectiveItem index={2} />
+          </>
+        }
+      />
+          
     </SafeAreaView>
   )
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, CellInputWithLegend, CellWithLegend} from '../CellComponents'
 import { useDispatch, useSelector } from 'react-redux';

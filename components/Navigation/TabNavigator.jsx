@@ -21,6 +21,7 @@ function TabNavigator({
       screenOptions,
       initialRouteName,
     });
+    
   return (
     <NavigationContent>
       <View style={[{ flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', borderWidth:1 }, tabBarStyle]}>
@@ -60,9 +61,9 @@ function TabNavigator({
             <View
               key={route.key}
               style= {{ display: i === state.index ? 'flex' : 'none' }}
-              
             >
-              {descriptors[route.key].render()}
+              {descriptors[route.key].render() }
+              {/* {i === state.index ? descriptors[route.key].render() : <Text></Text>} */}
             </View>
           );
         })}

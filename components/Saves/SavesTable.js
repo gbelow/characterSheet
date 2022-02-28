@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import {Cell, DoubleCell, CellInput, LargeCell} from '../CellComponents'
 import { TitleText, BigTitleText } from '../TextComponents';
 import { selectStatsModifier } from '../Stats/StatsSlice';

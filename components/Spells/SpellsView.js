@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import { View, Text, SafeAreaView, ScrollView, SectionList } from "react-native";
-import { Cell, DoubleCell, CellInput } from "../CellComponents";
-import { UnderlinedText, SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
+import { View, Text, SafeAreaView, SectionList } from "react-native";
+import { Cell, CellInput } from "../CellComponents";
+import { SectionTitle, UnderlinedTextInput, TitleText} from "../TextComponents";
 import { 
   changeSpellValue, selectSpellLevel, selectSpellSummaryLevelItem, 
   selectSpellItem, changeSpellSummary, changeSpellItem, 
@@ -28,9 +28,9 @@ export function SpellsView({}){
     return(
       <View>
         <TitleText fontSize={16}>{level + ' level spells:'}</TitleText>
-        <View style={{flexWrap:"wrap", height:100}}>
+        <View style={{flexWrap:"wrap", height:150, width:'100%'}}>
           {Object.values(spellIDs).map((el)=>{
-            return <UnderlinedTextInput key={level+'_'+el} id={el} selector={selector} setChanger={changer} size={2}/>
+            return <UnderlinedTextInput key={level+'_'+el} id={el} selector={selector} setChanger={changer} size={2.2}/>
           })}
         </View>
       </View>

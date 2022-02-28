@@ -1,12 +1,12 @@
-import React, {useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useState } from 'react';
 import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, ScrollView, FlatList } from 'react-native';
-import { Cell, LargeCell } from '../CellComponents';
+import { LargeCell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { changeSkillItemValue, selectAllSkillKeys, selectSkillTotal, createSkillItem, selectMaxSkill, selectSkillItemValue, changeSkillItemBool, removeSkillItem } from './SkillsSlice';
 import {selectStatsModifier} from '../Stats/StatsSlice';
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'expo-checkbox';
 
 export function SkillsTable ({}){
 

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, View, Image, ScrollView, SafeAreaView, Button, TouchableOpacity, Pressable, Alert } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text,  View, Image, Button,  Alert } from 'react-native';
 import dndPic from './assets/dndPic.png'
 import DescriptionView from './components/Description/DescriptionsView';
 import StatsTable from './components/Stats/StatsTable'
