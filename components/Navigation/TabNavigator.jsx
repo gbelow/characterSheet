@@ -21,6 +21,8 @@ function TabNavigator({
       screenOptions,
       initialRouteName,
     });
+
+  let loaded = React.useRef(new Set)
     
   return (
     <NavigationContent>
@@ -39,6 +41,8 @@ function TabNavigator({
                     canPreventDefault: true,
                   });
 
+                  loaded.current.add(index)
+
                   if (!event.defaultPrevented) {
                     navigation.dispatch({
                       ...TabActions.jumpTo(route.name),
@@ -56,14 +60,14 @@ function TabNavigator({
         )})}
       </View>
       <View style={[{ flex: 1 }, contentStyle]}>
-        {state.routes.map((route, i) => {
+        {state.routes.map((route, i) => {          
           return (
             <View
               key={route.key}
               style= {{ display: i === state.index ? 'flex' : 'none' }}
             >
-              {descriptors[route.key].render() }
-              {/* {i === state.index ? descriptors[route.key].render() : <Text></Text>} */}
+              {/* {descriptors[route.key].render() } */}
+              {i === state.index || loaded.current.has( state.index) ? descriptors[route.key].render() : <Text></Text>}
             </View>
           );
         })}
@@ -71,5 +75,6 @@ function TabNavigator({
     </NavigationContent>
   );
 }
+
 
 export const createTabNavigator = createNavigatorFactory(TabNavigator);
