@@ -29,7 +29,7 @@ export const saveCharacter = async ({char, fileName}) => {
   
 }
 
-const AlertWithPrompt = ({title, color='#333', onPress}) => {
+const AlertWithPrompt = ({title, color='#000', onPress}) => {
 
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
@@ -74,10 +74,10 @@ const AlertWithPrompt = ({title, color='#333', onPress}) => {
       </Modal>
       
       <Pressable 
-        style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} 
+        style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}} 
         onPress={() => setModalVisible(!modalVisible)}
         >
-          <Text style={{textAlign:'center'}}
+          <Text style={{textAlign:'center', color:'#fff'}}
             >New
           </Text>
       </Pressable>
@@ -116,7 +116,7 @@ export function CharManagement ({navigation}){
       return(
         <View style={{borderWidth:3, borderColor:'#333', alignItems:'center', marginVertical:20, borderRadius:3  }}>
           <View style={{ borderBottomColor:'#333', borderBottomWidth:2, backgroundColor:'#000', width:'100%', paddingVertical:10}}>
-            <Text style={{textAlign:'center', fontWeight:'bold', fontSize:20}}>Choose your character</Text>
+            <Text style={{textAlign:'center', fontWeight:'bold', fontSize:20, color:'#fff'}}>Choose your character</Text>
           </View>
           <SafeAreaView style={{textAlign:'center', alignItems:'center', minHeight:50, maxHeight:250, width:300, marginTop:10  }}>
             <ScrollView style={{width:'100%'}}>
@@ -124,7 +124,7 @@ export function CharManagement ({navigation}){
                   data.length > 0 ?
                     data.map(el => 
                       <Pressable key={el} style={{paddingVertical:5, width:'100%', backgroundColor: (selectedChar == el ? '#444' : 'transparent')}} onPress={() => setSelectedChar(el)}>
-                        <Text style={{textAlign:'center'}}>{el}</Text>
+                        <Text style={{textAlign:'center', }}>{el}</Text>
                       </Pressable>
                     )
                     : <Text style={{width:'100%', textAlign:'center'}}>Create your first character!</Text>
@@ -285,10 +285,10 @@ export function CharManagement ({navigation}){
         <Text style={{fontSize:18}}>Currently playing with:</Text>
         <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>
       </View>
-        <AlertWithPrompt title={'new'} color={'#333'} onPress={ onMakeNewCharacterClick}/>
-        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10, }}  onPress={onSaveCharacterClick}><Text style={{textAlign:'center'}}>Save</Text></Pressable>
-        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} onPress={onLoadCharacterClick}><Text style={{textAlign:'center'}}>Load</Text></Pressable>
-        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} onPress={onRemoveCharacterClick}><Text style={{textAlign:'center'}}>Delete</Text></Pressable>
+        <AlertWithPrompt title={'new'} color={'#000'} onPress={ onMakeNewCharacterClick}/>
+        <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}}  onPress={onSaveCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Save</Text></Pressable>
+        <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}} onPress={onLoadCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Load</Text></Pressable>
+        <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}} onPress={onRemoveCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Delete</Text></Pressable>
     </View>
   )
 }

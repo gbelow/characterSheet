@@ -23,7 +23,7 @@ function TabNavigator({
     });
 
   let loaded = React.useRef(new Set)
-    
+  
   return (
     <NavigationContent>
       <View style={[{ flexDirection:'row', flexWrap:'wrap', justifyContent:'space-evenly', borderWidth:1 }, tabBarStyle]}>
@@ -50,9 +50,9 @@ function TabNavigator({
                     });
                   }
                 }}
-                style={{ borderWidth:1, paddingVertical:5, paddingHorizontal:5, backgroundColor:isFocused ? '#800' : '#444'  }}
+                style={{ borderWidth:1, paddingVertical:5, paddingHorizontal:5, backgroundColor:isFocused ? '#800' : '#000'  }}
                 >
-                  <Text style={{ color: isFocused ? '#fff' : '#222', textAlign:'center' }}>
+                  <Text style={{ color: isFocused ? '#faa' : '#fff', textAlign:'center' }}>
                     {route.name}
                   </Text>
               </Pressable>

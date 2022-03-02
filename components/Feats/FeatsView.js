@@ -29,7 +29,7 @@ export function FeatsView({}){
   
 
   return(
-    <SafeAreaView>
+    <SafeAreaView style={{marginHorizontal:5, alignItems:'center'}}>
       <SectionList
         sections={[
           {

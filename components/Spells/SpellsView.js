@@ -82,7 +82,7 @@ const DataRow = ({level}) => {
   const spellLevels = useSelector(selectAllLevelIDs, shallowEqual)
 
   return(
-    <SafeAreaView style={{marginHorizontal:5}}>
+    <SafeAreaView style={{marginHorizontal:5, alignItems:'center'}}>
       
       <SectionList 
         sections={spellLevels.map(item => ({title:item, data:item}))}

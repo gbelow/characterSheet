@@ -79,7 +79,7 @@ export function ItemsTable() {
   }
 
   return(
-    <SafeAreaView>
+    <SafeAreaView style={{marginHorizontal:5, alignItems:'center'}}>
       <FlatList 
         data={Array.from(Array(numberItems).keys())}
         renderItem={({item})=> <TableRow  id={item}/>}

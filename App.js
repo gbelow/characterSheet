@@ -54,7 +54,7 @@ const HomeScreen = ({navigation}) => {
 export default function App() { 
   
   const Stack = createNativeStackNavigator()
-
+  
   return (
     <Provider store={store}>      
       <NavigationContainer>
@@ -78,7 +78,7 @@ export default function App() {
                 const char = useSelector(selectChar)
                 return(
                   <Pressable
-                    style={{backgroundColor:'#333', padding:10}}
+                    style={{backgroundColor:'#000', color:'#fff', padding:10}}
                     onPress={() => {                
                       try{
                         saveCharacter({char:char, fileName:fileName}) 
@@ -87,7 +87,7 @@ export default function App() {
                       }
                     }}
                   >
-                  <Text>Save</Text>
+                  <Text style={{color:'#fff'}}>Save</Text>
                   </Pressable>
                 )
               }

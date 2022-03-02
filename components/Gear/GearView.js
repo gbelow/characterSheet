@@ -173,7 +173,7 @@ export function GearView(){
   
 
   return(
-    <SafeAreaView>
+    <SafeAreaView style={{marginHorizontal:5}}>
       <FlatList
       ListHeaderComponent={<SectionTitle title={'GEAR'} />}
         data={[1,2,3,4]}
