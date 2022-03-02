@@ -161,7 +161,8 @@ export const ResourcesTable = () => {
           <TextInput 
             onChangeText={e => dispatch(changeResourceItemString({itemName:'EXTRAS', value:e}))} 
             style={{width:'100%', flexWrap:'wrap', fontSize:20}}
-          >{useSelector(selectResourceItem('EXTRAS'))}</TextInput>
+            value={useSelector(selectResourceItem('EXTRAS'))}
+          ></TextInput>
         </View>
       </View>
 

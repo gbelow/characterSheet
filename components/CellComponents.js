@@ -31,6 +31,7 @@ const CellInputRaw = ({content, setContent, fontSize=22}) => {
   return(
     <View style={styles.statsCell}>
       <TextInput 
+        textAlign={'center'}
         style={{...styles.cellText, fontSize:fontSize}} 
         onChangeText={setContent} keyboardType={'numeric'} value={''+content}
 
@@ -92,7 +93,6 @@ const styles = StyleSheet.create({
   },
   cellText:{
     fontSize:10,
-    textAlign:'center', 
   },
   cellTextWhite:{
     color:'#fff',

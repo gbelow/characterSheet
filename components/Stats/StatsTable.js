@@ -53,7 +53,6 @@ export default StatsTable
 const styles = StyleSheet.create({
 
   statsTable:{
-    height:400,
     width:'100%',
     marginTop:20,
   },
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   statsTableRow:{
     flex:1,
     flexDirection:'row',
-    height:40,
+    height:60,
     justifyContent:'space-around', 
   },
   statsTableCol:{

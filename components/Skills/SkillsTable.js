@@ -1,5 +1,5 @@
 import React, {useCallback, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Alert, SafeAreaView, FlatList, Pressable } from 'react-native';
 import { LargeCell } from '../CellComponents';
 import { UnderlinedText, UnderlinedTextInput, TitleText } from '../TextComponents';
 import SelectDropdown from 'react-native-select-dropdown'
@@ -81,7 +81,7 @@ export function SkillsTable ({}){
           <UnderlinedTextInput id={'miscMod'} selector={selector} setChanger={setChanger}/>
         </View>
         <View style={{flex:1, flexDirection:'row', alignItems:'center', marginLeft:10 }}>          
-          <Button title={'rm'} color={'#555'} onPress={() => onRemoveClick(name)}/>
+          <Pressable style={{backgroundColor:'#333', padding:10}} onPress={() => onRemoveClick(name)}><Text>RM</Text></Pressable>
         </View>
       </View>
     )
@@ -164,7 +164,7 @@ export function SkillsTable ({}){
               onValueChange={(v)=>{setSkill({...skill, isClassSkill:v})}}            
             />
         </View>
-        <Button title={'add skill'} color={'#222'} onPress={createItem(name, skill)}/>
+        <Pressable style={{backgroundColor:'#333', paddingVertical:10, paddingHorizontal:10}} onPress={createItem(name, skill)}><Text>add skill</Text></Pressable>
       </View>
     )
   }

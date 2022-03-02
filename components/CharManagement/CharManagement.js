@@ -29,7 +29,7 @@ export const saveCharacter = async ({char, fileName}) => {
   
 }
 
-const AlertWithPrompt = ({title, color='#111', onPress}) => {
+const AlertWithPrompt = ({title, color='#333', onPress}) => {
 
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
@@ -72,7 +72,16 @@ const AlertWithPrompt = ({title, color='#111', onPress}) => {
           
         </View>
       </Modal>
-      <Button title={title} color={color} onPress={() => setModalVisible(!modalVisible)}>New Character</Button>
+      
+      <Pressable 
+        style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} 
+        onPress={() => setModalVisible(!modalVisible)}
+        >
+          <Text style={{textAlign:'center'}}
+            >New
+          </Text>
+      </Pressable>
+
     </View>
   )
 }
@@ -276,10 +285,10 @@ export function CharManagement ({navigation}){
         <Text style={{fontSize:18}}>Currently playing with:</Text>
         <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>
       </View>
-        <AlertWithPrompt title={'new'} color={'#111'} onPress={ onMakeNewCharacterClick}/>
-        <Button title={'save'} color={'#111'} onPress={onSaveCharacterClick}/>
-        <Button title={'load'} color={'#111'} onPress={onLoadCharacterClick}/>
-        <Button title={'remove'} color={'#111'} onPress={onRemoveCharacterClick}/>
+        <AlertWithPrompt title={'new'} color={'#333'} onPress={ onMakeNewCharacterClick}/>
+        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10, }}  onPress={onSaveCharacterClick}><Text style={{textAlign:'center'}}>Save</Text></Pressable>
+        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} onPress={onLoadCharacterClick}><Text style={{textAlign:'center'}}>Load</Text></Pressable>
+        <Pressable style={{backgroundColor:'#333', marginBottom:5, paddingVertical:10,}} onPress={onRemoveCharacterClick}><Text style={{textAlign:'center'}}>Delete</Text></Pressable>
     </View>
   )
 }
@@ -296,9 +305,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 5
   },
 
 })

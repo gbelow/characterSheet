@@ -40,9 +40,12 @@ export const UnderlinedText = ({content='', legend='', size=0.8, fontSize=12 }) 
 const UnderlinedTextInputRaw = ({content, setContent, legend='', size=0.8, fontSize=12}) => {
   let thisStyle = {flexDirection: 'column', marginRight: 10, width:50, }
   thisStyle.width = thisStyle.width*size
+
+  
   return(
     <View style={thisStyle}>
       <TextInput 
+        textAlign={"center"}
         style={{...styles.textInput, fontSize:fontSize}} 
         onChangeText={setContent} value={''+content}
       />
@@ -56,7 +59,6 @@ const styles = StyleSheet.create({
   textInput:{
     fontSize:12, 
     width:'100%',
-    textAlign:'center',
   } 
   
 });

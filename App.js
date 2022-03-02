@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,  View, Image, Button,  Alert } from 'react-native';
+import { StyleSheet, Text,  View, Image, Button,  Alert, Pressable } from 'react-native';
 import dndPic from './assets/dndPic.png'
 import DescriptionView from './components/Description/DescriptionsView';
 import StatsTable from './components/Stats/StatsTable'
@@ -77,9 +77,8 @@ export default function App() {
                 const fileName = useSelector(selectCurrentChar)
                 const char = useSelector(selectChar)
                 return(
-                  <Button
-                    color={'#444'}
-                    title={'Save'}
+                  <Pressable
+                    style={{backgroundColor:'#333', padding:10}}
                     onPress={() => {                
                       try{
                         saveCharacter({char:char, fileName:fileName}) 
@@ -87,7 +86,9 @@ export default function App() {
                         Alert.alert('Saved!')
                       }
                     }}
-                  />
+                  >
+                  <Text>Save</Text>
+                  </Pressable>
                 )
               }
             })}
