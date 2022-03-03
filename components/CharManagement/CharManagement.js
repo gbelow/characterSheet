@@ -123,7 +123,7 @@ export function CharManagement ({navigation}){
                 {
                   data.length > 0 ?
                     data.map(el => 
-                      <Pressable key={el} style={{paddingVertical:5, width:'100%', backgroundColor: (selectedChar == el ? '#444' : 'transparent')}} onPress={() => setSelectedChar(el)}>
+                      <Pressable key={el} style={{paddingVertical:5, width:'100%', backgroundColor: (selectedChar == el ? '#999' : 'transparent')}} onPress={() => setSelectedChar(el)}>
                         <Text style={{textAlign:'center', }}>{el}</Text>
                       </Pressable>
                     )
@@ -273,23 +273,20 @@ export function CharManagement ({navigation}){
   }
   
   return(
-    <View>
-      {/* <SelectDropdown 
-          buttonStyle={{borderWidth:1, marginHorizontal:5, marginVertical:10}} 
-          buttonTextStyle={{fontSize:12}} data={data}
-          defaultButtonText={selectedChar}
-          onSelect={(e)=>{setSelectedChar(e)}}
-      /> */}
-      <CharListTable />
-      <View style={{flexDirection:'row', margin:10, padding:5, elevation:5, shadowColor:'#000'}}>
-        <Text style={{fontSize:18}}>Currently playing with:</Text>
-        <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>
-      </View>
+    <SafeAreaView>
+      <ScrollView>
+      
+        <CharListTable />
+        <View style={{flexDirection:'row', margin:10, padding:5, elevation:5, shadowColor:'#000'}}>
+          <Text style={{fontSize:18}}>Currently playing with:</Text>
+          <Text style={{fontSize:18, fontWeight:'bold', textAlign:'center'}}>{currentChar}</Text>
+        </View>
         <AlertWithPrompt title={'new'} color={'#000'} onPress={ onMakeNewCharacterClick}/>
         <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}}  onPress={onSaveCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Save</Text></Pressable>
         <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}} onPress={onLoadCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Load</Text></Pressable>
         <Pressable style={{backgroundColor:'#000', marginBottom:5, paddingVertical:10}} onPress={onRemoveCharacterClick}><Text style={{textAlign:'center', color:'#fff'}}>Delete</Text></Pressable>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

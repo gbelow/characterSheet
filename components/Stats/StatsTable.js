@@ -39,6 +39,7 @@ const StatsTable = () => {
             <View><Text style={styles.statsTableTitle}> {'Ability \n Modifier'} </Text></View>
           </View>
         }
+        removeClippedSubviews={false}
         renderItem={({item}) => <DataRow stat={item} />}
         data={['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA']}
         keyExtractor={(item) => item}

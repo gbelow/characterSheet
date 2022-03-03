@@ -85,6 +85,7 @@ export function ItemsTable() {
         renderItem={({item})=> <TableRow  id={item}/>}
         keyExtractor={(item) =>  item+''}
         numColumns={2}
+        removeClippedSubviews={false}
         ListHeaderComponent={
           <>
             <SectionTitle title={'OTHER POSSESIONS'} /> 

@@ -91,42 +91,7 @@ export default function App() {
       <NavigationContainer>
         <Header />
         <Navigation />
-        {/* <Stack.Navigator>
-          <Stack.Screen 
-            name={'Home'}
-            component={HomeScreen}
-          />
-          <Stack.Screen 
-            name={'Sheet'}
-            component={Navigation}
-            options={({navigation, route})=> ({
-              headerTitle: props => {
-                const cchar = useSelector(selectCurrentChar)
-                return(
-                  <Text style={{fontWeight:'bold'}}>{cchar}'s Character Sheet</Text>
-                )
-              },
-              headerRight: () => {
-                const fileName = useSelector(selectCurrentChar)
-                const char = useSelector(selectChar)
-                return(
-                  <Pressable
-                    style={{backgroundColor:'#000', color:'#fff', padding:10}}
-                    onPress={() => {                
-                      try{
-                        saveCharacter({char:char, fileName:fileName}) 
-                      }finally{
-                        Alert.alert('Saved!')
-                      }
-                    }}
-                  >
-                  <Text style={{color:'#fff'}}>Save</Text>
-                  </Pressable>
-                )
-              }
-            })}
-          />          
-        </Stack.Navigator> */}
+        
       </NavigationContainer>
     </Provider>
   );
@@ -136,7 +101,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    // backgroundColor: '#222',
     paddingLeft:10,
     paddingRight:10,
     alignItems: 'center',
