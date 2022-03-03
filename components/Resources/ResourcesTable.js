@@ -112,7 +112,7 @@ export const ResourcesTable = () => {
   const WeaponBar = ({hand}) => {
 
     const i = hand == 'Main' ?  'MAIN_HAND' : 'OFF_HAND'
-    const mh = useSelector(selectResourceItem(i)) || 'WEAPON1'
+    const mh = useSelector(selectResourceItem(i)) || (hand == 'Main' ?  'WEAPON1' : 'SHIELD')
     let weap =  useSelector(selectGearItem(mh)) 
     const mod =  useSelector(selectWeaponStatModifier(mh))
     

@@ -217,13 +217,13 @@ export function CharManagement ({navigation}){
           { text: "OK", onPress: ()=>{
             dispatch(changeCurrentChar({value:selectedChar}))
             loadCharacter({char:selectedChar})          
-            navigation.navigate('Sheet')
+            // navigation.navigate('Sheet')
           } }
         ]
       );
     }else{
       // Alert.alert("Loading", 'Loading '+currentChar+', please wait a few seconds')
-      navigation.navigate('Sheet')
+      // navigation.navigate('Sheet')
     }
     
   }
@@ -266,7 +266,7 @@ export function CharManagement ({navigation}){
           // console.log(s, 'saved')          
           getCharList()
           Alert.alert("Loading", 'Loading '+newCharName+', please wait a few seconds')
-          navigation.navigate('Sheet')
+          // navigation.navigate('Sheet')
         }}
       ]
     );

@@ -177,6 +177,7 @@ export function SkillsTable ({}){
           renderItem={({item}) => <SkillItem key={item} name={item} /> }
           keyExtractor={item => item}
           ListFooterComponent={<AddSkill />}
+          removeClippedSubviews={false}
         />      
       </SafeAreaView>
   )

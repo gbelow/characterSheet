@@ -25,9 +25,22 @@ const Tab = createTabNavigator()
 // const tabs = {description: DescriptionView, Combat: ResourcesTable, stats: StatsTable, 
 //   saves: SavesTable, gear: GearView, skills: SkillsTable, items: ItemsTable, feats: FeatsView, spells: SpellsView}
 
+
+const HomeScreen = ({navigation}) => {
+  return(
+    <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
+      <Image source={dndPic} style={styles.dndPic} />   
+      <CharManagement  navigation={navigation} />     
+      
+    </View>
+  )
+}
+
+
 const Navigation = () => {
   return (
     <Tab.Navigator >
+      <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Description" component={DescriptionView} />
       <Tab.Screen name="Combat" component={ResourcesTable} />
       <Tab.Screen name="Stats" component={StatsTable} />
@@ -41,12 +54,30 @@ const Navigation = () => {
   )
 } 
 
-const HomeScreen = ({navigation}) => {
+const SaveButton = () => {
+  const fileName = useSelector(selectCurrentChar)
+  const char = useSelector(selectChar)
   return(
-    <View style={{flexDirection:'column', marginVertical:30, alignItems:'center'}}>
-      <Image source={dndPic} style={styles.dndPic} />   
-      <CharManagement  navigation={navigation} />     
-      
+    <Pressable
+      style={{backgroundColor:'#000', color:'#fff', padding:10}}
+      onPress={() => {                
+        try{
+          saveCharacter({char:char, fileName:fileName}) 
+        }finally{
+          Alert.alert('Saved!')
+        }
+      }}
+    >
+    <Text style={{color:'#fff'}}>Save</Text>
+    </Pressable>
+  )
+}
+
+const Header = () => {
+  return(
+    <View style={{marginTop:20, flexDirection:'row', paddingVertical:10, justifyContent:'space-around', alignItems:'center'}}>
+      <Text style={{fontWeight:'bold', fontSize:16}}>{useSelector(selectCurrentChar)}'s Character Sheet</Text>
+      <SaveButton />
     </View>
   )
 }
@@ -58,7 +89,9 @@ export default function App() {
   return (
     <Provider store={store}>      
       <NavigationContainer>
-        <Stack.Navigator>
+        <Header />
+        <Navigation />
+        {/* <Stack.Navigator>
           <Stack.Screen 
             name={'Home'}
             component={HomeScreen}
@@ -93,7 +126,7 @@ export default function App() {
               }
             })}
           />          
-        </Stack.Navigator>
+        </Stack.Navigator> */}
       </NavigationContainer>
     </Provider>
   );
